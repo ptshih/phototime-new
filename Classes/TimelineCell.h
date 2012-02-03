@@ -12,10 +12,11 @@
 #define TL_CAPTION_HEIGHT 20.0
 
 @interface TimelineCell : PSCell {
-  NSMutableArray *_images;
-  NSMutableArray *_imageViews;
-  UILabel *_titleLabel;
-  UILabel *_subtitleLabel;
+    PSCachedImageView *_featuredImageView;
+    NSMutableArray *_images;
+    NSMutableArray *_imageViews;
+    UILabel *_titleLabel;
+    UILabel *_subtitleLabel;
 }
 
 @end

@@ -249,6 +249,15 @@
 		28F38D621498442E009D58BA /* IconMore.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D601498442E009D58BA /* IconMore.png */; };
 		28F38D631498442E009D58BA /* IconMore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D611498442E009D58BA /* IconMore@2x.png */; };
 		28FD7A9A14B120F300E9ADDE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD7A9914B120F300E9ADDE /* TestViewController.m */; };
+		D092D2A114DC3F2C001108A0 /* Phototime-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */; };
+		D092D2A814DC4362001108A0 /* Phototime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D092D2A614DC4362001108A0 /* Phototime.xcdatamodeld */; };
+		D092D2B314DC458C001108A0 /* Timeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B214DC458C001108A0 /* Timeline.m */; };
+		D092D2B614DC459F001108A0 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B514DC459E001108A0 /* Photo.m */; };
+		D092D2C314DC4837001108A0 /* NSMutableURLRequest+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2C214DC4837001108A0 /* NSMutableURLRequest+PSKit.m */; };
+		D092D2C614DC6018001108A0 /* NSManagedObject+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2C514DC6017001108A0 /* NSManagedObject+PSKit.m */; };
+		D092D2D414DC6712001108A0 /* _Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2D114DC6712001108A0 /* _Photo.m */; };
+		D092D2D514DC6712001108A0 /* _Timeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2D314DC6712001108A0 /* _Timeline.m */; };
+		D092D2D814DC6982001108A0 /* PSManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2D714DC6982001108A0 /* PSManagedObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -258,8 +267,6 @@
 		2810F5661491F66E0028BCFE /* ButtonNavList@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNavList@2x.png"; sourceTree = "<group>"; };
 		2810F56E1491FA930028BCFE /* ButtonNavListHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonNavListHighlighted.png; sourceTree = "<group>"; };
 		2810F56F1491FA930028BCFE /* ButtonNavListHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNavListHighlighted@2x.png"; sourceTree = "<group>"; };
-		2810F5731491FC2F0028BCFE /* OSnap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OSnap-Info.plist"; sourceTree = SOURCE_ROOT; };
-		2810F5741491FC2F0028BCFE /* OSnap-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OSnap-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		2810F576149202DE0028BCFE /* HorizontalLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HorizontalLine.png; sourceTree = "<group>"; };
 		2810F577149202DE0028BCFE /* HorizontalLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HorizontalLine@2x.png"; sourceTree = "<group>"; };
 		2810F57E1492169A0028BCFE /* ToolbarCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarCenter.png; sourceTree = "<group>"; };
@@ -291,7 +298,7 @@
 		281A488B1486323300F5E19E /* PSSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSlideView.m; sourceTree = "<group>"; };
 		281A488D14863E8F00F5E19E /* ArticleSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleSlideView.h; sourceTree = "<group>"; };
 		281A488E14863E8F00F5E19E /* ArticleSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleSlideView.m; sourceTree = "<group>"; };
-		283818BE14723F1D007E4827 /* OSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		283818BE14723F1D007E4827 /* Phototime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phototime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		283818C214723F1D007E4827 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		283818C414723F1D007E4827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		283818C614723F1D007E4827 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -614,6 +621,23 @@
 		28F38D611498442E009D58BA /* IconMore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMore@2x.png"; sourceTree = "<group>"; };
 		28FD7A9814B120F300E9ADDE /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		28FD7A9914B120F300E9ADDE /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Phototime-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D092D2A014DC3F2C001108A0 /* Phototime-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Phototime-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		D092D2A714DC4362001108A0 /* Phototime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Phototime.xcdatamodel; sourceTree = "<group>"; };
+		D092D2B114DC458C001108A0 /* Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timeline.h; sourceTree = "<group>"; };
+		D092D2B214DC458C001108A0 /* Timeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Timeline.m; sourceTree = "<group>"; };
+		D092D2B414DC459E001108A0 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		D092D2B514DC459E001108A0 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		D092D2C114DC4837001108A0 /* NSMutableURLRequest+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+PSKit.h"; sourceTree = "<group>"; };
+		D092D2C214DC4837001108A0 /* NSMutableURLRequest+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+PSKit.m"; sourceTree = "<group>"; };
+		D092D2C414DC6017001108A0 /* NSManagedObject+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+PSKit.h"; sourceTree = "<group>"; };
+		D092D2C514DC6017001108A0 /* NSManagedObject+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+PSKit.m"; sourceTree = "<group>"; };
+		D092D2D014DC6711001108A0 /* _Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Photo.h; sourceTree = "<group>"; };
+		D092D2D114DC6712001108A0 /* _Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Photo.m; sourceTree = "<group>"; };
+		D092D2D214DC6712001108A0 /* _Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Timeline.h; sourceTree = "<group>"; };
+		D092D2D314DC6712001108A0 /* _Timeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Timeline.m; sourceTree = "<group>"; };
+		D092D2D614DC6982001108A0 /* PSManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSManagedObject.h; sourceTree = "<group>"; };
+		D092D2D714DC6982001108A0 /* PSManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSManagedObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -621,6 +645,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				284BB04B14878B920046ABEF /* CoreData.framework in Frameworks */,
 				28603B8114AFBD4E00541BB1 /* AssetsLibrary.framework in Frameworks */,
 				28603B6714AD41ED00541BB1 /* CoreImage.framework in Frameworks */,
 				28603B6514AD414F00541BB1 /* ImageIO.framework in Frameworks */,
@@ -637,7 +662,6 @@
 				283818C314723F1D007E4827 /* UIKit.framework in Frameworks */,
 				283818C514723F1D007E4827 /* Foundation.framework in Frameworks */,
 				283818C714723F1D007E4827 /* CoreGraphics.framework in Frameworks */,
-				284BB04B14878B920046ABEF /* CoreData.framework in Frameworks */,
 				289C362A148EC48E00D02BAB /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,7 +714,7 @@
 		283818BF14723F1D007E4827 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				283818BE14723F1D007E4827 /* OSnap.app */,
+				283818BE14723F1D007E4827 /* Phototime.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -723,6 +747,7 @@
 		283818C814723F1D007E4827 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D092D2AA14DC456F001108A0 /* Models */,
 				28E94A80147DA19C002E8343 /* Views */,
 				28B855DA147CDCC4004F84EA /* Controllers */,
 				283818D114723F1D007E4827 /* AppDelegate.h */,
@@ -735,13 +760,14 @@
 		283818C914723F1D007E4827 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2810F5731491FC2F0028BCFE /* OSnap-Info.plist */,
-				2810F5741491FC2F0028BCFE /* OSnap-Prefix.pch */,
+				D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */,
+				D092D2A014DC3F2C001108A0 /* Phototime-Prefix.pch */,
 				286988611475CF3500B40860 /* InitialDefaults.plist */,
 				283818CB14723F1D007E4827 /* InfoPlist.strings */,
 				283818CE14723F1D007E4827 /* main.m */,
 				2869870814730F7200B40860 /* Constants.h */,
 				28698730147387C200B40860 /* PSStyleSheet.plist */,
+				D092D2A614DC4362001108A0 /* Phototime.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -753,6 +779,10 @@
 				284BB04414878B1E0046ABEF /* PSCoreDataStack.m */,
 				284BB04514878B1E0046ABEF /* PSCoreDataTableViewController.h */,
 				284BB04614878B1E0046ABEF /* PSCoreDataTableViewController.m */,
+				D092D2C414DC6017001108A0 /* NSManagedObject+PSKit.h */,
+				D092D2C514DC6017001108A0 /* NSManagedObject+PSKit.m */,
+				D092D2D614DC6982001108A0 /* PSManagedObject.h */,
+				D092D2D714DC6982001108A0 /* PSManagedObject.m */,
 			);
 			path = PSCoreDataStack;
 			sourceTree = "<group>";
@@ -885,6 +915,8 @@
 				2869875A1475CEEC00B40860 /* UIScreen+PSKit.m */,
 				2869875B1475CEEC00B40860 /* UIView+PSKit.h */,
 				2869875C1475CEEC00B40860 /* UIView+PSKit.m */,
+				D092D2C114DC4837001108A0 /* NSMutableURLRequest+PSKit.h */,
+				D092D2C214DC4837001108A0 /* NSMutableURLRequest+PSKit.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1431,12 +1463,27 @@
 			name = Backgrounds;
 			sourceTree = "<group>";
 		};
+		D092D2AA14DC456F001108A0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D092D2D014DC6711001108A0 /* _Photo.h */,
+				D092D2D114DC6712001108A0 /* _Photo.m */,
+				D092D2D214DC6712001108A0 /* _Timeline.h */,
+				D092D2D314DC6712001108A0 /* _Timeline.m */,
+				D092D2B414DC459E001108A0 /* Photo.h */,
+				D092D2B514DC459E001108A0 /* Photo.m */,
+				D092D2B114DC458C001108A0 /* Timeline.h */,
+				D092D2B214DC458C001108A0 /* Timeline.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		283818BD14723F1D007E4827 /* OSnap */ = {
+		283818BD14723F1D007E4827 /* Phototime */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 283818D614723F1D007E4827 /* Build configuration list for PBXNativeTarget "OSnap" */;
+			buildConfigurationList = 283818D614723F1D007E4827 /* Build configuration list for PBXNativeTarget "Phototime" */;
 			buildPhases = (
 				283818BA14723F1D007E4827 /* Sources */,
 				283818BB14723F1D007E4827 /* Frameworks */,
@@ -1446,9 +1493,9 @@
 			);
 			dependencies = (
 			);
-			name = OSnap;
+			name = Phototime;
 			productName = PSKitDemo;
-			productReference = 283818BE14723F1D007E4827 /* OSnap.app */;
+			productReference = 283818BE14723F1D007E4827 /* Phototime.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1459,7 +1506,7 @@
 			attributes = {
 				LastUpgradeCheck = 0420;
 			};
-			buildConfigurationList = 283818B814723F1C007E4827 /* Build configuration list for PBXProject "OSnap" */;
+			buildConfigurationList = 283818B814723F1C007E4827 /* Build configuration list for PBXProject "Phototime" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1471,7 +1518,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				283818BD14723F1D007E4827 /* OSnap */,
+				283818BD14723F1D007E4827 /* Phototime */,
 			);
 		};
 /* End PBXProject section */
@@ -1595,6 +1642,7 @@
 				28603B7614AFB2B500541BB1 /* IconCameraBlack@2x.png in Resources */,
 				28603B7714AFB2B500541BB1 /* IconCameraGray.png in Resources */,
 				28603B7814AFB2B500541BB1 /* IconCameraGray@2x.png in Resources */,
+				D092D2A114DC3F2C001108A0 /* Phototime-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1715,6 +1763,14 @@
 				28FD7A9A14B120F300E9ADDE /* TestViewController.m in Sources */,
 				288CB07114B2D72800233B45 /* CoreGraphics-PSKit.m in Sources */,
 				2812CFEC14B5C53D00F3B8CA /* PreviewViewController.m in Sources */,
+				D092D2A814DC4362001108A0 /* Phototime.xcdatamodeld in Sources */,
+				D092D2B314DC458C001108A0 /* Timeline.m in Sources */,
+				D092D2B614DC459F001108A0 /* Photo.m in Sources */,
+				D092D2C314DC4837001108A0 /* NSMutableURLRequest+PSKit.m in Sources */,
+				D092D2C614DC6018001108A0 /* NSManagedObject+PSKit.m in Sources */,
+				D092D2D414DC6712001108A0 /* _Photo.m in Sources */,
+				D092D2D514DC6712001108A0 /* _Timeline.m in Sources */,
+				D092D2D814DC6982001108A0 /* PSManagedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1751,9 +1807,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -1769,11 +1826,12 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -1785,11 +1843,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OSnap-Prefix.pch";
-				INFOPLIST_FILE = "OSnap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = OSnap;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
+				INFOPLIST_FILE = "Phototime-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = Phototime;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1802,11 +1860,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OSnap-Prefix.pch";
-				INFOPLIST_FILE = "OSnap-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				PRODUCT_NAME = OSnap;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
+				INFOPLIST_FILE = "Phototime-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = Phototime;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1814,7 +1872,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		283818B814723F1C007E4827 /* Build configuration list for PBXProject "OSnap" */ = {
+		283818B814723F1C007E4827 /* Build configuration list for PBXProject "Phototime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				283818D414723F1D007E4827 /* Debug */,
@@ -1823,7 +1881,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		283818D614723F1D007E4827 /* Build configuration list for PBXNativeTarget "OSnap" */ = {
+		283818D614723F1D007E4827 /* Build configuration list for PBXNativeTarget "Phototime" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				283818D714723F1D007E4827 /* Debug */,
@@ -1833,6 +1891,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D092D2A614DC4362001108A0 /* Phototime.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D092D2A714DC4362001108A0 /* Phototime.xcdatamodel */,
+			);
+			currentVersion = D092D2A714DC4362001108A0 /* Phototime.xcdatamodel */;
+			path = Phototime.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 283818B514723F1C007E4827 /* Project object */;
 }
