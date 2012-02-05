@@ -202,7 +202,7 @@
 
 - (NSPredicate *)fetchPredicate {
     return [[NSPredicate predicateWithFormat:@"ownerId IN $members"]
-            predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:[NSArray arrayWithObject:@"548430564"] forKey:@"members"]];
+            predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:[NSArray arrayWithObjects:@"548430564", @"13704812", @"2602152", nil] forKey:@"members"]];
 }
 
 - (NSArray *)fetchSortDescriptors {
@@ -220,14 +220,12 @@
     return YES;
 }
 
-- (void)loadDataSource {
-    [super loadDataSource];
-    
+- (void)fetchDataSource {
     // We always refetch from the core data store first
     NSError *fetchError = nil;
     NSArray *fetchedEntities = [self.moc executeFetchRequest:self.fetchRequest error:&fetchError];
     
-//    [self.frc performFetch:&fetchError];
+    //    [self.frc performFetch:&fetchError];
     
     NSMutableArray *items = [NSMutableArray array];
     
@@ -254,7 +252,13 @@
         }
     }];
     
+    [self dataSourceShouldLoadObjects:items shouldAnimate:NO];
+}
+
+- (void)loadDataSource {
+    [super loadDataSource];
     
+    [self fetchDataSource];
     [self loadFromRemote];
 //    [self loadFromSavedPhotos];
     
@@ -276,7 +280,6 @@
     //
     //  NSArray *items = [response objectForKey:@"data"];
     
-    [self dataSourceShouldLoadObjects:items shouldAnimate:NO];
 }
 
 - (void)dataSourceDidLoad {
@@ -291,7 +294,7 @@
     finishBlock = ^() {
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
-        
+        [self fetchDataSource];
         NSLog(@"# NSURLConnection finishBlock completed on thread: %@", [NSThread currentThread]);
     };
     
@@ -357,7 +360,7 @@
     
     // Setup the network request
     NSDictionary *parameters = [NSDictionary dictionary];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:5000/timeline/%@", @"4f2b65e2e4b024f14205b3ad"]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timeline/%@", API_BASE_URL, @"4f2b65e2e4b024f14205b3ad"]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
     // NOTE: We should generally run the completionHandler on the mainQueue. It can optionally be run on any queue if required
@@ -507,7 +510,7 @@
     
     CGFloat width = hv.width - 20.0;
     
-    UILabel *dateLabel = [UILabel labelWithText:[_sectionTitles objectAtIndex:section] style:@"timelineTitle"];
+    UILabel *dateLabel = [UILabel labelWithText:[[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] style:@"timelineTitle"];
     dateLabel.backgroundColor = [UIColor whiteColor];
     dateLabel.frame = CGRectMake(10.0, 5.0, width, 20.0);
     [hv addSubview:dateLabel];

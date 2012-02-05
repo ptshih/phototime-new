@@ -11,16 +11,19 @@
 #import "PSZoomView.h"
 #import "Photo.h"
 
-#define IMAGES_PER_ROW 4
+#define THUMB_SIZE 96.0
 
 static NSMutableSet *__reusableImageViews = nil;
 
 @implementation TimelineCell
 
 @synthesize
+images = _images,
+imageViews = _imageViews,
+profileViews = _profileViews,
+
 topImageView = _topImageView,
-lineView = _lineView,
-hasLayout = _hasLayout;
+lineView = _lineView;
 
 + (void)initialize {
     __reusableImageViews = [[NSMutableSet alloc] init];
@@ -30,7 +33,6 @@ hasLayout = _hasLayout;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.hasLayout = NO;
         
         self.topImageView = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
         self.topImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -42,6 +44,7 @@ hasLayout = _hasLayout;
         
         _images = [[NSMutableArray arrayWithCapacity:1] retain];
         _imageViews = [[NSMutableArray arrayWithCapacity:1] retain];
+        self.profileViews = [NSMutableArray arrayWithCapacity:1];
         
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [PSStyleSheet applyStyle:@"timelineTitle" forLabel:_titleLabel];
@@ -60,11 +63,13 @@ hasLayout = _hasLayout;
 }
 
 - (void)dealloc {
-    RELEASE_SAFELY(_topImageView);
-    RELEASE_SAFELY(_lineView);
     
     RELEASE_SAFELY(_images);
     RELEASE_SAFELY(_imageViews);
+    RELEASE_SAFELY(_profileViews);
+    
+    RELEASE_SAFELY(_topImageView);
+    RELEASE_SAFELY(_lineView);
     
     RELEASE_SAFELY(_titleLabel);
     RELEASE_SAFELY(_subtitleLabel);
@@ -73,8 +78,10 @@ hasLayout = _hasLayout;
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    self.hasLayout = NO;
-    self.topImageView.image = nil;    
+    self.topImageView.image = nil;
+    
+    [_profileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_profileViews removeAllObjects];
     
     [_imageViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [__reusableImageViews addObjectsFromArray:_imageViews];
@@ -144,11 +151,13 @@ hasLayout = _hasLayout;
     
     // Always account for top image
     height += floorf(width * 0.5);
-    height += TL_MARGIN;
     
     // Additional Images
     if (numImages > 0) {
-        height += 80.0;
+        NSInteger numRows = ceilf(numImages / 3.0);
+        height += TL_THUMB_MARGIN;
+        height += (THUMB_SIZE + TL_THUMB_MARGIN) * numRows;
+    } else {
         height += TL_MARGIN;
     }
     
@@ -168,9 +177,10 @@ hasLayout = _hasLayout;
     [_images addObjectsFromArray:[object objectForKey:@"photos"]];
     
     // Configure top image
+    NSDictionary *topImage = nil;
     if ([_images count] > 0) {
-        NSDictionary *i = [_images objectAtIndex:0];
-        [self.topImageView loadImageWithURL:[NSURL URLWithString:[i objectForKey:@"source"]]];
+        topImage = [_images objectAtIndex:0];
+        [self.topImageView loadImageWithURL:[NSURL URLWithString:[topImage objectForKey:@"source"]]];
         [_images removeObjectAtIndex:0];
     }
     
@@ -195,14 +205,26 @@ hasLayout = _hasLayout;
     CGFloat topImageHeight = floorf(width * 0.5);
     self.topImageView.frame = CGRectMake(left, top, topImageWidth, topImageHeight);
     
-    top = self.topImageView.bottom + TL_MARGIN;
+    // Add profile view
+    PSCachedImageView *pv = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
+    pv.frame = CGRectMake(self.topImageView.width - 29, self.topImageView.height - 29, 30, 30);
+    pv.contentMode = UIViewContentModeScaleAspectFill;
+    pv.clipsToBounds = YES;
+    pv.layer.borderWidth = 1.0;
+    pv.layer.borderColor = [RGBACOLOR(255, 255, 255, 1.0) CGColor];
+    [pv loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [topImage objectForKey:@"ownerId"]]]];
+    [self.topImageView addSubview:pv];
+    [self.profileViews addObject:pv];
+    
+    top = self.topImageView.bottom;
     
     // Additional Images
     NSInteger numImages = [_images count];
     if (numImages > 0) {
+        top += TL_THUMB_MARGIN;
         CGFloat colOffset = left;
         CGFloat rowOffset = top;
-        NSInteger numRows = 1;
+        NSInteger numRows = ceilf(numImages / 3.0);
         while (1) {
             NSDictionary *current = [[[_images objectAtIndex:0] retain] autorelease];
             [_images removeObjectAtIndex:0];
@@ -211,24 +233,41 @@ hasLayout = _hasLayout;
             PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[current objectForKey:@"source"]]];
             
             if (remaining == 0) {
-                iv.frame = CGRectMake(colOffset, rowOffset, self.contentView.width - colOffset - TL_MARGIN, 80.0);
+                iv.frame = CGRectMake(colOffset, rowOffset, self.contentView.width - colOffset - TL_MARGIN, THUMB_SIZE);
             } else {
-                iv.frame = CGRectMake(colOffset, rowOffset, 80.0, 80.0);
+                // Special case is when col = 0 and remaining = 1, we should split 50/50
+                if (colOffset == left && remaining == 1) {
+                    iv.frame = CGRectMake(colOffset, rowOffset, floorf((self.contentView.width - colOffset - TL_MARGIN) / 2) - TL_THUMB_MARGIN, THUMB_SIZE);
+                } else {
+                    iv.frame = CGRectMake(colOffset, rowOffset, THUMB_SIZE, THUMB_SIZE);
+                }
             }
-            colOffset += 80.0 + TL_MARGIN;
+            colOffset += iv.width + TL_THUMB_MARGIN;
             if (colOffset > width) {
-                colOffset = 0.0;
-                rowOffset += 80.0 + TL_MARGIN;
-                numRows++;
+                colOffset = left;
+                rowOffset += THUMB_SIZE + TL_THUMB_MARGIN;
             }
             
             [self.contentView addSubview:iv];
             [_imageViews addObject:iv];
             
+            // Add profile view
+            PSCachedImageView *pv = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
+            pv.frame = CGRectMake(iv.width - 29, iv.height - 29, 30, 30);
+            pv.contentMode = UIViewContentModeScaleAspectFill;
+            pv.clipsToBounds = YES;
+            pv.layer.borderWidth = 1.0;
+            pv.layer.borderColor = [RGBACOLOR(255, 255, 255, 1.0) CGColor];
+            [pv loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [current objectForKey:@"ownerId"]]]];
+            [iv addSubview:pv];
+            [self.profileViews addObject:pv];
+            
             if (remaining == 0) break;
         }
         
-        top += numRows * 80.0 + TL_MARGIN;
+        top += numRows * THUMB_SIZE + TL_THUMB_MARGIN;
+    } else {
+        top += TL_MARGIN;
     }
     
     // Labels
