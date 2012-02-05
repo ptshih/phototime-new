@@ -147,7 +147,7 @@
 }
 
 - (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
+    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
 }
 
 #pragma mark - Actions
@@ -501,6 +501,31 @@
 }
 
 #pragma mark - TableView
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *hv = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 32.0)] autorelease];
+    hv.backgroundColor = [UIColor whiteColor];
+    
+    CGFloat width = hv.width - 20.0;
+    
+    UILabel *dateLabel = [UILabel labelWithText:[_sectionTitles objectAtIndex:section] style:@"timelineTitle"];
+    dateLabel.backgroundColor = [UIColor whiteColor];
+    dateLabel.frame = CGRectMake(10.0, 5.0, width, 20.0);
+    [hv addSubview:dateLabel];
+    
+    UIImageView *hl = [[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]];
+    hl.frame = CGRectMake(10.0, hv.height - 1, width, 1.0);
+    [hv addSubview:hl];
+    return hv;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 32.0;
+}
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [_sectionTitles objectAtIndex:section];
+//}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.items count];
 }

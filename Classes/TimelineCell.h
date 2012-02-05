@@ -21,5 +21,9 @@
 }
 
 @property (nonatomic, retain) PSCachedImageView *topImageView;
+@property (nonatomic, retain) UIImageView *lineView;
+@property (nonatomic, assign) BOOL hasLayout;
+
+- (PSCachedImageView *)dequeueImageViewWithURL:(NSURL *)URL;
 
 @end
