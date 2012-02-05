@@ -17,6 +17,9 @@ static NSMutableSet *__reusableImageViews = nil;
 
 @implementation TimelineCell
 
+@synthesize
+topImageView = _topImageView;
+
 + (void)initialize {
     __reusableImageViews = [[NSMutableSet alloc] init];
 }
@@ -25,6 +28,8 @@ static NSMutableSet *__reusableImageViews = nil;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        self.topImageView = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
         
         _images = [[NSMutableArray arrayWithCapacity:1] retain];
         _imageViews = [[NSMutableArray arrayWithCapacity:1] retain];
@@ -35,6 +40,7 @@ static NSMutableSet *__reusableImageViews = nil;
         _subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [PSStyleSheet applyStyle:@"timelineSubtitle" forLabel:_subtitleLabel];
         
+        [self.contentView addSubview:self.topImageView];
         [self.contentView addSubview:_titleLabel];
         [self.contentView addSubview:_subtitleLabel];
     }
@@ -42,6 +48,8 @@ static NSMutableSet *__reusableImageViews = nil;
 }
 
 - (void)dealloc {
+    RELEASE_SAFELY(_topImageView);
+    
     RELEASE_SAFELY(_images);
     RELEASE_SAFELY(_imageViews);
     
@@ -52,6 +60,8 @@ static NSMutableSet *__reusableImageViews = nil;
 
 - (void)prepareForReuse {
     [super prepareForReuse];
+    self.topImageView.image = nil;
+    
     [__reusableImageViews addObjectsFromArray:_imageViews];
     [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIImageView *iv = (UIImageView *)obj;
@@ -72,8 +82,17 @@ static NSMutableSet *__reusableImageViews = nil;
     
     self.contentView.frame = CGRectMake(TL_MARGIN, TL_MARGIN, self.width - TL_MARGIN * 2, self.height - TL_MARGIN * 2);
     
+    CGFloat top = 0.0;
+    
     CGFloat width = self.contentView.width;
     CGFloat height = self.contentView.height - TL_CAPTION_HEIGHT - TL_MARGIN;
+    
+    // Top Image View (square)
+    CGFloat topImageWidth = width;
+    CGFloat topImageHeight = floorf(width * 3/4);
+    self.topImageView.frame = CGRectMake(0, 0, topImageWidth, topImageHeight);
+    
+    top = self.topImageView.bottom + TL_MARGIN;
     
     // Images
     CGFloat iWidth = 0.0;

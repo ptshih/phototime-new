@@ -11,12 +11,15 @@
 #define TL_MARGIN 10.0
 #define TL_CAPTION_HEIGHT 20.0
 
+@class PSCachedImageView;
+
 @interface TimelineCell : PSCell {
-    PSCachedImageView *_featuredImageView;
     NSMutableArray *_images;
     NSMutableArray *_imageViews;
     UILabel *_titleLabel;
     UILabel *_subtitleLabel;
 }
+
+@property (nonatomic, retain) PSCachedImageView *topImageView;
 
 @end
