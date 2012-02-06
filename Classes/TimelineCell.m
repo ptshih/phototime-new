@@ -172,7 +172,7 @@ bottomLineView = _bottomLineView;
     // Bottom Margin
 //    height += TL_MARGIN;
     
-    NSLog(@"calc height: %f", height);
+//    NSLog(@"calc height: %f", height);
     
     return height;
 }
@@ -296,7 +296,7 @@ bottomLineView = _bottomLineView;
     
     self.bottomLineView.frame = CGRectMake(left, top - 1, width, 1.0);
     
-    NSLog(@"fill height: %f", top);
+//    NSLog(@"fill height: %f", top);
 }
 
 #pragma mark - Zoom

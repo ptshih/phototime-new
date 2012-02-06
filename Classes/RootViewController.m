@@ -48,7 +48,7 @@
     
     // Test insert
 #warning THIS IS A TEST
-    NSDictionary *tDict = [NSDictionary dictionaryWithObjectsAndKeys:@"4f2b65e2e4b024f14205b3ad", @"id", @"548430564", @"ownerId", [NSNumber numberWithInteger:1328495128], @"lastSynced", [NSArray arrayWithObjects:@"548430564",@"13704812",@"2602152", nil], @"members", nil];
+    NSDictionary *tDict = [NSDictionary dictionaryWithObjectsAndKeys:@"4f2b65e2e4b024f14205b3ad", @"id", @"548430564", @"ownerId", [NSNumber numberWithInteger:1328495128], @"lastSynced", [NSArray arrayWithObjects:@"548430564",@"13704812",@"2602152", @"6010421", nil], @"members", nil];
     [Timeline updateOrInsertInManagedObjectContext:[PSCoreDataStack mainThreadContext] entity:tDict uniqueKey:@"id"];
     [[PSCoreDataStack mainThreadContext] save:nil];
     

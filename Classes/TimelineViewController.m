@@ -319,8 +319,11 @@ shouldFetch = _shouldFetch;
 - (void)loadDataSource {
     [super loadDataSource];
     
-    [self loadFromRemote];
+    // Ordering matters
+    // fetchDataSource will set self.shouldFetch = NO
+    // loadFromRemote will set self.shouldFetch = YES
     [self fetchDataSource];
+    [self loadFromRemote];
     
     
 //    [self loadFromSavedPhotos];
@@ -420,7 +423,7 @@ shouldFetch = _shouldFetch;
                             
                             NSError *error = nil;
                             [childContext save:&error];
-                            [blockSelf.moc save:nil];
+                            [blockSelf.moc save:&error];
                         }
                         
                         
