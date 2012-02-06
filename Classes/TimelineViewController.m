@@ -180,14 +180,17 @@ rightButton = _rightButton;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    static CGFloat top = 6.0;
     if ([object isEqual:self.tableView]) {
         CGPoint contentOffset = self.tableView.contentOffset;
         CGFloat y = contentOffset.y;
-        if (y <= 0) {
-            self.leftButton.top = 6.0 - y;
-            self.rightButton.top = 6.0 - y;
+        if (y < 0) {
+            self.leftButton.top = top - y;
+            self.rightButton.top = top - y;
+        } else {
+            self.leftButton.top = top;
+            self.rightButton.top = top;
         }
-        
     }
 }
 
@@ -407,7 +410,7 @@ rightButton = _rightButton;
     
     // Setup the network request
     NSDictionary *parameters = [NSDictionary dictionary];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timeline/%@/photos", API_BASE_URL, self.timeline.id]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timeline.id]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
     // NOTE: We should generally run the completionHandler on the mainQueue. It can optionally be run on any queue if required
