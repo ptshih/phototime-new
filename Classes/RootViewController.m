@@ -9,59 +9,76 @@
 #import "RootViewController.h"
 #import "PSNavigationController.h"
 #import "MenuViewController.h"
-#import "DashboardViewController.h"
 #import "LoginViewController.h"
 
 #import "TimelineViewController.h"
+#import "Timeline.h"
 
 @implementation RootViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    self.wantsFullScreenLayout = YES;
-  }
-  return self;
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.wantsFullScreenLayout = YES;
+    }
+    return self;
 }
 
 - (void)viewDidUnload {
-  [super viewDidUnload];
+    [super viewDidUnload];
 }
 
 - (void)dealloc {
-  RELEASE_SAFELY(_psNavigationController);
-  [super dealloc];
+    RELEASE_SAFELY(_psNavigationController);
+    [super dealloc];
 }
 
 - (void)loadView {
-  // Setup the main container view
-  CGRect frame = [[UIScreen mainScreen] applicationFrame];
-  UIView *view = [[UIView alloc] initWithFrame:frame];
-  view.backgroundColor = [UIColor blackColor];
-  view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.view = view;
-  [view release];
-  
-  // View Controllers
-  MenuViewController *lvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-  MenuViewController *rvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-  DashboardViewController *dvc = [[[DashboardViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-  TimelineViewController *tvc = [[[TimelineViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-  
-  // PS Navigation Controller
-//  UINavigationController *nc = [[[[[NSBundle mainBundle] loadNibNamed:@"PSNavigationController" owner:self options:nil] lastObject] retain] autorelease];
-//  nc.viewControllers = [NSArray arrayWithObject:dvc];
-  
-  _psNavigationController = [[PSNavigationController alloc] initWithRootViewController:tvc];
-  [self.view addSubview:_psNavigationController.view];
+    // Setup the main container view
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    view.backgroundColor = [UIColor blackColor];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view = view;
+    [view release];
+    
+    // View Controllers
+//    MenuViewController *lvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    
+    // Test insert
+#warning THIS IS A TEST
+    NSDictionary *tDict = [NSDictionary dictionaryWithObjectsAndKeys:@"4f2b65e2e4b024f14205b3ad", @"id", @"548430564", @"ownerId", [NSNumber numberWithInteger:1328495128], @"lastSynced", [NSArray arrayWithObjects:@"548430564",@"13704812",@"2602152", nil], @"members", nil];
+    [Timeline updateOrInsertInManagedObjectContext:[PSCoreDataStack mainThreadContext] entity:tDict uniqueKey:@"id"];
+    [[PSCoreDataStack mainThreadContext] save:nil];
+    
+    NSFetchRequest *fr = [[[NSFetchRequest alloc] initWithEntityName:[Timeline entityName]] autorelease];
+    [fr setEntity:[Timeline entityInManagedObjectContext:[PSCoreDataStack mainThreadContext]]];
+    [fr setPredicate:[NSPredicate predicateWithFormat:@"id = %@", @"4f2b65e2e4b024f14205b3ad"]];
+    [fr setReturnsObjectsAsFaults:NO];
+    
+    Timeline *t = nil;
+    NSArray *results = [[PSCoreDataStack mainThreadContext] executeFetchRequest:fr error:nil];
+    if (results && [results count] > 0) {
+        t = [results lastObject];
+    }
 
-
+    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
+    
+    
+    // PS Navigation Controller
+    //  UINavigationController *nc = [[[[[NSBundle mainBundle] loadNibNamed:@"PSNavigationController" owner:self options:nil] lastObject] retain] autorelease];
+    //  nc.viewControllers = [NSArray arrayWithObject:dvc];
+    
+    _psNavigationController = [[PSNavigationController alloc] initWithRootViewController:tvc];
+    [self.view addSubview:_psNavigationController.view];
+    
+    
 }
 
 - (void)test {
-  BOOL sb = [UIApplication sharedApplication].statusBarHidden;
-  [[UIApplication sharedApplication] setStatusBarHidden:!sb];
+    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
+    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
 }
 
 

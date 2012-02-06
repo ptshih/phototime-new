@@ -13,7 +13,7 @@
 #import "AFNetworking.h"
 
 #import "Photo.h"
-
+#import "Timeline.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
@@ -75,10 +75,19 @@
 @implementation TimelineViewController
 
 @synthesize
+timeline = _timeline,
 leftButton = _leftButton,
 rightButton = _rightButton;
 
 #pragma mark - Init
+- (id)initWithTimeline:(Timeline *)timeline {
+    self = [self initWithNibName:nil bundle:nil];
+    if (self) {
+        self.timeline = timeline;
+    }
+    return self;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -233,8 +242,10 @@ rightButton = _rightButton;
 }
 
 - (NSPredicate *)fetchPredicate {
-    return [[NSPredicate predicateWithFormat:@"ownerId IN $members"]
-            predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:[NSArray arrayWithObjects:@"548430564", @"13704812", @"2602152", nil] forKey:@"members"]];
+    // [NSArray arrayWithObjects:@"548430564", @"13704812", @"2602152", nil]
+    NSArray *members = [self.timeline.members componentsSeparatedByString:@","];
+    return [[NSPredicate predicateWithFormat:@"ownerId IN $members"]            
+            predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:members forKey:@"members"]];
 }
 
 - (NSArray *)fetchSortDescriptors {
@@ -366,7 +377,8 @@ rightButton = _rightButton;
                         }
                         
                         // Serialize to Core Data
-                        NSArray *photos = [results objectForKey:@"photos"];
+                        NSDictionary *data = [results objectForKey:@"data"];
+                        NSArray *photos = [data objectForKey:@"photos"];
                         if ([photos count] > 0) {
                             NSLog(@"# Serializing Core Data on thread: %@", [NSThread currentThread]);
                             [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"id"];
@@ -376,24 +388,27 @@ rightButton = _rightButton;
                             [blockSelf.moc save:nil];
                         }
                         
+                        
                         // Make sure to call the finish block on the main queue
                         [[NSOperationQueue mainQueue] addOperationWithBlock:finishBlock];
                     }];
                 } else {
                     // Failed, read status code
                     NSLog(@"# NSURLConnection failed with status code: %d", statusCode);
+                    [self dataSourceDidError];
                 }
             }
         } else {
             // This is equivalent to a connection failure block
             NSLog(@"# NSURLConnection failed with error: %@", error);
+            [self dataSourceDidError];
         }
     };
     
     // Setup the network request
     NSDictionary *parameters = [NSDictionary dictionary];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timeline/%@", API_BASE_URL, @"4f2b65e2e4b024f14205b3ad"]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timeline/%@/photos", API_BASE_URL, self.timeline.id]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
     // NOTE: We should generally run the completionHandler on the mainQueue. It can optionally be run on any queue if required
     //    NSOperationQueue *backgroundQueue = [[[NSOperationQueue alloc] init] autorelease];

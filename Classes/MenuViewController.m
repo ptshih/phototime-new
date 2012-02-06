@@ -8,13 +8,7 @@
 
 #import "MenuViewController.h"
 
-#import "MenuCell.h"
-#import "MenuProfileCell.h"
-
-#import "DashboardViewController.h"
-#import "ProfileViewController.h"
-#import "RolodexViewController.h"
-#import "FilmViewController.h"
+#import "TimelineViewController.h"
 
 #define MARGIN_X 10.0
 #define MARGIN_Y 5.0
@@ -152,14 +146,8 @@
 #pragma mark - TableView
 - (Class)cellClassAtIndexPath:(NSIndexPath *)indexPath {
   switch (indexPath.section) {
-    case 0:
-      return [MenuCell class];
-      break;
-    case 1:
-      return [MenuCell class];
-      break;
     default:
-      return [MenuCell class];
+      return [PSCell class];
       break;
   }
 }
@@ -207,38 +195,11 @@
   id controller = nil;
   
   switch (section) {
-    case 0:
-    {
-      // Home - Dashboard
-      UINavigationController *nc = [[[NSBundle mainBundle] loadNibNamed:@"PSNavigationController" owner:self options:nil] lastObject];
-      DashboardViewController *vc = [[[DashboardViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-      nc.viewControllers = [NSArray arrayWithObject:vc];
-      controller = nc;
-      break;
-    }
-    case 1:
-    {
-      // PSCollectionView - Connections
-      UINavigationController *nc = [[[NSBundle mainBundle] loadNibNamed:@"PSNavigationController" owner:self options:nil] lastObject];
-      RolodexViewController *vc = [[[RolodexViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-      nc.viewControllers = [NSArray arrayWithObject:vc];
-      controller = nc;
-      break;
-    }
-    case 2:
-    {
-      // PSFilmView - ImgUr Gallery
-      UINavigationController *nc = [[[NSBundle mainBundle] loadNibNamed:@"PSNavigationController" owner:self options:nil] lastObject];
-      FilmViewController *vc = [[[FilmViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-      nc.viewControllers = [NSArray arrayWithObject:vc];
-      controller = nc;
-      break;
-    }
     default:
     {
       // Home - Profile
       UINavigationController *nc = [[[NSBundle mainBundle] loadNibNamed:@"PSNavigationController" owner:self options:nil] lastObject];
-      DashboardViewController *vc = [[[DashboardViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+      TimelineViewController *vc = [[[TimelineViewController alloc] initWithNibName:nil bundle:nil] autorelease];
       nc.viewControllers = [NSArray arrayWithObject:vc];
       controller = nc;
       break;

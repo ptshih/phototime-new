@@ -1,4 +1,5 @@
 #import "PSConstants.h"
+#import "PSNavigationController.h"
 
 // Vendor imports
 #import "PSFacebookCenter.h"
