@@ -102,7 +102,7 @@
   [super loadDataSource];
   
   // Prepare Data
-  NSDictionary *currentUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+//  NSDictionary *currentUser = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
 //  
 //  if (!currentUser) {
 //    // User has not logged in yet
@@ -189,7 +189,7 @@
     return;
   }
   
-  NSMutableDictionary *object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+//  NSMutableDictionary *object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 
   // Menu
   id controller = nil;

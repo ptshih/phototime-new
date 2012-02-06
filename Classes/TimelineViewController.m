@@ -529,6 +529,7 @@ rightButton = _rightButton;
     } failureBlock: ^(NSError *error) {
         NSLog(@"No groups");
     }];
+    [library release];
 }
 
 #pragma mark - TableView
@@ -537,7 +538,7 @@ rightButton = _rightButton;
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     
-    UIImageView *hl = [[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]];
+    UIImageView *hl = [[[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]] autorelease];
     hl.frame = CGRectMake(10.0, headerView.height - 1, headerView.width - 20.0, 1.0);
     [headerView addSubview:hl];
     
