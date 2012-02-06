@@ -309,7 +309,7 @@ shouldFetch = _shouldFetch;
         }];
         
         [childContext.parentContext performBlock:^{
-            [self dataSourceShouldLoadObjects:items shouldAnimate:NO];
+            [self dataSourceShouldLoadObjects:items shouldAnimate:YES];
         }];
     }];
 }
@@ -317,8 +317,8 @@ shouldFetch = _shouldFetch;
 - (void)loadDataSource {
     [super loadDataSource];
     
-    [self fetchDataSource];
     [self loadFromRemote];
+    [self fetchDataSource];
     
     
 //    [self loadFromSavedPhotos];
@@ -348,6 +348,8 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)loadFromRemote {
+    [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+    
     self.shouldFetch = YES;
     
     BLOCK_SELF; // Used for accessing MOC
@@ -358,6 +360,7 @@ shouldFetch = _shouldFetch;
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
         [self fetchDataSource];
+        [SVProgressHUD dismissWithSuccess:@"Success"];
         NSLog(@"# NSURLConnection finishBlock completed on thread: %@", [NSThread currentThread]);
     };
     

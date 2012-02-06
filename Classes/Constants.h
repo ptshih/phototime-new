@@ -6,6 +6,7 @@
 #import "Parse/Parse.h"
 #import "JSONKit.h"
 #import "UIImageView+AFNetworking.h"
+#import "SVProgressHUD.h"
 
 // Facebook APP ID is in PSFacebookCenter.h
 
