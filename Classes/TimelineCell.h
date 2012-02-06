@@ -24,7 +24,8 @@
 @property (nonatomic, retain) NSMutableArray *profileViews;
 
 @property (nonatomic, retain) PSCachedImageView *topImageView;
-@property (nonatomic, retain) UIImageView *lineView;
+@property (nonatomic, retain) UIImageView *topLineView;
+@property (nonatomic, retain) UIImageView *bottomLineView;
 
 - (PSCachedImageView *)dequeueImageViewWithURL:(NSURL *)URL;
 

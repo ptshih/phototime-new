@@ -23,7 +23,8 @@ imageViews = _imageViews,
 profileViews = _profileViews,
 
 topImageView = _topImageView,
-lineView = _lineView;
+topLineView = _topLineView,
+bottomLineView = _bottomLineView;
 
 + (void)initialize {
     __reusableImageViews = [[NSMutableSet alloc] init];
@@ -52,12 +53,14 @@ lineView = _lineView;
         _subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [PSStyleSheet applyStyle:@"timelineSubtitle" forLabel:_subtitleLabel];
         
-        self.lineView = [[[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]] autorelease];
+        self.topLineView = [[[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]] autorelease];
+        self.bottomLineView = [[[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]] autorelease];
         
         [self.contentView addSubview:self.topImageView];
         [self.contentView addSubview:_titleLabel];
         [self.contentView addSubview:_subtitleLabel];
-        [self.contentView addSubview:self.lineView];
+        [self.contentView addSubview:self.topLineView];
+        [self.contentView addSubview:self.bottomLineView];
     }
     return self;
 }
@@ -69,7 +72,8 @@ lineView = _lineView;
     RELEASE_SAFELY(_profileViews);
     
     RELEASE_SAFELY(_topImageView);
-    RELEASE_SAFELY(_lineView);
+    RELEASE_SAFELY(_topLineView);
+    RELEASE_SAFELY(_bottomLineView);
     
     RELEASE_SAFELY(_titleLabel);
     RELEASE_SAFELY(_subtitleLabel);
@@ -155,7 +159,6 @@ lineView = _lineView;
     // Additional Images
     if (numImages > 0) {
         NSInteger numRows = ceilf(numImages / 3.0);
-        height += TL_THUMB_MARGIN;
         height += (THUMB_SIZE + TL_THUMB_MARGIN) * numRows;
     }
     height += TL_MARGIN;
@@ -163,11 +166,10 @@ lineView = _lineView;
     // Labels
 //    height += TL_CAPTION_HEIGHT;
     
-    // Line View
-    height += 1.0;
-    
     // Bottom Margin
 //    height += TL_MARGIN;
+    
+    NSLog(@"calc height: %f", height);
     
     return height;
 }
@@ -196,8 +198,12 @@ lineView = _lineView;
     
     // Dimensions
     CGFloat left = TL_MARGIN;
-    CGFloat top = TL_MARGIN;
+    CGFloat top = 0.0;
     CGFloat width = self.contentView.width - TL_MARGIN * 2;
+
+    self.topLineView.frame = CGRectMake(left, top, width, 1.0);
+    
+    top = TL_MARGIN;
     
     // Top Image View (4:3)
     CGFloat topImageWidth = width;
@@ -220,7 +226,7 @@ lineView = _lineView;
     // Additional Images
     NSInteger numImages = [_images count];
     if (numImages > 0) {
-        top += TL_THUMB_MARGIN;
+//        top += TL_THUMB_MARGIN;
         CGFloat colOffset = left;
         CGFloat rowOffset = top;
         NSInteger numRows = ceilf(numImages / 3.0);
@@ -261,10 +267,12 @@ lineView = _lineView;
             [iv addSubview:pv];
             [self.profileViews addObject:pv];
             
-            if (remaining == 0) break;
+            if (remaining == 0)  {
+                break;
+            }
         }
         
-        top += numRows * THUMB_SIZE;
+        top += numRows * (THUMB_SIZE + TL_THUMB_MARGIN);
     }
     
     top += TL_MARGIN;
@@ -273,7 +281,9 @@ lineView = _lineView;
 //    _titleLabel.frame = CGRectMake(left, top, floorf(width * (2.0 / 4.0)), TL_CAPTION_HEIGHT);
 //    _subtitleLabel.frame = CGRectMake(floorf(width * (2.0 / 4.0)), top, floorf(width * (2.0 / 4.0)), TL_CAPTION_HEIGHT);
     
-    self.lineView.frame = CGRectMake(left, top, width, 1.0);
+    self.bottomLineView.frame = CGRectMake(left, top - 1, width, 1.0);
+    
+    NSLog(@"fill height: %f", top);
 }
 
 #pragma mark - Zoom

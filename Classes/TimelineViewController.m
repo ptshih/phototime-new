@@ -571,10 +571,6 @@ shouldFetch = _shouldFetch;
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     
-    UIImageView *hl = [[[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]] autorelease];
-    hl.frame = CGRectMake(10.0, headerView.height - 1, headerView.width - 20.0, 1.0);
-    [headerView addSubview:hl];
-    
     NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
     
     UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
