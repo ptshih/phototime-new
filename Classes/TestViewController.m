@@ -36,13 +36,19 @@
 }
 */
 
-/*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIButton *b = [[UIButton alloc] initWithFrame:self.view.bounds];
+    [b addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:b];
+    
 }
-*/
+
+- (void)back {
+    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidUnload
 {

@@ -185,7 +185,7 @@
   NSInteger row = indexPath.row;
   
   if (_selectedMenuIndexPath.row == row && _selectedMenuIndexPath.section == section) {
-    [self.drawerController slideFromLeft];
+    [(PSDrawerController *)self.parentViewController slideFromLeft];
     return;
   }
   
@@ -205,9 +205,7 @@
       break;
     }
   }
-  
-  [self.drawerController setRootViewController:controller];
-  [self.drawerController slideFromLeft];
+    [(PSDrawerController *)self.parentViewController replaceRootViewControllerWithViewController:controller animated:YES];
   
   RELEASE_SAFELY(_selectedMenuIndexPath);
   _selectedMenuIndexPath = [[NSIndexPath indexPathForRow:row inSection:section] retain];

@@ -131,7 +131,7 @@
 }
 
 - (void)loginDidSucceed:(BOOL)animated {
-  [self dismissModalViewControllerAnimated:animated];
+  [self.presentingViewController dismissModalViewControllerAnimated:animated];
 }
 
 - (void)loginDidNotSucceed {

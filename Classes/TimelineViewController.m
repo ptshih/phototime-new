@@ -12,6 +12,8 @@
 #import "PreviewViewController.h"
 #import "AFNetworking.h"
 
+#import "TestViewController.h"
+
 #import "Photo.h"
 #import "Timeline.h"
 
@@ -50,7 +52,6 @@
         }
         
         if (pvc) {
-            pvc.psNavigationController = self.psNavigationController;
             [picker pushViewController:pvc animated:YES];
             [pvc release];
         } else {
@@ -103,7 +104,8 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)dealloc {
-    
+    [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
+    RELEASE_SAFELY(_timeline);
     // Views
     [super dealloc];
 }
@@ -206,6 +208,7 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)testRight {
+//    TestViewController *tvc = [[[TestViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:self.timeline] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:tvc animated:YES];
 }
@@ -283,13 +286,15 @@ shouldFetch = _shouldFetch;
         return;
     }
     
+    BLOCK_SELF;
+    
     // We always refetch from the core data store first
     NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-    [childContext setParentContext:self.moc];
+    [childContext setParentContext:blockSelf.moc];
     
     [childContext performBlock:^{
         NSError *fetchError = nil;
-        NSArray *fetchedEntities = [childContext executeFetchRequest:self.fetchRequest error:&fetchError];
+        NSArray *fetchedEntities = [childContext executeFetchRequest:blockSelf.fetchRequest error:&fetchError];
         
         NSMutableArray *items = [NSMutableArray array];
         
@@ -317,7 +322,7 @@ shouldFetch = _shouldFetch;
         }];
         
         [childContext.parentContext performBlock:^{
-            [self dataSourceShouldLoadObjects:items shouldAnimate:YES];
+            [blockSelf dataSourceShouldLoadObjects:items shouldAnimate:YES];
         }];
     }];
 }
@@ -371,7 +376,7 @@ shouldFetch = _shouldFetch;
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
         [SVProgressHUD dismissWithSuccess:@"Success"];
-        [self fetchDataSource];
+        [blockSelf fetchDataSource];
         NSLog(@"# NSURLConnection finishBlock completed on thread: %@", [NSThread currentThread]);
     };
     
@@ -381,7 +386,7 @@ shouldFetch = _shouldFetch;
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
         [SVProgressHUD dismissWithError:@"Error"];
-        [self dataSourceDidError];
+        [blockSelf dataSourceDidError];
         NSLog(@"# NSURLConnection failed on thread: %@", [NSThread currentThread]);
     };
     

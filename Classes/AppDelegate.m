@@ -11,6 +11,7 @@
 #import "PSLocationCenter.h"
 #import "LoginViewController.h"
 #import "TimelineViewController.h"
+#import "MenuViewController.h"
 #import "Timeline.h"
 
 static NSMutableDictionary *_captionsCache;
@@ -25,7 +26,8 @@ static NSMutableDictionary *_captionsCache;
 
 @synthesize
 window = _window,
-navigationController = _navigationController;
+navigationController = _navigationController,
+drawerController = _drawerController;
 
 + (void)initialize {
     [self setupDefaults];
@@ -105,7 +107,11 @@ navigationController = _navigationController;
     
     TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
     
-    self.navigationController = [[PSNavigationController alloc] initWithRootViewController:tvc];
+    self.navigationController = [[[PSNavigationController alloc] initWithRootViewController:tvc] autorelease];
+    
+//    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    
+//    self.drawerController = [[[PSDrawerController alloc] initWithRootViewController:self.navigationController leftViewController:mvc rightViewController:nil] autorelease];
     
     self.window.rootViewController = self.navigationController;
     
@@ -160,7 +166,8 @@ navigationController = _navigationController;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_navigationController release];
+    RELEASE_SAFELY(_drawerController);
+    RELEASE_SAFELY(_navigationController);
     [_window release];
     [super dealloc];
 }

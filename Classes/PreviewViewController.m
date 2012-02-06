@@ -327,13 +327,11 @@
   [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSInteger statusCode = [operation.response statusCode];
     if (statusCode == 200) {
-      [self.navigationController popViewControllerAnimated:NO];
-      [self.psNavigationController popViewControllerAnimated:YES];
+      [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
     }
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     // Something bad happened
-    [self.navigationController popViewControllerAnimated:NO];
-    [self.psNavigationController popViewControllerAnimated:YES];
+    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
   }];
   
   NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];

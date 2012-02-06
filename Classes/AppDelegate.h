@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, retain) PSNavigationController *navigationController;
+@property (nonatomic, retain) PSDrawerController *drawerController;
 
 - (NSMutableDictionary *)captionsCache;
 
