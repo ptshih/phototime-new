@@ -204,7 +204,10 @@ shouldFetch = _shouldFetch;
 - (void)test {
 //    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
 //    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
-    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
+    id vc = [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
+    if (!vc) {
+        [[PSDrawerController sharedDrawer] slideFromLeft];
+    }
 }
 
 - (void)testRight {

@@ -109,11 +109,12 @@ drawerController = _drawerController;
     
     self.navigationController = [[[PSNavigationController alloc] initWithRootViewController:tvc] autorelease];
     
-//    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     
-//    self.drawerController = [[[PSDrawerController alloc] initWithRootViewController:self.navigationController leftViewController:mvc rightViewController:nil] autorelease];
+    [[PSDrawerController sharedDrawer] setRootViewController:self.navigationController];
+    [[PSDrawerController sharedDrawer] setLeftViewController:mvc];
     
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = [PSDrawerController sharedDrawer];
     
     // Login
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
