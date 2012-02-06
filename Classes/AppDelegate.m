@@ -87,9 +87,11 @@ static NSMutableDictionary *_captionsCache;
     self.window.rootViewController = _rootViewController;
     
     // Login
-    LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-    [_rootViewController presentModalViewController:lvc animated:NO];
-    [lvc release];
+    if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
+        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+        [_rootViewController presentModalViewController:lvc animated:NO];
+        [lvc release];
+    }
     
     return YES;
 }

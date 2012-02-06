@@ -77,7 +77,8 @@
 @synthesize
 timeline = _timeline,
 leftButton = _leftButton,
-rightButton = _rightButton;
+rightButton = _rightButton,
+shouldFetch = _shouldFetch;
 
 #pragma mark - Init
 - (id)initWithTimeline:(Timeline *)timeline {
@@ -91,6 +92,7 @@ rightButton = _rightButton;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.shouldFetch = YES;
     }
     return self;
 }
@@ -267,38 +269,49 @@ rightButton = _rightButton;
 }
 
 - (void)fetchDataSource {
+    if (self.shouldFetch) {
+        self.shouldFetch = NO;
+    } else {
+        return;
+    }
+    
     // We always refetch from the core data store first
-    NSError *fetchError = nil;
-    NSArray *fetchedEntities = [self.moc executeFetchRequest:self.fetchRequest error:&fetchError];
+    NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
+    [childContext setParentContext:self.moc];
     
-    //    [self.frc performFetch:&fetchError];
-    
-    NSMutableArray *items = [NSMutableArray array];
-    
-    // After the fetch, we want to split the entities by date (ignoring time)
-    // [fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]
-    [_sectionTitles addObjectsFromArray:[fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]];
-    
-    __block NSString *lastDate = nil;
-    [fetchedEntities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
-        NSString *currentDate = [entity objectForKey:@"formattedDate"];
-        if ([currentDate isEqualToString:lastDate]) {
-            // Add to existing section
-            [[[[items lastObject] lastObject] objectForKey:@"photos"] addObject:entity];
-        } else {
-            // Create a new section
-            lastDate = currentDate;
-            NSMutableArray *section = [NSMutableArray array];
-            NSMutableDictionary *row = [NSMutableDictionary dictionary];
-            [row setObject:currentDate forKey:@"formattedDate"];
-            [row setObject:[NSMutableArray array] forKey:@"photos"];
-            [[row objectForKey:@"photos"] addObject:entity];
-            [section addObject:row];
-            [items addObject:section];
-        }
+    [childContext performBlock:^{
+        NSError *fetchError = nil;
+        NSArray *fetchedEntities = [childContext executeFetchRequest:self.fetchRequest error:&fetchError];
+        
+        NSMutableArray *items = [NSMutableArray array];
+        
+        // After the fetch, we want to split the entities by date (ignoring time)
+        // [fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]
+        [_sectionTitles addObjectsFromArray:[fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]];
+        
+        __block NSString *lastDate = nil;
+        [fetchedEntities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
+            NSString *currentDate = [entity objectForKey:@"formattedDate"];
+            if ([currentDate isEqualToString:lastDate]) {
+                // Add to existing section
+                [[[[items lastObject] lastObject] objectForKey:@"photos"] addObject:entity];
+            } else {
+                // Create a new section
+                lastDate = currentDate;
+                NSMutableArray *section = [NSMutableArray array];
+                NSMutableDictionary *row = [NSMutableDictionary dictionary];
+                [row setObject:currentDate forKey:@"formattedDate"];
+                [row setObject:[NSMutableArray array] forKey:@"photos"];
+                [[row objectForKey:@"photos"] addObject:entity];
+                [section addObject:row];
+                [items addObject:section];
+            }
+        }];
+        
+        [childContext.parentContext performBlock:^{
+            [self dataSourceShouldLoadObjects:items shouldAnimate:NO];
+        }];
     }];
-    
-    [self dataSourceShouldLoadObjects:items shouldAnimate:NO];
 }
 
 - (void)loadDataSource {
@@ -306,6 +319,8 @@ rightButton = _rightButton;
     
     [self fetchDataSource];
     [self loadFromRemote];
+    
+    
 //    [self loadFromSavedPhotos];
     
     //  NSString *jpegPath = [[NSBundle mainBundle] pathForResource:@"bubbles" ofType:@"jpg"];
@@ -333,6 +348,8 @@ rightButton = _rightButton;
 }
 
 - (void)loadFromRemote {
+    self.shouldFetch = YES;
+    
     BLOCK_SELF; // Used for accessing MOC
     
     // This block is called after parsing/serializing and should always called on the main queue
