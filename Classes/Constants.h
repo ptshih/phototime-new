@@ -1,6 +1,7 @@
 #import "PSConstants.h"
 
 // Vendor imports
+#import "PSFacebookCenter.h"
 #import "Parse/Parse.h"
 #import "JSONKit.h"
 #import "UIImageView+AFNetworking.h"
@@ -19,16 +20,11 @@
 #define CELL_BACKGROUND_COLOR CELL_BLACK_COLOR
 #define CELL_SELECTED_COLOR CELL_BLUE_COLOR
 
-/**
- http://api.linkedin.com/v1/people/~/connections:(id,first-name,last-name,headline,location:(name),industry,picture-url)?format=json
-*/
-
 #if TARGET_IPHONE_SIMULATOR
   #define USE_LOCALHOST
 #endif
 
 #define API_LOCALHOST @"http://localhost:5000"
-//#define API_REMOTE @"http://10.0.1.191:5000"
 #define API_REMOTE @"http://whiskey.herokuapp.com"
 
 #ifdef USE_LOCALHOST

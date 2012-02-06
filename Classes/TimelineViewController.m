@@ -121,7 +121,9 @@ rightButton = _rightButton;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self loadDataSource];
+    if ([[PSFacebookCenter defaultCenter] isLoggedIn]) {
+        [self loadDataSource];
+    }
 }
 
 #pragma mark - Config Subviews
@@ -397,25 +399,6 @@ rightButton = _rightButton;
     //    NSOperationQueue *backgroundQueue = [[[NSOperationQueue alloc] init] autorelease];
     //    NSOperationQueue *backgroundQueue = [NSOperationQueue mainQueue];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
-    
-    
-    
-    
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/timeline", API_BASE_URL]]];
-//    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
-//        
-//        NSArray *items = [JSON objectForKey:@"data"];
-//        if (items && [items count] > 0) {
-//            [self dataSourceShouldLoadObjects:[NSMutableArray arrayWithObject:items] shouldAnimate:NO];
-//        } else {
-//            [self dataSourceDidError];
-//        }
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON){
-//        [self dataSourceDidError];
-//    }];
-//    
-//    NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
-//    [queue addOperation:op];
 }
 
 - (void)loadFromSavedPhotos {
@@ -536,8 +519,12 @@ rightButton = _rightButton;
 #pragma mark - TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
+    headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
-    [headerView setImage:[UIImage stretchableImageNamed:@"BackgroundNavigationBar" withLeftCapWidth:0.0 topCapWidth:1.0]];
+    
+    UIImageView *hl = [[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]];
+    hl.frame = CGRectMake(10.0, headerView.height - 1, headerView.width - 20.0, 1.0);
+    [headerView addSubview:hl];
     
     NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
     

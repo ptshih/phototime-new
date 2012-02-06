@@ -249,7 +249,6 @@
 		28F38D621498442E009D58BA /* IconMore.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D601498442E009D58BA /* IconMore.png */; };
 		28F38D631498442E009D58BA /* IconMore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D611498442E009D58BA /* IconMore@2x.png */; };
 		28FD7A9A14B120F300E9ADDE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD7A9914B120F300E9ADDE /* TestViewController.m */; };
-		D092D2A114DC3F2C001108A0 /* Phototime-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */; };
 		D092D2A814DC4362001108A0 /* Phototime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D092D2A614DC4362001108A0 /* Phototime.xcdatamodeld */; };
 		D092D2B314DC458C001108A0 /* Timeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B214DC458C001108A0 /* Timeline.m */; };
 		D092D2B614DC459F001108A0 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B514DC459E001108A0 /* Photo.m */; };
@@ -1642,7 +1641,6 @@
 				28603B7614AFB2B500541BB1 /* IconCameraBlack@2x.png in Resources */,
 				28603B7714AFB2B500541BB1 /* IconCameraGray.png in Resources */,
 				28603B7814AFB2B500541BB1 /* IconCameraGray@2x.png in Resources */,
-				D092D2A114DC3F2C001108A0 /* Phototime-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

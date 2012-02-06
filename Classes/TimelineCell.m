@@ -157,9 +157,8 @@ lineView = _lineView;
         NSInteger numRows = ceilf(numImages / 3.0);
         height += TL_THUMB_MARGIN;
         height += (THUMB_SIZE + TL_THUMB_MARGIN) * numRows;
-    } else {
-        height += TL_MARGIN;
     }
+    height += TL_MARGIN;
     
     // Labels
 //    height += TL_CAPTION_HEIGHT;
@@ -265,10 +264,10 @@ lineView = _lineView;
             if (remaining == 0) break;
         }
         
-        top += numRows * THUMB_SIZE + TL_THUMB_MARGIN;
-    } else {
-        top += TL_MARGIN;
+        top += numRows * THUMB_SIZE;
     }
+    
+    top += TL_MARGIN;
     
     // Labels
 //    _titleLabel.frame = CGRectMake(left, top, floorf(width * (2.0 / 4.0)), TL_CAPTION_HEIGHT);
