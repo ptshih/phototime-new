@@ -25,7 +25,6 @@
 		2810F5931492169A0028BCFE /* ToolbarSingle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F5871492169A0028BCFE /* ToolbarSingle@2x.png */; };
 		2810F5941492169A0028BCFE /* ToolbarSingleSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F5881492169A0028BCFE /* ToolbarSingleSelected.png */; };
 		2810F5951492169A0028BCFE /* ToolbarSingleSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F5891492169A0028BCFE /* ToolbarSingleSelected@2x.png */; };
-		2810F59814921A2C0028BCFE /* PSToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2810F59714921A2B0028BCFE /* PSToolbar.m */; };
 		2810F59B14921C340028BCFE /* BackgroundToolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F59914921C330028BCFE /* BackgroundToolbar.png */; };
 		2810F59C14921C340028BCFE /* BackgroundToolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F59A14921C330028BCFE /* BackgroundToolbar@2x.png */; };
 		2810F59E1492555D0028BCFE /* short_gallery.json in Resources */ = {isa = PBXBuildFile; fileRef = 2810F59D1492555D0028BCFE /* short_gallery.json */; };
@@ -135,9 +134,6 @@
 		286988351475CEEC00B40860 /* PSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987A91475CEEC00B40860 /* PSView.m */; };
 		286988361475CEEC00B40860 /* PSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987AB1475CEEC00B40860 /* PSViewController.m */; };
 		286988371475CEEC00B40860 /* PSKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 286987AC1475CEEC00B40860 /* PSKit.bundle */; };
-		286988381475CEEC00B40860 /* PSNavigationBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 286987AE1475CEEC00B40860 /* PSNavigationBar.bundle */; };
-		286988391475CEEC00B40860 /* PSNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987B01475CEEC00B40860 /* PSNavigationBar.m */; };
-		2869883A1475CEEC00B40860 /* PSNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286987B11475CEEC00B40860 /* PSNavigationController.xib */; };
 		2869883B1475CEEC00B40860 /* PSStyleSheet-Default.plist in Resources */ = {isa = PBXBuildFile; fileRef = 286987B31475CEEC00B40860 /* PSStyleSheet-Default.plist */; };
 		2869883C1475CEEC00B40860 /* PSStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987B51475CEEC00B40860 /* PSStyleSheet.m */; };
 		2869883D1475CEEC00B40860 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987B91475CEEC00B40860 /* AFHTTPClient.m */; };
@@ -198,7 +194,6 @@
 		289C3630148EC53300D02BAB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 289C362D148EC53300D02BAB /* CFNetwork.framework */; };
 		289C3631148EC53300D02BAB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 289C362E148EC53300D02BAB /* Security.framework */; };
 		28A19CF714A018FD0043F7BB /* PSWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A19CF614A018FD0043F7BB /* PSWindow.m */; };
-		28A19CFB14A01C120043F7BB /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A19CFA14A01C120043F7BB /* RootViewController.m */; };
 		28A19CFF14A023520043F7BB /* PSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A19CFE14A023520043F7BB /* PSNavigationController.m */; };
 		28B855D9147C7645004F84EA /* PSDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B855D8147C7645004F84EA /* PSDrawerController.m */; };
 		28B855E0147CDDE8004F84EA /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28B855DF147CDDE8004F84EA /* MenuViewController.m */; };
@@ -263,8 +258,6 @@
 		2810F5871492169A0028BCFE /* ToolbarSingle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolbarSingle@2x.png"; sourceTree = "<group>"; };
 		2810F5881492169A0028BCFE /* ToolbarSingleSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ToolbarSingleSelected.png; sourceTree = "<group>"; };
 		2810F5891492169A0028BCFE /* ToolbarSingleSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ToolbarSingleSelected@2x.png"; sourceTree = "<group>"; };
-		2810F59614921A2A0028BCFE /* PSToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSToolbar.h; sourceTree = "<group>"; };
-		2810F59714921A2B0028BCFE /* PSToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSToolbar.m; sourceTree = "<group>"; };
 		2810F59914921C330028BCFE /* BackgroundToolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundToolbar.png; sourceTree = "<group>"; };
 		2810F59A14921C330028BCFE /* BackgroundToolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundToolbar@2x.png"; sourceTree = "<group>"; };
 		2810F59D1492555D0028BCFE /* short_gallery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = short_gallery.json; sourceTree = "<group>"; };
@@ -433,10 +426,6 @@
 		286987AA1475CEEC00B40860 /* PSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSViewController.h; sourceTree = "<group>"; };
 		286987AB1475CEEC00B40860 /* PSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSViewController.m; sourceTree = "<group>"; };
 		286987AC1475CEEC00B40860 /* PSKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PSKit.bundle; sourceTree = "<group>"; };
-		286987AE1475CEEC00B40860 /* PSNavigationBar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PSNavigationBar.bundle; sourceTree = "<group>"; };
-		286987AF1475CEEC00B40860 /* PSNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNavigationBar.h; sourceTree = "<group>"; };
-		286987B01475CEEC00B40860 /* PSNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNavigationBar.m; sourceTree = "<group>"; };
-		286987B11475CEEC00B40860 /* PSNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PSNavigationController.xib; sourceTree = "<group>"; };
 		286987B31475CEEC00B40860 /* PSStyleSheet-Default.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PSStyleSheet-Default.plist"; sourceTree = "<group>"; };
 		286987B41475CEEC00B40860 /* PSStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSStyleSheet.h; sourceTree = "<group>"; };
 		286987B51475CEEC00B40860 /* PSStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSStyleSheet.m; sourceTree = "<group>"; };
@@ -533,8 +522,6 @@
 		289C362E148EC53300D02BAB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		28A19CF514A018FD0043F7BB /* PSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWindow.h; sourceTree = "<group>"; };
 		28A19CF614A018FD0043F7BB /* PSWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWindow.m; sourceTree = "<group>"; };
-		28A19CF914A01C120043F7BB /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		28A19CFA14A01C120043F7BB /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		28A19CFD14A023520043F7BB /* PSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNavigationController.h; sourceTree = "<group>"; };
 		28A19CFE14A023520043F7BB /* PSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNavigationController.m; sourceTree = "<group>"; };
 		28B855D7147C7645004F84EA /* PSDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSDrawerController.h; sourceTree = "<group>"; };
@@ -806,7 +793,6 @@
 				28B855D6147C7638004F84EA /* PSDrawerController */,
 				284BB0501487904B0046ABEF /* PSImageCache */,
 				284BB04214878B1E0046ABEF /* PSCoreDataStack */,
-				286987AD1475CEEC00B40860 /* PSNavigationBar */,
 				286987B21475CEEC00B40860 /* PSStyleSheet */,
 				286987831475CEEC00B40860 /* PSKit */,
 				286987AC1475CEEC00B40860 /* PSKit.bundle */,
@@ -1014,19 +1000,6 @@
 				288CB07014B2D72700233B45 /* CoreGraphics-PSKit.m */,
 			);
 			path = PSKit;
-			sourceTree = "<group>";
-		};
-		286987AD1475CEEC00B40860 /* PSNavigationBar */ = {
-			isa = PBXGroup;
-			children = (
-				286987AE1475CEEC00B40860 /* PSNavigationBar.bundle */,
-				2810F59614921A2A0028BCFE /* PSToolbar.h */,
-				2810F59714921A2B0028BCFE /* PSToolbar.m */,
-				286987AF1475CEEC00B40860 /* PSNavigationBar.h */,
-				286987B01475CEEC00B40860 /* PSNavigationBar.m */,
-				286987B11475CEEC00B40860 /* PSNavigationController.xib */,
-			);
-			path = PSNavigationBar;
 			sourceTree = "<group>";
 		};
 		286987B21475CEEC00B40860 /* PSStyleSheet */ = {
@@ -1265,8 +1238,6 @@
 				28B855DF147CDDE8004F84EA /* MenuViewController.m */,
 				28B855EB147CE1A3004F84EA /* LoginViewController.h */,
 				28B855EC147CE1A3004F84EA /* LoginViewController.m */,
-				28A19CF914A01C120043F7BB /* RootViewController.h */,
-				28A19CFA14A01C120043F7BB /* RootViewController.m */,
 				28603B5914AC4A1D00541BB1 /* TimelineViewController.h */,
 				28603B5A14AC4A1D00541BB1 /* TimelineViewController.m */,
 				28603B7D14AFB3AB00541BB1 /* CameraViewController.h */,
@@ -1453,8 +1424,6 @@
 				286988201475CEEC00B40860 /* bg_toast.png in Resources */,
 				286988211475CEEC00B40860 /* bg_toast@2x.png in Resources */,
 				286988371475CEEC00B40860 /* PSKit.bundle in Resources */,
-				286988381475CEEC00B40860 /* PSNavigationBar.bundle in Resources */,
-				2869883A1475CEEC00B40860 /* PSNavigationController.xib in Resources */,
 				2869883B1475CEEC00B40860 /* PSStyleSheet-Default.plist in Resources */,
 				2869884D1475CEEC00B40860 /* FBDialog.bundle in Resources */,
 				286988591475CEEC00B40860 /* PullToRefresh.bundle in Resources */,
@@ -1603,7 +1572,6 @@
 				286988331475CEEC00B40860 /* PSTutorialView.m in Sources */,
 				286988351475CEEC00B40860 /* PSView.m in Sources */,
 				286988361475CEEC00B40860 /* PSViewController.m in Sources */,
-				286988391475CEEC00B40860 /* PSNavigationBar.m in Sources */,
 				2869883C1475CEEC00B40860 /* PSStyleSheet.m in Sources */,
 				2869883D1475CEEC00B40860 /* AFHTTPClient.m in Sources */,
 				2869883E1475CEEC00B40860 /* AFHTTPRequestOperation.m in Sources */,
@@ -1644,9 +1612,7 @@
 				284BB04814878B1E0046ABEF /* PSCoreDataTableViewController.m in Sources */,
 				284BB0551487904B0046ABEF /* PSCachedImageView.m in Sources */,
 				284BB0561487904B0046ABEF /* PSImageCache.m in Sources */,
-				2810F59814921A2C0028BCFE /* PSToolbar.m in Sources */,
 				28A19CF714A018FD0043F7BB /* PSWindow.m in Sources */,
-				28A19CFB14A01C120043F7BB /* RootViewController.m in Sources */,
 				28A19CFF14A023520043F7BB /* PSNavigationController.m in Sources */,
 				28603B4414AA860700541BB1 /* PSZoomView.m in Sources */,
 				28603B5B14AC4A1D00541BB1 /* TimelineViewController.m in Sources */,

@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class RootViewController;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
-  RootViewController *_rootViewController;
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, retain) PSNavigationController *navigationController;
 
 - (NSMutableDictionary *)captionsCache;
 

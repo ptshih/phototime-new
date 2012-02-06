@@ -23,7 +23,7 @@
 @implementation TimelineViewController (CameraDelegateMethods)
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self.psNavigationController popViewControllerAnimated:YES];
+    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -54,10 +54,10 @@
             [picker pushViewController:pvc animated:YES];
             [pvc release];
         } else {
-            [self.psNavigationController popViewControllerAnimated:YES];
+            [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
         }
     } else {
-        [self.psNavigationController popViewControllerAnimated:YES];
+        [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
     }
 }
 
@@ -140,30 +140,30 @@ shouldFetch = _shouldFetch;
 }
 
 #pragma mark - Config Subviews
-- (void)setupHeader {
-    static CGFloat margin = 10.0;
-    UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)];
-    headerView.userInteractionEnabled = YES;
-    [headerView setImage:[UIImage stretchableImageNamed:@"BackgroundNavigationBar" withLeftCapWidth:0.0 topCapWidth:1.0]];
-    
-    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(test)];
-    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"IconBackGray"] forState:UIControlStateHighlighted];
-    [headerView addSubview:leftButton];
-    
-    UILabel *titleLabel = [UILabel labelWithText:@"Timeline" style:@"navigationTitleLabel"];
-    titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
-    titleLabel.center = headerView.center;
-    [headerView addSubview:titleLabel];
-    
-    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(snap)];
-    [rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
-    [headerView addSubview:rightButton];
-    
-    [self setHeaderView:headerView];
-    [headerView release];
-}
+//- (void)setupHeader {
+//    static CGFloat margin = 10.0;
+//    UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)];
+//    headerView.userInteractionEnabled = YES;
+//    [headerView setImage:[UIImage stretchableImageNamed:@"BackgroundNavigationBar" withLeftCapWidth:0.0 topCapWidth:1.0]];
+//    
+//    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(test)];
+//    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
+//    [leftButton setImage:[UIImage imageNamed:@"IconBackGray"] forState:UIControlStateHighlighted];
+//    [headerView addSubview:leftButton];
+//    
+//    UILabel *titleLabel = [UILabel labelWithText:@"Timeline" style:@"navigationTitleLabel"];
+//    titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
+//    titleLabel.center = headerView.center;
+//    [headerView addSubview:titleLabel];
+//    
+//    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(snap)];
+//    [rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+//    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
+//    [headerView addSubview:rightButton];
+//    
+//    [self setHeaderView:headerView];
+//    [headerView release];
+//}
 
 - (void)setupSubviews {
     [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
@@ -171,11 +171,11 @@ shouldFetch = _shouldFetch;
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
     self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(test)];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconBackGray"] forState:UIControlStateHighlighted];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
+//    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.leftButton];
     
-    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(snap)];
+    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(testRight)];
     [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
     [self.rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.rightButton];
@@ -200,8 +200,14 @@ shouldFetch = _shouldFetch;
 
 #pragma mark - Actions
 - (void)test {
-    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
-    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
+//    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
+//    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
+    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
+}
+
+- (void)testRight {
+    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:self.timeline] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:tvc animated:YES];
 }
 
 - (void)snap {
@@ -233,7 +239,7 @@ shouldFetch = _shouldFetch;
     imagePicker.delegate = self;
     imagePicker.sourceType = sourceType;
     imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
-    [self.psNavigationController pushViewController:imagePicker animated:YES];
+    [(PSNavigationController *)self.parentViewController pushViewController:imagePicker animated:YES];
     [imagePicker release];
 }
 

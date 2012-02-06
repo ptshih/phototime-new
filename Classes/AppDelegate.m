@@ -9,8 +9,9 @@
 #import "AppDelegate.h"
 #import "PSReachabilityCenter.h"
 #import "PSLocationCenter.h"
-#import "RootViewController.h"
 #import "LoginViewController.h"
+#import "TimelineViewController.h"
+#import "Timeline.h"
 
 static NSMutableDictionary *_captionsCache;
 
@@ -22,7 +23,9 @@ static NSMutableDictionary *_captionsCache;
 
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize
+window = _window,
+navigationController = _navigationController;
 
 + (void)initialize {
     [self setupDefaults];
@@ -83,13 +86,33 @@ static NSMutableDictionary *_captionsCache;
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]];
     
-    _rootViewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    self.window.rootViewController = _rootViewController;
+    // Test insert
+#warning THIS IS A TEST
+    NSDictionary *tDict = [NSDictionary dictionaryWithObjectsAndKeys:@"4f2b65e2e4b024f14205b3ad", @"id", @"548430564", @"ownerId", [NSNumber numberWithInteger:1328495128], @"lastSynced", [NSArray arrayWithObjects:@"548430564",@"13704812",@"2602152", @"6010421", nil], @"members", nil];
+    [Timeline updateOrInsertInManagedObjectContext:[PSCoreDataStack mainThreadContext] entity:tDict uniqueKey:@"id"];
+    [[PSCoreDataStack mainThreadContext] save:nil];
+    
+    NSFetchRequest *fr = [[[NSFetchRequest alloc] initWithEntityName:[Timeline entityName]] autorelease];
+    [fr setEntity:[Timeline entityInManagedObjectContext:[PSCoreDataStack mainThreadContext]]];
+    [fr setPredicate:[NSPredicate predicateWithFormat:@"id = %@", @"4f2b65e2e4b024f14205b3ad"]];
+    [fr setReturnsObjectsAsFaults:NO];
+    
+    Timeline *t = nil;
+    NSArray *results = [[PSCoreDataStack mainThreadContext] executeFetchRequest:fr error:nil];
+    if (results && [results count] > 0) {
+        t = [results lastObject];
+    }
+    
+    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
+    
+    self.navigationController = [[PSNavigationController alloc] initWithRootViewController:tvc];
+    
+    self.window.rootViewController = self.navigationController;
     
     // Login
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
         LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-        [_rootViewController presentModalViewController:lvc animated:NO];
+        [self.navigationController presentModalViewController:lvc animated:NO];
         [lvc release];
     }
     
@@ -137,7 +160,7 @@ static NSMutableDictionary *_captionsCache;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_rootViewController release];
+    [_navigationController release];
     [_window release];
     [super dealloc];
 }
