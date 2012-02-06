@@ -10,5 +10,8 @@
 
 @interface TimelineViewController : PSCoreDataTableViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (nonatomic, assign) UIButton *leftButton;
+@property (nonatomic, assign) UIButton *rightButton;
+
 
 @end

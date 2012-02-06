@@ -74,6 +74,10 @@
 
 @implementation TimelineViewController
 
+@synthesize
+leftButton = _leftButton,
+rightButton = _rightButton;
+
 #pragma mark - Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -108,7 +112,7 @@
     [super viewDidLoad];
     
     // Setup Views
-    [self setupHeader];
+//    [self setupHeader];
     [self setupSubviews];
     
     [self setupPullRefresh];
@@ -148,6 +152,32 @@
 
 - (void)setupSubviews {
     [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+    
+    // Setup perma left/right buttons
+    static CGFloat margin = 10.0;
+    self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(test)];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconBackGray"] forState:UIControlStateHighlighted];
+    [self.view addSubview:self.leftButton];
+    
+    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(snap)];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
+    [self.view addSubview:self.rightButton];
+    
+    [self.tableView addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isEqual:self.tableView]) {
+        CGPoint contentOffset = self.tableView.contentOffset;
+        CGFloat y = contentOffset.y;
+        if (y <= 0) {
+            self.leftButton.top = 6.0 - y;
+            self.rightButton.top = 6.0 - y;
+        }
+        
+    }
 }
 
 #pragma mark - Actions
@@ -505,24 +535,39 @@
 
 #pragma mark - TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *hv = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 32.0)] autorelease];
-    hv.backgroundColor = [UIColor whiteColor];
+    UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
+    headerView.userInteractionEnabled = YES;
+    [headerView setImage:[UIImage stretchableImageNamed:@"BackgroundNavigationBar" withLeftCapWidth:0.0 topCapWidth:1.0]];
     
-    CGFloat width = hv.width - 20.0;
+    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
     
-    UILabel *dateLabel = [UILabel labelWithText:[[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] style:@"timelineTitle"];
-    dateLabel.backgroundColor = [UIColor whiteColor];
-    dateLabel.frame = CGRectMake(10.0, 5.0, width, 20.0);
-    [hv addSubview:dateLabel];
+    UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
+    titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
+    titleLabel.center = headerView.center;
+    [headerView addSubview:titleLabel];
     
-    UIImageView *hl = [[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]];
-    hl.frame = CGRectMake(10.0, hv.height - 1, width, 1.0);
-    [hv addSubview:hl];
-    return hv;
+    return headerView;
+    
+    
+    
+//    UIView *hv = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 32.0)] autorelease];
+//    hv.backgroundColor = [UIColor whiteColor];
+//    
+//    CGFloat width = hv.width - 20.0;
+//    
+//    UILabel *dateLabel = [UILabel labelWithText:[[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] style:@"timelineTitle"];
+//    dateLabel.backgroundColor = [UIColor whiteColor];
+//    dateLabel.frame = CGRectMake(10.0, 5.0, width, 20.0);
+//    [hv addSubview:dateLabel];
+//    
+//    UIImageView *hl = [[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]];
+//    hl.frame = CGRectMake(10.0, hv.height - 1, width, 1.0);
+//    [hv addSubview:hl];
+//    return hv;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 32.0;
+    return 44.0;
 }
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
