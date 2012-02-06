@@ -158,8 +158,9 @@ bottomLineView = _bottomLineView;
     
     // Additional Images
     if (numImages > 0) {
+        height += TL_THUMB_MARGIN;
         NSInteger numRows = ceilf(numImages / 3.0);
-        height += (THUMB_SIZE + TL_THUMB_MARGIN) * numRows;
+        height += (THUMB_SIZE + TL_THUMB_MARGIN) * numRows - TL_THUMB_MARGIN;
     }
     height += TL_MARGIN;
     
@@ -221,12 +222,12 @@ bottomLineView = _bottomLineView;
     [self.topImageView addSubview:pv];
     [self.profileViews addObject:pv];
     
-    top = self.topImageView.bottom;
+    top += self.topImageView.height;
     
     // Additional Images
     NSInteger numImages = [_images count];
     if (numImages > 0) {
-//        top += TL_THUMB_MARGIN;
+        top += TL_THUMB_MARGIN;
         CGFloat colOffset = left;
         CGFloat rowOffset = top;
         NSInteger numRows = ceilf(numImages / 3.0);
@@ -272,7 +273,7 @@ bottomLineView = _bottomLineView;
             }
         }
         
-        top += numRows * (THUMB_SIZE + TL_THUMB_MARGIN);
+        top += numRows * (THUMB_SIZE + TL_THUMB_MARGIN) - TL_THUMB_MARGIN;
     }
     
     top += TL_MARGIN;
