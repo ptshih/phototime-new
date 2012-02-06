@@ -129,12 +129,14 @@ shouldFetch = _shouldFetch;
     [self setupPullRefresh];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    if ([[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        [self loadDataSource];
-    }
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        if ([[PSFacebookCenter defaultCenter] isLoggedIn]) {
+            [self loadDataSource];
+        }
+    }];
 }
 
 #pragma mark - Config Subviews
@@ -359,9 +361,19 @@ shouldFetch = _shouldFetch;
     finishBlock = ^() {
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
-        [self fetchDataSource];
         [SVProgressHUD dismissWithSuccess:@"Success"];
+        [self fetchDataSource];
         NSLog(@"# NSURLConnection finishBlock completed on thread: %@", [NSThread currentThread]);
+    };
+    
+    // This block is called after parsing/serializing and should always called on the main queue
+    void (^failureBlock)();
+    failureBlock = ^() {
+        // Call any UI updates on the main queue
+        // By now we can guarantee that our Core Data dataSource is ready
+        [SVProgressHUD dismissWithError:@"Error"];
+        [self dataSourceDidError];
+        NSLog(@"# NSURLConnection failed on thread: %@", [NSThread currentThread]);
     };
     
     // This block is passed in to NSURLConnection equivalent to a finish block, it is run inside the provided operation queue
@@ -417,14 +429,12 @@ shouldFetch = _shouldFetch;
                     }];
                 } else {
                     // Failed, read status code
-                    NSLog(@"# NSURLConnection failed with status code: %d", statusCode);
-                    [self dataSourceDidError];
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:failureBlock];
                 }
             }
         } else {
             // This is equivalent to a connection failure block
-            NSLog(@"# NSURLConnection failed with error: %@", error);
-            [self dataSourceDidError];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:failureBlock];
         }
     };
     
