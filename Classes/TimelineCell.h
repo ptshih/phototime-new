@@ -8,10 +8,6 @@
 
 #import "PSCell.h"
 
-#define TL_MARGIN 10.0
-#define TL_THUMB_MARGIN 5.0
-#define TL_CAPTION_HEIGHT 20.0
-
 @class PSCachedImageView;
 
 @interface TimelineCell : PSCell {

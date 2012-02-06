@@ -11,7 +11,9 @@
 #import "PSZoomView.h"
 #import "Photo.h"
 
-#define THUMB_SIZE 96.0
+#define TL_THUMB_SIZE 96.0
+#define TL_THUMB_MARGIN 6.0
+#define TL_MARGIN 10.0
 
 static NSMutableSet *__reusableImageViews = nil;
 
@@ -160,7 +162,7 @@ bottomLineView = _bottomLineView;
     if (numImages > 0) {
         height += TL_THUMB_MARGIN;
         NSInteger numRows = ceilf(numImages / 3.0);
-        height += (THUMB_SIZE + TL_THUMB_MARGIN) * numRows - TL_THUMB_MARGIN;
+        height += (TL_THUMB_SIZE + TL_THUMB_MARGIN) * numRows - TL_THUMB_MARGIN;
     }
     height += TL_MARGIN;
     
@@ -228,30 +230,40 @@ bottomLineView = _bottomLineView;
     NSInteger numImages = [_images count];
     if (numImages > 0) {
         top += TL_THUMB_MARGIN;
+        CGFloat thumbWidth = 0.0;
         CGFloat colOffset = left;
         CGFloat rowOffset = top;
         NSInteger numRows = ceilf(numImages / 3.0);
         while (1) {
-            NSDictionary *current = [[[_images objectAtIndex:0] retain] autorelease];
+//            colOffset = left + (col * (TL_THUMB_SIZE + TL_THUMB_MARGIN));
+//            rowOffset = top + (row * (TL_THUMB_SIZE + TL_THUMB_MARGIN));
+            
+            NSDictionary *image = [[[_images objectAtIndex:0] retain] autorelease];
             [_images removeObjectAtIndex:0];
             NSInteger remaining = [_images count];
             
-            PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[current objectForKey:@"source"]]];
+            PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[image objectForKey:@"source"]]];
             
             if (remaining == 0) {
-                iv.frame = CGRectMake(colOffset, rowOffset, self.contentView.width - colOffset - TL_MARGIN, THUMB_SIZE);
+                thumbWidth = left + width - colOffset;
+                iv.frame = CGRectMake(colOffset, rowOffset, thumbWidth, TL_THUMB_SIZE);
+                colOffset += thumbWidth + TL_THUMB_MARGIN;
             } else {
                 // Special case is when col = 0 and remaining = 1, we should split 50/50
                 if (colOffset == left && remaining == 1) {
-                    iv.frame = CGRectMake(colOffset, rowOffset, floorf((self.contentView.width - colOffset - TL_MARGIN) / 2) - TL_THUMB_MARGIN, THUMB_SIZE);
+                    thumbWidth = floorf((width - TL_THUMB_MARGIN) / 2.0);
+                    iv.frame = CGRectMake(colOffset, rowOffset, thumbWidth, TL_THUMB_SIZE);
+                    colOffset += thumbWidth + TL_THUMB_MARGIN;
                 } else {
-                    iv.frame = CGRectMake(colOffset, rowOffset, THUMB_SIZE, THUMB_SIZE);
+                    thumbWidth = TL_THUMB_SIZE;
+                    iv.frame = CGRectMake(colOffset, rowOffset, thumbWidth, TL_THUMB_SIZE);
+                    colOffset += thumbWidth + TL_THUMB_MARGIN;
                 }
             }
-            colOffset += iv.width + TL_THUMB_MARGIN;
+            
             if (colOffset > width) {
                 colOffset = left;
-                rowOffset += THUMB_SIZE + TL_THUMB_MARGIN;
+                rowOffset += TL_THUMB_SIZE + TL_THUMB_MARGIN;
             }
             
             [self.contentView addSubview:iv];
@@ -264,7 +276,7 @@ bottomLineView = _bottomLineView;
             pv.clipsToBounds = YES;
             pv.layer.borderWidth = 1.0;
             pv.layer.borderColor = [RGBACOLOR(255, 255, 255, 1.0) CGColor];
-            [pv loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [current objectForKey:@"ownerId"]]]];
+            [pv loadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [image objectForKey:@"ownerId"]]]];
             [iv addSubview:pv];
             [self.profileViews addObject:pv];
             
@@ -273,7 +285,7 @@ bottomLineView = _bottomLineView;
             }
         }
         
-        top += numRows * (THUMB_SIZE + TL_THUMB_MARGIN) - TL_THUMB_MARGIN;
+        top += numRows * (TL_THUMB_SIZE + TL_THUMB_MARGIN) - TL_THUMB_MARGIN;
     }
     
     top += TL_MARGIN;
