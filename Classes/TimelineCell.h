@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSMutableArray *imageDicts;
 @property (nonatomic, retain) NSMutableArray *imageViews;
 @property (nonatomic, retain) NSMutableArray *profileViews;
+@property (nonatomic, assign) CGFloat profileIconSize;
 
 - (PSCachedImageView *)dequeueImageViewWithURL:(NSURL *)URL;
 

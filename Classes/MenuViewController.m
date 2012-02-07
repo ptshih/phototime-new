@@ -55,18 +55,15 @@
     [self setupHeader];
     [self setupSubviews];
     
-    self.tableView.scrollsToTop = NO;
-    
-    NSError *error = nil;
-    [self.frc performFetch:&error];
+    [self loadDataSource];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self loadDataSource];
-    }];
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        [self loadDataSource];
+//    }];
 }
 
 #pragma mark - Config Subviews
@@ -77,7 +74,7 @@
     
     NSString *title = @"Timelines";
     
-    UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
+    UILabel *titleLabel = [UILabel labelWithText:title style:@"timelineSectionTitle"];
     titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
     titleLabel.center = headerView.center;
     [headerView addSubview:titleLabel];
@@ -86,12 +83,12 @@
     static CGFloat margin = 10.0;
     UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
     [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
-    //    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
+    [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
     [headerView addSubview:leftButton];
     
     UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
-    [rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
+    [rightButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateHighlighted];
     [headerView addSubview:rightButton];
     
     self.headerView = headerView;
@@ -106,14 +103,15 @@
 }
 
 - (void)rightAction {
-    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
+    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionLeft animated:YES];
 }
 
 #pragma mark - State Machine
 - (void)loadDataSource {
     [super loadDataSource];
     
-    
+    NSError *error = nil;
+    [self.frc performFetch:&error];
 }
 
 - (void)dataSourceDidLoad {
@@ -167,22 +165,6 @@
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
     id object = [self.frc objectAtIndexPath:indexPath];
     [cell fillCellWithObject:object];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class cellClass = [self cellClassAtIndexPath:indexPath];
-    id cell = nil;
-    NSString *reuseIdentifier = [cellClass reuseIdentifier];
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if(cell == nil) { 
-        cell = [[[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-        [_cellCache addObject:cell];
-    }
-    
-    [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

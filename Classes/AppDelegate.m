@@ -115,7 +115,7 @@ navigationController = _navigationController;
     // Login
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
         LoginViewController *lvc = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-        [self.navigationController pushViewController:lvc direction:PSNavigationControllerDirectionUp animated:YES];
+        [self.navigationController pushViewController:lvc direction:PSNavigationControllerDirectionUp animated:NO];
     }
     
     return YES;

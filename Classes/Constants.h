@@ -8,6 +8,11 @@
 #import "UIImageView+AFNetworking.h"
 #import "SVProgressHUD.h"
 
+/**
+ Notifications
+ */
+#define kLoginSucceeded @"kLoginSucceeded"
+
 // Facebook APP ID is in PSFacebookCenter.h
 
 // Convenience

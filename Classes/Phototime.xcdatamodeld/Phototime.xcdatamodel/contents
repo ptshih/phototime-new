@@ -17,8 +17,14 @@
         <attribute name="members" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="ownerId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Photo" positionX="-54" positionY="-9" width="128" height="180"/>
         <element name="Timeline" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="User" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

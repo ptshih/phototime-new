@@ -22,7 +22,8 @@ static NSMutableSet *__reusableImageViews = nil;
 @synthesize
 imageDicts = _imageDicts,
 imageViews = _imageViews,
-profileViews = _profileViews;
+profileViews = _profileViews,
+profileIconSize = _profileIconSize;
 
 + (void)initialize {
     __reusableImageViews = [[NSMutableSet alloc] init];
@@ -36,6 +37,7 @@ profileViews = _profileViews;
         self.imageDicts = [NSMutableArray arrayWithCapacity:1];
         self.imageViews = [NSMutableArray arrayWithCapacity:1];
         self.profileViews = [NSMutableArray arrayWithCapacity:1];
+        self.profileIconSize = 40.0;
     }
     return self;
 }
@@ -131,6 +133,8 @@ profileViews = _profileViews;
     NSInteger numPhotos = [photos count];
     [self.imageDicts addObjectsFromArray:photos];
     
+    self.profileIconSize = (numPhotos > 1) ? 30.0 : 40.0;
+    
     // Layout
     CGFloat left = TL_MARGIN;
     CGFloat top = TL_THUMB_MARGIN / 2;
@@ -165,7 +169,7 @@ profileViews = _profileViews;
         
         // Add profile view
         PSCachedImageView *pv = [self dequeueImageViewWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [dict objectForKey:@"ownerId"]]]];
-        pv.frame = CGRectMake(iv.width - 29, iv.height - 29, 30, 30);
+        pv.frame = CGRectMake(iv.width - self.profileIconSize - 1, iv.height - self.profileIconSize - 1, self.profileIconSize, self.profileIconSize);
         pv.layer.borderWidth = 1.0;
         pv.layer.borderColor = [RGBACOLOR(255, 255, 255, 1.0) CGColor];
         [iv addSubview:pv];

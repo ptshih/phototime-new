@@ -240,5 +240,43 @@
 		<key>numberOfLines</key>
 		<integer>1</integer>
 	</dict>
+	<key>loginButton</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-MediumCond</string>
+		<key>fontSize</key>
+		<integer>24</integer>
+		<key>textColor</key>
+		<string>0x000000</string>
+		<key>highlightedTextColor</key>
+		<string>0x000000</string>
+		<key>textAlignment</key>
+		<string>left</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>5</integer>
+	</dict>
+	<key>timelineSectionTitle</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-BoldCond</string>
+		<key>fontSize</key>
+		<integer>20</integer>
+		<key>textColor</key>
+		<string>0x000000</string>
+		<key>highlightedTextColor</key>
+		<string>0x000000</string>
+		<key>textAlignment</key>
+		<string>center</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>5</integer>
+	</dict>
 </dict>
 </plist>

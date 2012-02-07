@@ -229,6 +229,14 @@
 		28F38D621498442E009D58BA /* IconMore.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D601498442E009D58BA /* IconMore.png */; };
 		28F38D631498442E009D58BA /* IconMore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D611498442E009D58BA /* IconMore@2x.png */; };
 		28FD7A9A14B120F300E9ADDE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD7A9914B120F300E9ADDE /* TestViewController.m */; };
+		D0269E3814E1AE2C00B690A2 /* PSTimelineConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269E3714E1AE2C00B690A2 /* PSTimelineConfigViewController.m */; };
+		D0269E3E14E1B2F300B690A2 /* IconClockBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D0269E3A14E1B2F200B690A2 /* IconClockBlack.png */; };
+		D0269E3F14E1B2F300B690A2 /* IconClockBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0269E3B14E1B2F200B690A2 /* IconClockBlack@2x.png */; };
+		D0269E4014E1B2F300B690A2 /* IconGearBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D0269E3C14E1B2F200B690A2 /* IconGearBlack.png */; };
+		D0269E4114E1B2F300B690A2 /* IconGearBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0269E3D14E1B2F300B690A2 /* IconGearBlack@2x.png */; };
+		D0269E4414E1B5E100B690A2 /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269E4314E1B5E100B690A2 /* UserCell.m */; };
+		D0269E4714E1BD9C00B690A2 /* _User.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269E4614E1BD9C00B690A2 /* _User.m */; };
+		D0269E4A14E1BDA200B690A2 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269E4914E1BDA200B690A2 /* User.m */; };
 		D092D2A814DC4362001108A0 /* Phototime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D092D2A614DC4362001108A0 /* Phototime.xcdatamodeld */; };
 		D092D2B314DC458C001108A0 /* Timeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B214DC458C001108A0 /* Timeline.m */; };
 		D092D2B614DC459F001108A0 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B514DC459E001108A0 /* Photo.m */; };
@@ -563,6 +571,18 @@
 		28F38D611498442E009D58BA /* IconMore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMore@2x.png"; sourceTree = "<group>"; };
 		28FD7A9814B120F300E9ADDE /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		28FD7A9914B120F300E9ADDE /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		D0269E3614E1AE2C00B690A2 /* PSTimelineConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTimelineConfigViewController.h; sourceTree = "<group>"; };
+		D0269E3714E1AE2C00B690A2 /* PSTimelineConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTimelineConfigViewController.m; sourceTree = "<group>"; };
+		D0269E3A14E1B2F200B690A2 /* IconClockBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconClockBlack.png; sourceTree = "<group>"; };
+		D0269E3B14E1B2F200B690A2 /* IconClockBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconClockBlack@2x.png"; sourceTree = "<group>"; };
+		D0269E3C14E1B2F200B690A2 /* IconGearBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconGearBlack.png; sourceTree = "<group>"; };
+		D0269E3D14E1B2F300B690A2 /* IconGearBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconGearBlack@2x.png"; sourceTree = "<group>"; };
+		D0269E4214E1B5E100B690A2 /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		D0269E4314E1B5E100B690A2 /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
+		D0269E4514E1BD9C00B690A2 /* _User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _User.h; sourceTree = "<group>"; };
+		D0269E4614E1BD9C00B690A2 /* _User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _User.m; sourceTree = "<group>"; };
+		D0269E4814E1BDA200B690A2 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		D0269E4914E1BDA200B690A2 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Phototime-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D092D2A014DC3F2C001108A0 /* Phototime-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Phototime-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D092D2A714DC4362001108A0 /* Phototime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Phototime.xcdatamodel; sourceTree = "<group>"; };
@@ -1249,6 +1269,8 @@
 				28FD7A9914B120F300E9ADDE /* TestViewController.m */,
 				2812CFEA14B5C53D00F3B8CA /* PreviewViewController.h */,
 				2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */,
+				D0269E3614E1AE2C00B690A2 /* PSTimelineConfigViewController.h */,
+				D0269E3714E1AE2C00B690A2 /* PSTimelineConfigViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1277,6 +1299,8 @@
 				28603B5E14AC4D9300541BB1 /* TimelineCell.m */,
 				D09E412D14E0DE850049D01F /* MenuCell.h */,
 				D09E412E14E0DE850049D01F /* MenuCell.m */,
+				D0269E4214E1B5E100B690A2 /* UserCell.h */,
+				D0269E4314E1B5E100B690A2 /* UserCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1284,6 +1308,10 @@
 		28F38D4A149839B9009D58BA /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				D0269E3A14E1B2F200B690A2 /* IconClockBlack.png */,
+				D0269E3B14E1B2F200B690A2 /* IconClockBlack@2x.png */,
+				D0269E3C14E1B2F200B690A2 /* IconGearBlack.png */,
+				D0269E3D14E1B2F300B690A2 /* IconGearBlack@2x.png */,
 				28603B7114AFB2B400541BB1 /* IconCameraBlack.png */,
 				28603B7214AFB2B400541BB1 /* IconCameraBlack@2x.png */,
 				28603B7314AFB2B400541BB1 /* IconCameraGray.png */,
@@ -1350,6 +1378,8 @@
 		D092D2AA14DC456F001108A0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D0269E4514E1BD9C00B690A2 /* _User.h */,
+				D0269E4614E1BD9C00B690A2 /* _User.m */,
 				D092D2D014DC6711001108A0 /* _Photo.h */,
 				D092D2D114DC6712001108A0 /* _Photo.m */,
 				D092D2D214DC6712001108A0 /* _Timeline.h */,
@@ -1358,6 +1388,8 @@
 				D092D2B514DC459E001108A0 /* Photo.m */,
 				D092D2B114DC458C001108A0 /* Timeline.h */,
 				D092D2B214DC458C001108A0 /* Timeline.m */,
+				D0269E4814E1BDA200B690A2 /* User.h */,
+				D0269E4914E1BDA200B690A2 /* User.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1524,6 +1556,10 @@
 				28603B7614AFB2B500541BB1 /* IconCameraBlack@2x.png in Resources */,
 				28603B7714AFB2B500541BB1 /* IconCameraGray.png in Resources */,
 				28603B7814AFB2B500541BB1 /* IconCameraGray@2x.png in Resources */,
+				D0269E3E14E1B2F300B690A2 /* IconClockBlack.png in Resources */,
+				D0269E3F14E1B2F300B690A2 /* IconClockBlack@2x.png in Resources */,
+				D0269E4014E1B2F300B690A2 /* IconGearBlack.png in Resources */,
+				D0269E4114E1B2F300B690A2 /* IconGearBlack@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1635,6 +1671,10 @@
 				D092D2D514DC6712001108A0 /* _Timeline.m in Sources */,
 				D092D2D814DC6982001108A0 /* PSManagedObject.m in Sources */,
 				D09E412F14E0DE850049D01F /* MenuCell.m in Sources */,
+				D0269E3814E1AE2C00B690A2 /* PSTimelineConfigViewController.m in Sources */,
+				D0269E4414E1B5E100B690A2 /* UserCell.m in Sources */,
+				D0269E4714E1BD9C00B690A2 /* _User.m in Sources */,
+				D0269E4A14E1BDA200B690A2 /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,7 +56,7 @@
     [super viewDidLoad];
     
     // Add a login button
-    UIButton *loginButton = [UIButton buttonWithFrame:self.view.bounds andStyle:@"expandButton" target:self action:@selector(login)];
+    UIButton *loginButton = [UIButton buttonWithFrame:self.view.bounds andStyle:@"loginButton" target:self action:@selector(login)];
     [loginButton setTitle:@"Login to Facebook" forState:UIControlStateNormal];
     [self.view addSubview:loginButton];
 }
@@ -123,7 +123,7 @@
     [parameters setObject:[me objectForKey:@"id"] forKey:@"fbId"];
     [parameters setObject:[me JSONString] forKey:@"fbMe"];
     
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/token", API_BASE_URL]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users", API_BASE_URL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"POST" headers:nil parameters:parameters];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
@@ -139,6 +139,7 @@
 }
 
 - (void)loginDidSucceed:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
     [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
 }
 

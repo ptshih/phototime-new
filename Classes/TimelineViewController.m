@@ -12,6 +12,7 @@
 #import "PreviewViewController.h"
 #import "AFNetworking.h"
 
+#import "PSTimelineConfigViewController.h"
 #import "MenuViewController.h"
 
 #import "Photo.h"
@@ -93,6 +94,7 @@ shouldFetch = _shouldFetch;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.shouldFetch = YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
     }
     return self;
 }
@@ -103,6 +105,7 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     RELEASE_SAFELY(_timeline);
     // Views
@@ -125,18 +128,15 @@ shouldFetch = _shouldFetch;
     
     // Setup Views
     [self setupSubviews];
-    
     [self setupPullRefresh];
+    
+    if ([[PSFacebookCenter defaultCenter] isLoggedIn]) {
+        [self loadDataSource];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        if ([[PSFacebookCenter defaultCenter] isLoggedIn]) {
-            [self loadDataSource];
-        }
-    }];
 }
 
 #pragma mark - Config Subviews
@@ -151,8 +151,8 @@ shouldFetch = _shouldFetch;
     [self.view addSubview:self.leftButton];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.rightButton];
     
     [self.tableView addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
@@ -182,9 +182,8 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)rightAction {
-    //    TestViewController *tvc = [[[TestViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:self.timeline] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:tvc direction:PSNavigationControllerDirectionLeft animated:YES];
+    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
 
 - (void)snap {
@@ -426,7 +425,7 @@ shouldFetch = _shouldFetch;
     //    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
     NSString *title = [self.sectionTitles count] > 0 ? [self.sectionTitles objectAtIndex:section] : @"Timeline";
     
-    UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
+    UILabel *titleLabel = [UILabel labelWithText:title style:@"timelineSectionTitle"];
     titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
     titleLabel.center = headerView.center;
     [headerView addSubview:titleLabel];
@@ -465,22 +464,6 @@ shouldFetch = _shouldFetch;
     //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [cell fillCellWithObject:object];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class cellClass = [self cellClassAtIndexPath:indexPath];
-    id cell = nil;
-    NSString *reuseIdentifier = [cellClass reuseIdentifier];
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if(cell == nil) { 
-        cell = [[[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier] autorelease];
-        [_cellCache addObject:cell];
-    }
-    
-    [self tableView:tableView configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
 }
 
 #pragma mark - Blah
