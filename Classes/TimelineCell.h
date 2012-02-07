@@ -10,18 +10,11 @@
 
 @class PSCachedImageView;
 
-@interface TimelineCell : PSCell {
-    UILabel *_titleLabel;
-    UILabel *_subtitleLabel;
-}
+@interface TimelineCell : PSCell
 
-@property (nonatomic, retain) NSMutableArray *images;
+@property (nonatomic, retain) NSMutableArray *imageDicts;
 @property (nonatomic, retain) NSMutableArray *imageViews;
 @property (nonatomic, retain) NSMutableArray *profileViews;
-
-@property (nonatomic, retain) PSCachedImageView *topImageView;
-@property (nonatomic, retain) UIImageView *topLineView;
-@property (nonatomic, retain) UIImageView *bottomLineView;
 
 - (PSCachedImageView *)dequeueImageViewWithURL:(NSURL *)URL;
 

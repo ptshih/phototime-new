@@ -257,24 +257,40 @@ shouldFetch = _shouldFetch;
         
         // After the fetch, we want to split the entities by date (ignoring time)
         // [fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]
-        [_sectionTitles addObjectsFromArray:[fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]];
+//        [_sectionTitles addObjectsFromArray:[fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]];
         
+        // Reset section titles
+        [_sectionTitles removeAllObjects];
+        
+        __block BOOL isNewSection = NO;
+        __block NSInteger i = 0; // counter for photos per row
         __block NSString *lastDate = nil;
         [fetchedEntities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
             NSString *currentDate = [entity objectForKey:@"formattedDate"];
             if ([currentDate isEqualToString:lastDate]) {
                 // Add to existing section
-                [[[[items lastObject] lastObject] objectForKey:@"photos"] addObject:entity];
+                NSMutableArray *rows = [items lastObject];
+                
+                if (isNewSection || (i == 3)) {
+                    i = 0;
+                    isNewSection = NO;
+                    [rows addObject:[NSMutableArray arrayWithCapacity:3]];
+                }
+                NSMutableArray *photos = [rows lastObject];
+                [photos addObject:entity];
+                i++;
             } else {
-                // Create a new section
                 lastDate = currentDate;
-                NSMutableArray *section = [NSMutableArray array];
-                NSMutableDictionary *row = [NSMutableDictionary dictionary];
-                [row setObject:currentDate forKey:@"formattedDate"];
-                [row setObject:[NSMutableArray array] forKey:@"photos"];
-                [[row objectForKey:@"photos"] addObject:entity];
-                [section addObject:row];
-                [items addObject:section];
+                [_sectionTitles addObject:currentDate];
+                
+                // Create a new section
+                NSMutableArray *rows = [NSMutableArray array];
+                NSMutableArray *photos = [NSMutableArray arrayWithCapacity:1];
+                [photos addObject:entity];
+                [rows addObject:photos];
+                [items addObject:rows];
+                i = 0;
+                isNewSection = YES;
             }
         }];
         
@@ -404,7 +420,8 @@ shouldFetch = _shouldFetch;
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     
-    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
+//    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
+    NSString *title = [_sectionTitles count] > 0 ? [_sectionTitles objectAtIndex:section] : @"Timeline";
     
     UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
     titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
@@ -423,7 +440,7 @@ shouldFetch = _shouldFetch;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.items objectAtIndex:section] count];
+    return [[self.items objectAtIndex:section] count];;
 }
 
 - (Class)cellClassAtIndexPath:(NSIndexPath *)indexPath {
