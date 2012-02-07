@@ -12,7 +12,7 @@
 #import "PreviewViewController.h"
 #import "AFNetworking.h"
 
-#import "TestViewController.h"
+#import "MenuViewController.h"
 
 #import "Photo.h"
 #import "Timeline.h"
@@ -145,12 +145,12 @@ shouldFetch = _shouldFetch;
     
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
-    self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(test)];
+    self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
     [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
 //    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.leftButton];
     
-    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(testRight)];
+    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
     [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
     [self.rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.rightButton];
@@ -174,19 +174,17 @@ shouldFetch = _shouldFetch;
 }
 
 #pragma mark - Actions
-- (void)test {
+- (void)leftAction {
 //    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
 //    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
-    id vc = [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
-    if (!vc) {
-        [[PSDrawerController sharedDrawer] slideFromLeft];
-    }
+    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:mvc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
-- (void)testRight {
+- (void)rightAction {
 //    TestViewController *tvc = [[[TestViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:self.timeline] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:tvc animated:YES];
+    [(PSNavigationController *)self.parentViewController pushViewController:tvc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
 
 - (void)snap {
@@ -221,10 +219,6 @@ shouldFetch = _shouldFetch;
     return [NSArray arrayWithObjects:
             [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],
             nil];
-}
-
-- (NSString *)sectionNameKeyPath {
-    return @"dateString";
 }
 
 #pragma mark - State Machine

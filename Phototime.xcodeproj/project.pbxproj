@@ -237,6 +237,7 @@
 		D092D2D414DC6712001108A0 /* _Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2D114DC6712001108A0 /* _Photo.m */; };
 		D092D2D514DC6712001108A0 /* _Timeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2D314DC6712001108A0 /* _Timeline.m */; };
 		D092D2D814DC6982001108A0 /* PSManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2D714DC6982001108A0 /* PSManagedObject.m */; };
+		D09E412F14E0DE850049D01F /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D09E412E14E0DE850049D01F /* MenuCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -579,6 +580,8 @@
 		D092D2D314DC6712001108A0 /* _Timeline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Timeline.m; sourceTree = "<group>"; };
 		D092D2D614DC6982001108A0 /* PSManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSManagedObject.h; sourceTree = "<group>"; };
 		D092D2D714DC6982001108A0 /* PSManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSManagedObject.m; sourceTree = "<group>"; };
+		D09E412D14E0DE850049D01F /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		D09E412E14E0DE850049D01F /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1272,6 +1275,8 @@
 			children = (
 				28603B5D14AC4D9300541BB1 /* TimelineCell.h */,
 				28603B5E14AC4D9300541BB1 /* TimelineCell.m */,
+				D09E412D14E0DE850049D01F /* MenuCell.h */,
+				D09E412E14E0DE850049D01F /* MenuCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1629,6 +1634,7 @@
 				D092D2D414DC6712001108A0 /* _Photo.m in Sources */,
 				D092D2D514DC6712001108A0 /* _Timeline.m in Sources */,
 				D092D2D814DC6982001108A0 /* PSManagedObject.m in Sources */,
+				D09E412F14E0DE850049D01F /* MenuCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

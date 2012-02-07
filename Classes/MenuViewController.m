@@ -9,6 +9,7 @@
 #import "MenuViewController.h"
 #import "TimelineViewController.h"
 #import "Timeline.h"
+#import "MenuCell.h"
 
 @implementation MenuViewController
 
@@ -29,19 +30,18 @@
 }
 
 #pragma mark - View Config
-- (UIView *)baseBackgroundView {
-    UIImageView *bgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]] autorelease];
-    return bgView;
+- (UIColor *)baseBackgroundColor {
+    return [UIColor whiteColor];
 }
 
-- (UIView *)rowBackgroundViewForIndexPath:(NSIndexPath *)indexPath selected:(BOOL)selected {
-    UIImageView *backgroundView = nil;
-    if (!selected) {
-        backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundCellLeather.png"]] autorelease];
-        backgroundView.autoresizingMask = ~UIViewAutoresizingNone;
-    }
-    return backgroundView;
-}
+//- (UIView *)rowBackgroundViewForIndexPath:(NSIndexPath *)indexPath selected:(BOOL)selected {
+//    UIImageView *backgroundView = nil;
+//    if (!selected) {
+//        backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundCellLeather.png"]] autorelease];
+//        backgroundView.autoresizingMask = ~UIViewAutoresizingNone;
+//    }
+//    return backgroundView;
+//}
 
 #pragma mark - View
 //- (void)loadView {
@@ -52,9 +52,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupHeader];
     [self setupSubviews];
     
     self.tableView.scrollsToTop = NO;
+    
+    NSError *error = nil;
+    [self.frc performFetch:&error];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -66,13 +70,50 @@
 }
 
 #pragma mark - Config Subviews
+- (void)setupHeader {
+    UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
+    headerView.backgroundColor = [UIColor whiteColor];
+    headerView.userInteractionEnabled = YES;
+    
+    NSString *title = @"Timelines";
+    
+    UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
+    titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
+    titleLabel.center = headerView.center;
+    [headerView addSubview:titleLabel];
+    
+    // Setup perma left/right buttons
+    static CGFloat margin = 10.0;
+    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
+    [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
+    //    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
+    [headerView addSubview:leftButton];
+    
+    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
+    [rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
+    [headerView addSubview:rightButton];
+    
+    self.headerView = headerView;
+}
+
 - (void)setupSubviews {
     [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+}
+
+#pragma mark - Actions
+- (void)leftAction {
+}
+
+- (void)rightAction {
+    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
 }
 
 #pragma mark - State Machine
 - (void)loadDataSource {
     [super loadDataSource];
+    
+    
 }
 
 - (void)dataSourceDidLoad {
@@ -87,28 +128,32 @@
     [fr setPredicate:[self fetchPredicate]];
     [fr setSortDescriptors:[self fetchSortDescriptors]];
     [fr setReturnsObjectsAsFaults:NO];
-    [fr setResultType:NSDictionaryResultType];
+    //    [fr setResultType:NSDictionaryResultType];
     return [fr autorelease];
 }
 
 // Subclass MAY OPTIONALLY implement
 - (NSString *)frcCacheName {
-    return nil;
+    return @"Menu#Timelines";
 }
 
 - (NSPredicate *)fetchPredicate {
-//    return [NSPredicate predicateWithFormat:@"ownerId = %@", ];
+    NSDictionary *fbMe = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbMe"];
+    NSString *userId = [fbMe objectForKey:@"id"];
+    return [NSPredicate predicateWithFormat:@"ownerId = %@", userId];
 }
 
 - (NSArray *)fetchSortDescriptors {
-    return nil;
+    return [NSArray arrayWithObjects:
+            [NSSortDescriptor sortDescriptorWithKey:@"lastSynced" ascending:NO],
+            nil];
 }
 
 #pragma mark - TableView
 - (Class)cellClassAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         default:
-            return [PSCell class];
+            return [MenuCell class];
             break;
     }
 }
@@ -141,7 +186,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    id object = [self.frc objectAtIndexPath:indexPath];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    id object = [self.frc objectAtIndexPath:indexPath];
+    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:object] autorelease];
+    
+    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionUp animated:YES];
 }
 
 @end

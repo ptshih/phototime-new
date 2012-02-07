@@ -26,8 +26,7 @@ static NSMutableDictionary *_captionsCache;
 
 @synthesize
 window = _window,
-navigationController = _navigationController,
-drawerController = _drawerController;
+navigationController = _navigationController;
 
 + (void)initialize {
     [self setupDefaults];
@@ -109,18 +108,14 @@ drawerController = _drawerController;
     
     self.navigationController = [[[PSNavigationController alloc] initWithRootViewController:tvc] autorelease];
     
-    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    //    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     
-    [[PSDrawerController sharedDrawer] setRootViewController:self.navigationController];
-    [[PSDrawerController sharedDrawer] setLeftViewController:mvc];
-    
-    self.window.rootViewController = [PSDrawerController sharedDrawer];
+    self.window.rootViewController = self.navigationController;
     
     // Login
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        LoginViewController *lvc = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-        [self.navigationController presentModalViewController:lvc animated:NO];
-        [lvc release];
+        LoginViewController *lvc = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+        [self.navigationController pushViewController:lvc direction:PSNavigationControllerDirectionUp animated:YES];
     }
     
     return YES;
@@ -153,7 +148,6 @@ drawerController = _drawerController;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    RELEASE_SAFELY(_drawerController);
     RELEASE_SAFELY(_navigationController);
     [_window release];
     [super dealloc];
