@@ -147,7 +147,7 @@ shouldFetch = _shouldFetch;
     static CGFloat margin = 10.0;
     self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
     [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
-//    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
+    //    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.leftButton];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
@@ -175,14 +175,14 @@ shouldFetch = _shouldFetch;
 
 #pragma mark - Actions
 - (void)leftAction {
-//    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
-//    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
+    //    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
+    //    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
     MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:mvc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
 - (void)rightAction {
-//    TestViewController *tvc = [[[TestViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    //    TestViewController *tvc = [[[TestViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:self.timeline] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:tvc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
@@ -233,34 +233,26 @@ shouldFetch = _shouldFetch;
         return;
     }
     
+    BLOCK_SELF;
+    
     /**
-     TODO
-     
-     Optimize this so that its not just ONE cell driving all the pics in 1 day
      Each DAY should be a SECTION.
      First ROW should always have 1 photo
      Each ROW should have UP TO 3 photos
      Basically, numRows = 1 + ceilf((numImages - 1) / 3)
      */
     
-    BLOCK_SELF;
+    // Reset section titles
+    [self.sectionTitles removeAllObjects];
     
-    // We always refetch from the core data store first
     NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-    [childContext setParentContext:blockSelf.moc];
+    [childContext setParentContext:self.moc];
     
     [childContext performBlock:^{
-        NSError *fetchError = nil;
-        NSArray *fetchedEntities = [childContext executeFetchRequest:blockSelf.fetchRequest error:&fetchError];
+        NSError *error = nil;
+        NSArray *fetchedEntities = [childContext executeFetchRequest:self.fetchRequest error:&error];
         
         NSMutableArray *items = [NSMutableArray array];
-        
-        // After the fetch, we want to split the entities by date (ignoring time)
-        // [fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]
-//        [_sectionTitles addObjectsFromArray:[fetchedEntities valueForKeyPath:@"@distinctUnionOfObjects.formattedDate"]];
-        
-        // Reset section titles
-        [_sectionTitles removeAllObjects];
         
         __block BOOL isNewSection = NO;
         __block NSInteger i = 0; // counter for photos per row
@@ -274,30 +266,35 @@ shouldFetch = _shouldFetch;
                 if (isNewSection || (i == 3)) {
                     i = 0;
                     isNewSection = NO;
-                    [rows addObject:[NSMutableArray arrayWithCapacity:3]];
+                    NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:3];
+                    [rows addObject:photos];
+                    [photos release];
                 }
                 NSMutableArray *photos = [rows lastObject];
                 [photos addObject:entity];
                 i++;
             } else {
                 lastDate = currentDate;
-                [_sectionTitles addObject:currentDate];
+                [blockSelf.sectionTitles addObject:currentDate];
                 
                 // Create a new section
-                NSMutableArray *rows = [NSMutableArray array];
-                NSMutableArray *photos = [NSMutableArray arrayWithCapacity:1];
+                NSMutableArray *rows = [[NSMutableArray alloc] init];
+                NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:1];
                 [photos addObject:entity];
                 [rows addObject:photos];
+                [photos release];
                 [items addObject:rows];
+                [rows release];
                 i = 0;
                 isNewSection = YES;
             }
         }];
         
-        [childContext.parentContext performBlock:^{
-            [blockSelf dataSourceShouldLoadObjects:items shouldAnimate:YES];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [blockSelf dataSourceShouldLoadObjects:items shouldAnimate:NO];
         }];
     }];
+    
 }
 
 - (void)loadDataSource {
@@ -315,7 +312,7 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)loadFromRemote {
-    [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+    //    [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
     
     self.shouldFetch = YES;
     
@@ -326,7 +323,7 @@ shouldFetch = _shouldFetch;
     finishBlock = ^() {
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
-        [SVProgressHUD dismissWithSuccess:@"Success"];
+        //        [SVProgressHUD dismissWithSuccess:@"Success"];
         [blockSelf fetchDataSource];
         NSLog(@"# NSURLConnection finishBlock completed on thread: %@", [NSThread currentThread]);
     };
@@ -336,7 +333,7 @@ shouldFetch = _shouldFetch;
     failureBlock = ^() {
         // Call any UI updates on the main queue
         // By now we can guarantee that our Core Data dataSource is ready
-        [SVProgressHUD dismissWithError:@"Error"];
+        //        [SVProgressHUD dismissWithError:@"Error"];
         [blockSelf dataSourceDidError];
         NSLog(@"# NSURLConnection failed on thread: %@", [NSThread currentThread]);
     };
@@ -363,8 +360,8 @@ shouldFetch = _shouldFetch;
                     NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
                     [childContext setParentContext:blockSelf.moc];
                     
-                    // Parse JSON and/or serialize to Core Data
                     [childContext performBlock:^{
+                        // Parse JSON and/or serialize to Core Data
                         NSLog(@"# Parsing JSON on thread: %@", [NSThread currentThread]);
                         // Parse JSON if Content-Type is "application/json"
                         NSString *contentType = [[httpResponse allHeaderFields] objectForKey:@"Content-Type"];
@@ -385,9 +382,15 @@ shouldFetch = _shouldFetch;
                             
                             NSError *error = nil;
                             [childContext save:&error];
-                            [blockSelf.moc save:&error];
+                            //                         If parent context has changes, save it in the background
+                            if ([blockSelf.moc hasChanges]) {
+                                BLOCK_SELF;
+                                [blockSelf.moc performBlock:^{
+                                    NSError *error = nil;
+                                    [blockSelf.moc save:&error];
+                                }];
+                            }
                         }
-                        
                         
                         // Make sure to call the finish block on the main queue
                         [[NSOperationQueue mainQueue] addOperationWithBlock:finishBlock];
@@ -420,8 +423,8 @@ shouldFetch = _shouldFetch;
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     
-//    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
-    NSString *title = [_sectionTitles count] > 0 ? [_sectionTitles objectAtIndex:section] : @"Timeline";
+    //    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
+    NSString *title = [self.sectionTitles count] > 0 ? [self.sectionTitles objectAtIndex:section] : @"Timeline";
     
     UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
     titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
@@ -453,13 +456,13 @@ shouldFetch = _shouldFetch;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Class cellClass = [self cellClassAtIndexPath:indexPath];
-//    id object = [self.frc objectAtIndexPath:indexPath];
+    //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     return [cellClass rowHeightForObject:object forInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
-//    id object = [self.frc objectAtIndexPath:indexPath];
+    //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [cell fillCellWithObject:object];
 }

@@ -12,8 +12,8 @@
 #import "Photo.h"
 
 #define TL_THUMB_SIZE 96.0
-//#define TL_THUMB_MARGIN 6.0
-#define TL_MARGIN 6.0
+#define TL_THUMB_MARGIN 6.0
+#define TL_MARGIN 10.0
 
 static NSMutableSet *__reusableImageViews = nil;
 
@@ -109,7 +109,7 @@ profileViews = _profileViews;
     CGFloat width = [[self class] rowWidthForInterfaceOrientation:interfaceOrientation] - TL_MARGIN * 2;
     
     // Top Margin
-    height += TL_MARGIN;
+    height += TL_THUMB_MARGIN / 2;
     
     if (numPhotos == 1) {
         height += floorf(width * 0.5);
@@ -118,7 +118,7 @@ profileViews = _profileViews;
     }
     
     // Bottom Margin
-    height += TL_MARGIN;
+    height += TL_THUMB_MARGIN / 2;
     
 //    NSLog(@"numPhotos: %d, calc height: %f", numPhotos, height);
     
@@ -133,7 +133,7 @@ profileViews = _profileViews;
     
     // Layout
     CGFloat left = TL_MARGIN;
-    CGFloat top = TL_MARGIN;
+    CGFloat top = TL_THUMB_MARGIN / 2;
     CGFloat width = self.contentView.width - TL_MARGIN * 2;
     
     CGFloat photoWidth = 0.0;
@@ -144,10 +144,10 @@ profileViews = _profileViews;
             photoHeight = floorf(width * 0.5);
             break;
         case 2:
-            photoWidth = floorf((width - TL_MARGIN) / 2);
+            photoWidth = floorf((width - TL_THUMB_MARGIN) / 2);
             break;
         case 3:
-            photoWidth = floorf((width - TL_MARGIN - TL_MARGIN) / 3);
+            photoWidth = floorf((width - TL_THUMB_MARGIN - TL_THUMB_MARGIN) / 3);
             break;
         default:
             break;
@@ -159,7 +159,7 @@ profileViews = _profileViews;
         [iv addGestureRecognizer:gr];
         iv.layer.borderWidth = 0.0;
         iv.layer.borderColor = nil;
-        iv.frame = CGRectMake(left + idx * (TL_MARGIN + photoWidth), top, photoWidth, photoHeight);
+        iv.frame = CGRectMake(left + idx * (TL_THUMB_MARGIN + photoWidth), top, photoWidth, photoHeight);
         [self.contentView addSubview:iv];
         [_imageViews addObject:iv];
         
@@ -174,7 +174,7 @@ profileViews = _profileViews;
     
     top += TL_THUMB_SIZE;
     
-    top += TL_MARGIN;
+    top += TL_THUMB_MARGIN / 2;
 
     
 //    NSLog(@"numPhotos: %d, fill height: %f", numPhotos, top);
