@@ -233,6 +233,16 @@ shouldFetch = _shouldFetch;
         return;
     }
     
+    /**
+     TODO
+     
+     Optimize this so that its not just ONE cell driving all the pics in 1 day
+     Each DAY should be a SECTION.
+     First ROW should always have 1 photo
+     Each ROW should have UP TO 3 photos
+     Basically, numRows = 1 + ceilf((numImages - 1) / 3)
+     */
+    
     BLOCK_SELF;
     
     // We always refetch from the core data store first

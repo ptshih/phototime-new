@@ -306,7 +306,6 @@ bottomLineView = _bottomLineView;
     
     UIViewContentMode contentMode = imageView.contentMode;
     PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:imageView.image contentMode:contentMode] autorelease];
-    [zoomView loadFullResolutionWithURL:[imageView url]];
     CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
     [zoomView showInRect:[self convertRect:imageRect toView:nil]];
 }
