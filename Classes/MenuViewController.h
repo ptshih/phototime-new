@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSTableViewController.h"
+#import "PSCoreDataTableViewController.h"
 
-@interface MenuViewController : PSTableViewController <UITextFieldDelegate> {
-  NSIndexPath *_selectedMenuIndexPath;
-  PSSearchField *_searchField;
+@interface MenuViewController : PSCoreDataTableViewController {
 }
 
 @end

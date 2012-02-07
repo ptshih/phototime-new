@@ -302,6 +302,8 @@ bottomLineView = _bottomLineView;
 #pragma mark - Zoom
 - (void)zoom:(UITapGestureRecognizer *)gestureRecognizer {
     PSCachedImageView *imageView = (PSCachedImageView *)gestureRecognizer.view;
+    if (!imageView.image) return;
+    
     UIViewContentMode contentMode = imageView.contentMode;
     PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:imageView.image contentMode:contentMode] autorelease];
     [zoomView loadFullResolutionWithURL:[imageView url]];

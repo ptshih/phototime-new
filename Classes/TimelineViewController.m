@@ -69,7 +69,6 @@
 - (void)snap;
 
 - (void)loadFromRemote;
-- (void)loadFromSavedPhotos;
 
 @end
 
@@ -125,7 +124,6 @@ shouldFetch = _shouldFetch;
     [super viewDidLoad];
     
     // Setup Views
-//    [self setupHeader];
     [self setupSubviews];
     
     [self setupPullRefresh];
@@ -142,31 +140,6 @@ shouldFetch = _shouldFetch;
 }
 
 #pragma mark - Config Subviews
-//- (void)setupHeader {
-//    static CGFloat margin = 10.0;
-//    UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)];
-//    headerView.userInteractionEnabled = YES;
-//    [headerView setImage:[UIImage stretchableImageNamed:@"BackgroundNavigationBar" withLeftCapWidth:0.0 topCapWidth:1.0]];
-//    
-//    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(test)];
-//    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
-//    [leftButton setImage:[UIImage imageNamed:@"IconBackGray"] forState:UIControlStateHighlighted];
-//    [headerView addSubview:leftButton];
-//    
-//    UILabel *titleLabel = [UILabel labelWithText:@"Timeline" style:@"navigationTitleLabel"];
-//    titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
-//    titleLabel.center = headerView.center;
-//    [headerView addSubview:titleLabel];
-//    
-//    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(snap)];
-//    [rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-//    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
-//    [headerView addSubview:rightButton];
-//    
-//    [self setHeaderView:headerView];
-//    [headerView release];
-//}
-
 - (void)setupSubviews {
     [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
     
@@ -224,29 +197,6 @@ shouldFetch = _shouldFetch;
         as = [[[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Choose From Library", nil] autorelease];
     }
     [as showInView:[APP_DELEGATE window]];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) return;
-    //  CameraViewController *cvc = [[CameraViewController alloc] initWithNibName:nil bundle:nil];
-    //  [self.psNavigationController pushViewController:cvc animated:YES];
-    //  [cvc release];
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        if (buttonIndex == 0) {
-            sourceType = UIImagePickerControllerSourceTypeCamera;
-        }
-    }
-    
-    //  [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.allowsEditing = NO;
-    imagePicker.delegate = self;
-    imagePicker.sourceType = sourceType;
-    imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
-    [(PSNavigationController *)self.parentViewController pushViewController:imagePicker animated:YES];
-    [imagePicker release];
 }
 
 #pragma mark - Core Data
@@ -338,28 +288,6 @@ shouldFetch = _shouldFetch;
     // loadFromRemote will set self.shouldFetch = YES
     [self fetchDataSource];
     [self loadFromRemote];
-    
-    
-//    [self loadFromSavedPhotos];
-    
-    //  NSString *jpegPath = [[NSBundle mainBundle] pathForResource:@"bubbles" ofType:@"jpg"];
-    //  NSData *jpegData = [NSData dataWithContentsOfFile:jpegPath];
-    
-    //  UIImage *jpeg = [UIImage imageWithData:jpegData];
-    
-    //  CGImageSourceRef ref = CGImageSourceCreateWithData((CFDataRef)jpegData, NULL);
-    //  NSDictionary *dict = (NSDictionary *)CGImageSourceCopyPropertiesAtIndex(ref
-    //                                                                          , 0, NULL);
-    //  NSDictionary *exif = [dict objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-    //  NSDictionary *gps = [dict objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-    //  
-    //  
-    //  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"albums" ofType:@"json"];
-    //  NSData *fixtureData = [NSData dataWithContentsOfFile:filePath];
-    //  NSDictionary *response = [fixtureData objectFromJSONData];
-    //
-    //  NSArray *items = [response objectForKey:@"data"];
-    
 }
 
 - (void)dataSourceDidLoad {
@@ -466,122 +394,6 @@ shouldFetch = _shouldFetch;
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
 }
 
-- (void)loadFromSavedPhotos {
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    // Enumerate just the photos and videos group by using ALAssetsGroupSavedPhotos.
-    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        
-        if (group) {
-            // Within the group enumeration block, filter to enumerate just photos.
-            [group setAssetsFilter:[ALAssetsFilter allPhotos]];
-            
-            NSMutableArray *items = [NSMutableArray array];
-            
-            NSMutableArray *photos = [NSMutableArray array];
-            
-            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop){
-                if (result) {
-                    ALAssetRepresentation *rep = [result defaultRepresentation];
-                    
-                    NSURL *assetURL = [rep url];
-                    // NOTE: it is expensive to read out the metadata!!!
-                    //          NSDictionary *metadata = [rep metadata];
-                    
-#warning debug
-                    //          if ([assetURL.absoluteString isEqualToString:@"assets-library://asset/asset.JPG?id=E6292758-C2C3-4077-A7AD-ED11C4BACF7A&ext=JPG"]) {
-                    //            NSLog(@"debug");
-                    //          }
-                    
-                    // Read out asset properties
-                    //          NSNumber *assetWidth = [metadata objectForKey:(NSString *)kCGImagePropertyPixelWidth];
-                    //          NSNumber *assetHeight = [metadata objectForKey:(NSString *)kCGImagePropertyPixelHeight];
-                    NSDate *assetDate = [result valueForProperty:ALAssetPropertyDate];
-                    CLLocation *assetLocation = [result valueForProperty:ALAssetPropertyLocation];
-                    
-                    // EXIF Optional
-                    //          NSDictionary *exif = [metadata objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-                    //          NSNumber *exifWidth = nil;
-                    //          NSNumber *exifHeight = nil;
-                    //          NSMutableString *exifDatetime = nil;
-                    //          if (exif) {
-                    //            // Width
-                    //            exifWidth = [exif objectForKey:(NSString *)kCGImagePropertyExifPixelXDimension];
-                    //            exifHeight = [exif objectForKey:(NSString *)kCGImagePropertyExifPixelYDimension];
-                    //            
-                    //            // Datetime
-                    //            NSString *unformattedDateAsString = [exif objectForKey:(NSString *)kCGImagePropertyExifDateTimeOriginal];
-                    //            if (unformattedDateAsString) {
-                    //              exifDatetime = [[unformattedDateAsString mutableCopy] autorelease];
-                    //              //make sure the date stored in the metadata is not nil, and contains a meaningful date
-                    //              if(exifDatetime && ![exifDatetime isEqualToString:@""] && ![exifDatetime isEqualToString:@"0000:00:00 00:00:00"]) {
-                    //                // the date (not the time) part of the string needs to contain dashes, not colons, for NSDate to read it correctly
-                    //                [exifDatetime replaceOccurrencesOfString:@":" withString:@"-" options:0 range:NSMakeRange(0, 10)]; //the first 10 characters are the date part
-                    //                //the EXIF spec does not allow the time zone to be saved with the date,
-                    //                // so we must assume the camera’s clock is set to the same time zone as the computer’s.
-                    //                [exifDatetime appendString:@" +0000"];
-                    //              }
-                    //            }
-                    //          }
-                    
-                    // GPS
-                    //          NSDictionary *gps = [metadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-                    //          
-                    //          NSString *exifLatitude = nil;
-                    //          NSString *exifLongitude = nil;
-                    //          if (gps) {
-                    //            exifLatitude = [gps objectForKey:(NSString *)kCGImagePropertyGPSLatitude];
-                    //            exifLongitude = [gps objectForKey:(NSString *)kCGImagePropertyGPSLongitude];
-                    //          }
-                    
-                    // Build array of PTPhoto based on Assets
-                    // Pass into dataSourcedidLoadObjects:
-                    NSMutableDictionary *photo = [[NSMutableDictionary alloc] init];
-                    [photo setObject:assetURL.absoluteString forKey:@"source"];
-                    if (assetDate) [photo setObject:assetDate forKey:@"timestamp"];
-                    if (assetLocation) [photo setObject:assetLocation forKey:@"location"];
-                    //          if (assetWidth) [photo setObject:assetWidth forKey:@"width"];
-                    //          if (assetHeight) [photo setObject:assetHeight forKey:@"height"];
-                    
-                    //          NSLog(@"Adding photo: %@", photo);
-                    [photos addObject:photo];
-                    [photo release];
-                }        
-            }];
-            
-            NSArray *sortedPhotos = [photos sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]]];
-            
-            unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
-            
-            NSDate *currentDate = nil;
-            CLLocation *currentLocation = nil;
-            for (NSDictionary *photo in sortedPhotos) {
-                NSDateComponents *components = [[NSCalendar currentCalendar] components:unitFlags fromDate:[photo objectForKey:@"timestamp"]];
-                NSDate *photoDate = [[NSCalendar currentCalendar] dateFromComponents:components];
-                
-                CLLocation *photoLocation = [photo objectForKey:@"location"];
-                currentLocation = photoLocation;
-                
-                // Begin a new day if no currentDate set or if photo date doesn't match
-                if (!currentDate || (![currentDate isEqualToDate:photoDate])) {
-                    currentDate = photoDate;
-                    [items addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:currentDate, @"timestamp", currentLocation, @"location", nil]];
-                    [[items lastObject] setObject:[NSMutableArray arrayWithObject:photo] forKey:@"photos"];
-                } else {
-                    // If photo is still part of current day, add to array
-                    [[[items lastObject] objectForKey:@"photos"] addObject:photo];
-                }
-            }
-            
-            [self dataSourceShouldLoadObjects:[NSMutableArray arrayWithObject:items] shouldAnimate:NO];
-        }
-        
-    } failureBlock: ^(NSError *error) {
-        NSLog(@"No groups");
-    }];
-    [library release];
-}
-
 #pragma mark - TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
@@ -596,32 +408,11 @@ shouldFetch = _shouldFetch;
     [headerView addSubview:titleLabel];
     
     return headerView;
-    
-    
-    
-//    UIView *hv = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 32.0)] autorelease];
-//    hv.backgroundColor = [UIColor whiteColor];
-//    
-//    CGFloat width = hv.width - 20.0;
-//    
-//    UILabel *dateLabel = [UILabel labelWithText:[[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] style:@"timelineTitle"];
-//    dateLabel.backgroundColor = [UIColor whiteColor];
-//    dateLabel.frame = CGRectMake(10.0, 5.0, width, 20.0);
-//    [hv addSubview:dateLabel];
-//    
-//    UIImageView *hl = [[UIImageView alloc] initWithImage:[UIImage stretchableImageNamed:@"HorizontalLine" withLeftCapWidth:2 topCapWidth:0]];
-//    hl.frame = CGRectMake(10.0, hv.height - 1, width, 1.0);
-//    [hv addSubview:hl];
-//    return hv;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 44.0;
 }
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    return [_sectionTitles objectAtIndex:section];
-//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.items count];
@@ -666,6 +457,30 @@ shouldFetch = _shouldFetch;
     [self tableView:tableView configureCell:cell atIndexPath:indexPath];
     
     return cell;
+}
+
+#pragma mark - Blah
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == actionSheet.cancelButtonIndex) return;
+    //  CameraViewController *cvc = [[CameraViewController alloc] initWithNibName:nil bundle:nil];
+    //  [self.psNavigationController pushViewController:cvc animated:YES];
+    //  [cvc release];
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        if (buttonIndex == 0) {
+            sourceType = UIImagePickerControllerSourceTypeCamera;
+        }
+    }
+    
+    //  [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.allowsEditing = NO;
+    imagePicker.delegate = self;
+    imagePicker.sourceType = sourceType;
+    imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+    [(PSNavigationController *)self.parentViewController pushViewController:imagePicker animated:YES];
+    [imagePicker release];
 }
 
 @end
