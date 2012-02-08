@@ -110,11 +110,9 @@
 
 #pragma mark - Config Subviews
 - (void)setupSubviews {
-  _photoView = [[UIImageView alloc] initWithImage:_image];
-  _photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _photoView.contentMode = UIViewContentModeScaleAspectFit;
-  _photoView.frame = _contentView.bounds;
-  [self.contentView addSubview:_photoView];
+//  _photoView = [[UIImageView alloc] initWithImage:_image];
+//  _photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//  _photoView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 #pragma mark - Actions

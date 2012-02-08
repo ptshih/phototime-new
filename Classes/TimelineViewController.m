@@ -76,6 +76,7 @@
 @implementation TimelineViewController
 
 @synthesize
+moc = _moc,
 timeline = _timeline,
 leftButton = _leftButton,
 rightButton = _rightButton,
@@ -93,6 +94,9 @@ shouldFetch = _shouldFetch;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
+        [self.moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
+        
         self.shouldFetch = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
     }
@@ -101,6 +105,7 @@ shouldFetch = _shouldFetch;
 
 - (void)viewDidUnload {
     // Views
+    [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     [super viewDidUnload];
 }
 
@@ -108,6 +113,7 @@ shouldFetch = _shouldFetch;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     RELEASE_SAFELY(_timeline);
+    RELEASE_SAFELY(_moc);
     // Views
     [super dealloc];
 }
@@ -129,10 +135,10 @@ shouldFetch = _shouldFetch;
     // Setup Views
     [self setupSubviews];
     [self setupPullRefresh];
+    self.tableView.contentOffset = self.contentOffset;
     
-    if ([[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        [self loadDataSource];
-    }
+    // Load
+    [self loadDataSource];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -141,7 +147,7 @@ shouldFetch = _shouldFetch;
 
 #pragma mark - Config Subviews
 - (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+    [self setupTableViewWithFrame:CGRectMake(0.0, 0.0, self.view.width, self.view.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
     
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
@@ -221,28 +227,18 @@ shouldFetch = _shouldFetch;
 }
 
 #pragma mark - State Machine
-- (BOOL)dataIsAvailable {
-    return YES;
+- (void)loadDataSource {
+    [self loadFromRemote];
+    [self loadFromCache];
 }
 
-- (void)fetchDataSource {
-    if (self.shouldFetch) {
-        self.shouldFetch = NO;
-    } else {
-        return;
-    }
-    
+- (void)reloadDataSource {
+    if (self.reloading) return;
+    [self loadFromRemote];
+}
+
+- (void)loadFromCache {
     BLOCK_SELF;
-    
-    /**
-     Each DAY should be a SECTION.
-     First ROW should always have 1 photo
-     Each ROW should have UP TO 3 photos
-     Basically, numRows = 1 + ceilf((numImages - 1) / 3)
-     */
-    
-    // Reset section titles
-    [self.sectionTitles removeAllObjects];
     
     NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
     [childContext setParentContext:self.moc];
@@ -251,6 +247,7 @@ shouldFetch = _shouldFetch;
         NSError *error = nil;
         NSArray *fetchedEntities = [childContext executeFetchRequest:self.fetchRequest error:&error];
         
+        NSMutableArray *sectionTitles = [NSMutableArray array];
         NSMutableArray *items = [NSMutableArray array];
         
         __block BOOL isNewSection = NO;
@@ -274,7 +271,7 @@ shouldFetch = _shouldFetch;
                 i++;
             } else {
                 lastDate = currentDate;
-                [blockSelf.sectionTitles addObject:currentDate];
+                [sectionTitles addObject:currentDate];
                 
                 // Create a new section
                 NSMutableArray *rows = [[NSMutableArray alloc] init];
@@ -290,100 +287,59 @@ shouldFetch = _shouldFetch;
         }];
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [blockSelf dataSourceShouldLoadObjects:items shouldAnimate:NO];
+            blockSelf.sectionTitles = sectionTitles;
+            [blockSelf dataSourceShouldLoadObjects:items animated:NO];
         }];
     }];
-    
-}
-
-- (void)loadDataSource {
-    [super loadDataSource];
-    
-    // Ordering matters
-    // fetchDataSource will set self.shouldFetch = NO
-    // loadFromRemote will set self.shouldFetch = YES
-    [self fetchDataSource];
-    [self loadFromRemote];
-}
-
-- (void)dataSourceDidLoad {
-    [super dataSourceDidLoad];
 }
 
 - (void)loadFromRemote {
-    //    [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+    [self beginRefresh];
+
+    BLOCK_SELF;
     
-    self.shouldFetch = YES;
-    
-    BLOCK_SELF; // Used for accessing MOC
-    
-    // This block is called after parsing/serializing and should always called on the main queue
     void (^finishBlock)();
     finishBlock = ^() {
-        // Call any UI updates on the main queue
-        // By now we can guarantee that our Core Data dataSource is ready
-        //        [SVProgressHUD dismissWithSuccess:@"Success"];
-        [blockSelf fetchDataSource];
-        NSLog(@"# NSURLConnection finishBlock completed on thread: %@", [NSThread currentThread]);
+        [self endRefresh];
+        [self loadFromCache];
+        NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
     };
     
-    // This block is called after parsing/serializing and should always called on the main queue
     void (^failureBlock)();
     failureBlock = ^() {
-        // Call any UI updates on the main queue
-        // By now we can guarantee that our Core Data dataSource is ready
-        //        [SVProgressHUD dismissWithError:@"Error"];
-        [blockSelf dataSourceDidError];
+        [self endRefresh];
         NSLog(@"# NSURLConnection failed on thread: %@", [NSThread currentThread]);
     };
     
-    // This block is passed in to NSURLConnection equivalent to a finish block, it is run inside the provided operation queue
     void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
     handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
         NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
         
-        // How to check response
         // First check error and data
         if (!error && data) {
-            // This is equivalent to the completion block
             // Check the HTTP Status code if available
             if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 NSInteger statusCode = [httpResponse statusCode];
                 if (statusCode == 200) {
-                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
-                    // We got an HTTP OK code, start reading the response
-                    __block id results = nil;
-                    
                     // Create a child context
                     NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
                     [childContext setParentContext:blockSelf.moc];
                     
                     [childContext performBlock:^{
-                        // Parse JSON and/or serialize to Core Data
-                        NSLog(@"# Parsing JSON on thread: %@", [NSThread currentThread]);
-                        // Parse JSON if Content-Type is "application/json"
-                        NSString *contentType = [[httpResponse allHeaderFields] objectForKey:@"Content-Type"];
-                        BOOL isJSON = contentType ? [contentType rangeOfString:@"application/json"].location != NSNotFound : NO;
-                        if (isJSON) {
-                            NSError *jsonError = nil;
-                            results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-                        } else {
-                            results = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-                        }
+                        NSLog(@"# NSURLConnection Parsing/Serializing on thread: %@", [NSThread currentThread]);
+                        id results = [self parseData:data httpResponse:httpResponse];
                         
                         // Serialize to Core Data
                         NSDictionary *data = [results objectForKey:@"data"];
                         NSArray *photos = [data objectForKey:@"photos"];
                         if ([photos count] > 0) {
-                            NSLog(@"# Serializing Core Data on thread: %@", [NSThread currentThread]);
                             [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"id"];
                             
                             NSError *error = nil;
                             [childContext save:&error];
-                            //                         If parent context has changes, save it in the background
+                            
                             if ([blockSelf.moc hasChanges]) {
-                                BLOCK_SELF;
                                 [blockSelf.moc performBlock:^{
                                     NSError *error = nil;
                                     [blockSelf.moc save:&error];
@@ -410,11 +366,9 @@ shouldFetch = _shouldFetch;
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timeline.id]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
-    // NOTE: We should generally run the completionHandler on the mainQueue. It can optionally be run on any queue if required
-    //    NSOperationQueue *backgroundQueue = [[[NSOperationQueue alloc] init] autorelease];
-    //    NSOperationQueue *backgroundQueue = [NSOperationQueue mainQueue];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
 }
+
 
 #pragma mark - TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

@@ -6,12 +6,13 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "PSCoreDataTableViewController.h"
+#import "PSTableViewController.h"
 
 @class Timeline;
 
-@interface TimelineViewController : PSCoreDataTableViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface TimelineViewController : PSTableViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (nonatomic, retain) NSManagedObjectContext *moc;
 @property (nonatomic, retain) Timeline *timeline;
 @property (nonatomic, assign) UIButton *leftButton;
 @property (nonatomic, assign) UIButton *rightButton;

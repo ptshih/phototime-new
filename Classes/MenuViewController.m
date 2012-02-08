@@ -91,11 +91,11 @@
     [rightButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateHighlighted];
     [headerView addSubview:rightButton];
     
-    self.headerView = headerView;
+    [self.view addSubview:headerView];
 }
 
 - (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+    [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
 }
 
 #pragma mark - Actions
@@ -108,14 +108,12 @@
 
 #pragma mark - State Machine
 - (void)loadDataSource {
-    [super loadDataSource];
-    
     NSError *error = nil;
     [self.frc performFetch:&error];
 }
 
-- (void)dataSourceDidLoad {
-    [super dataSourceDidLoad];
+- (void)reloadDataSource {
+    
 }
 
 #pragma mark - Core Data
@@ -170,7 +168,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     id object = [self.frc objectAtIndexPath:indexPath];
-    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:object] autorelease];
+//    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:object] autorelease];
     
     [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionUp animated:YES];
 }

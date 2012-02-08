@@ -72,7 +72,7 @@
 //    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
 //    [headerView addSubview:rightButton];
     
-    self.headerView = headerView;
+    [self.view addSubview:headerView];
 }
 
 #pragma mark - Actions
@@ -86,12 +86,12 @@
 }
 
 - (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.height, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+    [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
 }
 
 #pragma mark - State Machine
 - (void)loadDataSource {
-    [super loadDataSource];
+    [self beginRefresh];
     
     /**
      Sections:
@@ -133,15 +133,15 @@
                     [items addObject:[NSMutableArray array]];
                     [self.sectionTitles addObject:@"Friends on Facebook"];
                     
-                    [self dataSourceShouldLoadObjects:items shouldAnimate:NO];
-                    
+                    [self dataSourceShouldLoadObjects:items animated:NO];
+                    [self endRefresh];
                 } else {
                     // Failed, read status code
-                    [self dataSourceDidError];
+                    [self endRefresh];
                 }
             }
         } else {
-            [self dataSourceDidError];
+            [self endRefresh];
         }
     };
     
@@ -153,18 +153,6 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
-    
-    [SVProgressHUD showWithStatus:@"Finding Friends" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
-}
-
-- (void)dataSourceDidLoad {
-    [super dataSourceDidLoad];
-    [SVProgressHUD dismissWithSuccess:@"Success"];
-}
-
-- (void)dataSourceDidError {
-    [super dataSourceDidError];
-    [SVProgressHUD dismissWithError:@"Network Error"];
 }
 
 #pragma mark - TableView
