@@ -100,6 +100,7 @@ profileIconSize = _profileIconSize;
         [__reusableImageViews removeObject:iv];
     }
     [iv loadImageWithURL:URL];
+    [self.imageViews addObject:iv];
     return iv;
 }
 
@@ -165,7 +166,6 @@ profileIconSize = _profileIconSize;
         iv.layer.borderColor = nil;
         iv.frame = CGRectMake(left + idx * (TL_THUMB_MARGIN + photoWidth), top, photoWidth, photoHeight);
         [self.contentView addSubview:iv];
-        [_imageViews addObject:iv];
         
         // Add profile view
         PSCachedImageView *pv = [self dequeueImageViewWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [dict objectForKey:@"ownerId"]]]];
