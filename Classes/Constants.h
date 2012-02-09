@@ -1,5 +1,8 @@
+#import <CoreData/CoreData.h>
+
 #import "PSConstants.h"
 #import "PSNavigationController.h"
+#import "PSCoreDataStack.h"
 
 // Vendor imports
 #import "PSFacebookCenter.h"

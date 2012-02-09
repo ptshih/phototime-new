@@ -1,18 +1,22 @@
 //
-//  LoginViewController.m
+//  WelcomeViewController.m
 //  OSnap
 //
 //  Created by Peter Shih on 11/23/11.
 //  Copyright (c) 2011 Peter Shih. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "WelcomeViewController.h"
+#import "TimelineViewController.h"
+#import "Timeline.h"
 
-@interface LoginViewController (Private)
+@interface WelcomeViewController (Private)
 
 - (void)loginIfNecessary;
 - (void)loginDidSucceed:(BOOL)animated;
 - (void)loginDidNotSucceed;
+
+- (void)downloadTimelines;
 
 // Notifications
 - (void)fbDidLogin;
@@ -24,7 +28,7 @@
 - (void)uploadAccessToken;
 @end
 
-@implementation LoginViewController
+@implementation WelcomeViewController
 
 #pragma mark - Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -63,11 +67,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    // Add this to main runloop queue
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        [self loginIfNecessary];
-//    }];
 }
 
 #pragma mark - Actions
@@ -104,7 +103,7 @@
                     // We got an HTTP OK code, start reading the response
                     
                     
-                    [self loginDidSucceed:YES];
+                    [self downloadTimelines];
                 } else {
                     // Failed, read status code
                     [self loginDidNotSucceed];
@@ -132,6 +131,7 @@
 #pragma mark - Login
 - (void)loginIfNecessary {
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
+        [SVProgressHUD showWithStatus:@"Talking with Facebook" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
         [[PSFacebookCenter defaultCenter] authorizeBasicPermissions];
     } else {
         [self loginDidSucceed:NO];
@@ -139,12 +139,74 @@
 }
 
 - (void)loginDidSucceed:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
-    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
+//    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
+    [SVProgressHUD dismissWithSuccess:@"Hurray!"];
+    
+    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
+    Timeline *t = nil;
+    NSFetchRequest *fr = [[[NSFetchRequest alloc] initWithEntityName:[Timeline entityName]] autorelease];
+    [fr setEntity:[Timeline entityInManagedObjectContext:[PSCoreDataStack mainThreadContext]]];
+    [fr setPredicate:[NSPredicate predicateWithFormat:@"ownerId = %@", fbId]];
+    [fr setReturnsObjectsAsFaults:NO];
+    NSArray *results = [[PSCoreDataStack mainThreadContext] executeFetchRequest:fr error:nil];
+    if (results && [results count] > 0) {
+        t = [results lastObject];
+    }
+    
+    TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
 }
 
 - (void)loginDidNotSucceed {
+    [SVProgressHUD dismissWithError:@"Epic Fail"];
     [self loginIfNecessary];
+}
+
+- (void)downloadTimelines {
+    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
+    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
+        if (!error && data) {
+            // This is equivalent to the completion block
+            // Check the HTTP Status code if available
+            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                NSInteger statusCode = [httpResponse statusCode];
+                if (statusCode == 200) {
+                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
+                    id results = [self parseData:data httpResponse:httpResponse];
+                    NSDictionary *timeline = [[[results objectForKey:@"data"] objectForKey:@"timelines"] lastObject];
+                    
+                    NSManagedObjectContext *moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
+                    [moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
+                    [moc performBlock:^{
+                        [Timeline updateOrInsertInManagedObjectContext:moc entity:timeline uniqueKey:@"id"];
+                        
+                        NSError *error = nil;
+                        [moc save:&error];
+                        
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            [self loginDidSucceed:YES];
+                        }];
+                    }];
+                } else {
+                    // Failed, read status code
+                    [self loginDidNotSucceed];
+                }
+            }
+        } else {
+            [self loginDidNotSucceed];
+        }
+    };
+
+    
+    // Setup the network request
+    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/%@/timelines", API_BASE_URL, fbId]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
 }
 
 @end

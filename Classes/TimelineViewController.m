@@ -334,7 +334,7 @@ shouldFetch = _shouldFetch;
                         NSDictionary *data = [results objectForKey:@"data"];
                         NSArray *photos = [data objectForKey:@"photos"];
                         if ([photos count] > 0) {
-                            [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"id"];
+                            [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"fbId"];
                             
                             NSError *error = nil;
                             [childContext save:&error];

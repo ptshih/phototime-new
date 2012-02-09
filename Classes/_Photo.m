@@ -5,6 +5,7 @@
 
 const struct PhotoAttributes PhotoAttributes = {
 	.createdAt = @"createdAt",
+	.fbId = @"fbId",
 	.formattedDate = @"formattedDate",
 	.height = @"height",
 	.id = @"id",
@@ -63,6 +64,13 @@ const struct PhotoFetchedProperties PhotoFetchedProperties = {
 
 
 @dynamic createdAt;
+
+
+
+
+
+
+@dynamic fbId;
 
 
 

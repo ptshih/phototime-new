@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  WelcomeViewController.h
 //  OSnap
 //
 //  Created by Peter Shih on 11/23/11.
@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PSViewController.h"
+#import "PSBaseViewController.h"
 
-@interface LoginViewController : PSViewController
+@interface WelcomeViewController : PSBaseViewController
 
 @end
