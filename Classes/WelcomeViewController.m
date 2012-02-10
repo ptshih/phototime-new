@@ -154,8 +154,12 @@
         t = [results lastObject];
     }
     
-    TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
+    if (t) {
+        TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
+        [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
+    } else {
+#warning handle this edge error case
+    }
 }
 
 - (void)loginDidNotSucceed {

@@ -102,8 +102,6 @@ navigationController = _navigationController;
     
     id controller = nil;
     if ([[PSFacebookCenter defaultCenter] isLoggedIn] && t) {
-        // Test insert
-#warning THIS IS A TEST
         controller = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
     } else {
         controller = [[[WelcomeViewController alloc] initWithNibName:nil bundle:nil] autorelease];
