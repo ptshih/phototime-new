@@ -12,6 +12,7 @@
 
 @interface TimelineCell : PSCell
 
+@property (nonatomic, retain) id object;
 @property (nonatomic, retain) NSMutableArray *imageDicts;
 @property (nonatomic, retain) NSMutableArray *imageViews;
 @property (nonatomic, retain) NSMutableArray *profileViews;

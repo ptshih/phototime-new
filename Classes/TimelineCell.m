@@ -20,6 +20,7 @@ static NSMutableSet *__reusableImageViews = nil;
 @implementation TimelineCell
 
 @synthesize
+object = _object,
 imageDicts = _imageDicts,
 imageViews = _imageViews,
 profileViews = _profileViews,
@@ -43,7 +44,7 @@ profileIconSize = _profileIconSize;
 }
 
 - (void)dealloc {
-    
+    RELEASE_SAFELY(_object);
     RELEASE_SAFELY(_imageDicts);
     RELEASE_SAFELY(_imageViews);
     RELEASE_SAFELY(_profileViews);
@@ -64,25 +65,6 @@ profileIconSize = _profileIconSize;
     [self.imageDicts removeAllObjects];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    // Here we should format the cell
-    // There should always be a featured image on top, and an array of additional images on bottom that follow set guidelines
-    // If 2, split then 50/50
-    // If 3, split them 33/33/33
-    // If > 3, split and fill as necessary in priority order, 3 -> 2 -> 1
-    
-    /**
-     Always have a top image (featured)
-     Any additional images will be SQUARE and gridded up below with the following rules:
-     - If 1 image, fill entire row
-     - If 2 images, split them 50/50
-     - If 3 images, split them 33/33/33
-     - If > 3 images, fill up to 3 per row and the rest in priority order
-     */
-}
-
 - (PSCachedImageView *)dequeueImageViewWithURL:(NSURL *)URL {
     PSCachedImageView *iv = [[[__reusableImageViews anyObject] retain] autorelease];
     if (!iv) {
@@ -100,7 +82,6 @@ profileIconSize = _profileIconSize;
         [__reusableImageViews removeObject:iv];
     }
     [iv loadImageWithURL:URL];
-    [self.imageViews addObject:iv];
     return iv;
 }
 
@@ -129,12 +110,41 @@ profileIconSize = _profileIconSize;
 }
 
 - (void)fillCellWithObject:(id)object {
+    self.object = object;
+    
     // Fill Data
     NSArray *photos = (NSArray *)object;
     NSInteger numPhotos = [photos count];
     [self.imageDicts addObjectsFromArray:photos];
     
     self.profileIconSize = (numPhotos > 1) ? 30.0 : 40.0;
+
+    [self.imageDicts enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+        PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[dict objectForKey:@"source"]]];
+        UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(zoom:)] autorelease];
+        [iv addGestureRecognizer:gr];
+        iv.layer.borderWidth = 0.0;
+        iv.layer.borderColor = nil;
+        [self.contentView addSubview:iv];
+        [self.imageViews addObject:iv];
+        
+        // Add profile view
+        PSCachedImageView *pv = [self dequeueImageViewWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [dict objectForKey:@"ownerId"]]]];
+        // TODO
+        // Detect (using flipboard's method) if pixel contrast is dark/light and choose black/white border
+        pv.layer.borderWidth = 1.0;
+        pv.layer.borderColor = [RGBACOLOR(255, 255, 255, 1.0) CGColor];
+        [iv addSubview:pv];
+        [self.profileViews addObject:pv];
+    }];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    // Read object
+    NSArray *photos = (NSArray *)self.object;
+    NSInteger numPhotos = [photos count];
     
     // Layout
     CGFloat left = TL_MARGIN;
@@ -157,31 +167,18 @@ profileIconSize = _profileIconSize;
         default:
             break;
     }
-
-    [self.imageDicts enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
-        PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[dict objectForKey:@"source"]]];
-        UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(zoom:)] autorelease];
-        [iv addGestureRecognizer:gr];
-        iv.layer.borderWidth = 0.0;
-        iv.layer.borderColor = nil;
+    
+    [self.imageViews enumerateObjectsUsingBlock:^(UIImageView *iv, NSUInteger idx, BOOL *stop) {
         iv.frame = CGRectMake(left + idx * (TL_THUMB_MARGIN + photoWidth), top, photoWidth, photoHeight);
-        [self.contentView addSubview:iv];
         
         // Add profile view
-        PSCachedImageView *pv = [self dequeueImageViewWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [dict objectForKey:@"ownerId"]]]];
+        UIImageView *pv = [self.profileViews objectAtIndex:idx];
         pv.frame = CGRectMake(iv.width - self.profileIconSize + 1, iv.height - self.profileIconSize + 1, self.profileIconSize, self.profileIconSize);
-        pv.layer.borderWidth = 1.0;
-        pv.layer.borderColor = [RGBACOLOR(255, 255, 255, 1.0) CGColor];
-        [iv addSubview:pv];
-        [self.profileViews addObject:pv];
     }];
     
     top += TL_THUMB_SIZE;
     
     top += TL_THUMB_MARGIN / 2;
-
-    
-//    NSLog(@"numPhotos: %d, fill height: %f", numPhotos, top);
 }
 
 #pragma mark - Zoom
