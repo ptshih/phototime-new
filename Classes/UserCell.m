@@ -47,7 +47,7 @@
 //    top = self.detailTextLabel.bottom;
 }
 
-- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object {
+- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *dict = (NSDictionary *)object;
     NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [dict objectForKey:@"id"]]];
     [self.psImageView loadImageWithURL:profileURL];

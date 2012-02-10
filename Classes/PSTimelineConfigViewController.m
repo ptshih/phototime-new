@@ -202,7 +202,7 @@ timeline = _timeline;
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [cell tableView:tableView fillCellWithObject:object];
+    [cell tableView:tableView fillCellWithObject:object atIndexPath:indexPath];
     
     // Configure accessoryView
     if (indexPath.section == 0 || indexPath.section == 1) {

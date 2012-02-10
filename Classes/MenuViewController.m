@@ -157,12 +157,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Class cellClass = [self cellClassAtIndexPath:indexPath];
     id object = [self.frc objectAtIndexPath:indexPath];
-    return [cellClass rowHeightForObject:object forInterfaceOrientation:self.interfaceOrientation];
+    return [cellClass rowHeightForObject:object atIndexPath:indexPath forInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
     id object = [self.frc objectAtIndexPath:indexPath];
-    [cell tableView:tableView fillCellWithObject:object];
+    [cell tableView:tableView fillCellWithObject:object atIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

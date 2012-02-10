@@ -87,7 +87,7 @@ profileIconSize = _profileIconSize;
     return iv;
 }
 
-+ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
++ (CGFloat)rowHeightForObject:(id)object atIndexPath:(NSIndexPath *)indexPath forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     NSArray *photos = (NSArray *)object;
     NSInteger numPhotos = [photos count];
     
@@ -98,7 +98,12 @@ profileIconSize = _profileIconSize;
     height += TL_THUMB_MARGIN / 2;
     
     if (numPhotos == 1) {
-        height += floorf(width * 0.5);
+        // Special case, row is not first row but only 1 photo
+        if (indexPath.row != 0) {
+            height += TL_THUMB_SIZE;
+        } else {
+            height += floorf(width * 0.5);
+        }
     } else {
         height += TL_THUMB_SIZE;
     }
@@ -111,8 +116,9 @@ profileIconSize = _profileIconSize;
     return height;
 }
 
-- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object {
+- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
     self.object = object;
+    self.indexPath = indexPath;
     
     // Fill Data
     NSArray *photos = (NSArray *)object;
@@ -158,7 +164,12 @@ profileIconSize = _profileIconSize;
     switch (numPhotos) {
         case 1:
             photoWidth = width;
-            photoHeight = floorf(width * 0.5);
+            // Special case, row is not first row but only 1 photo
+            if (self.indexPath.row != 0) {
+                photoHeight = TL_THUMB_SIZE;
+            } else {
+                photoHeight = floorf(width * 0.5);
+            }
             break;
         case 2:
             photoWidth = floorf((width - TL_THUMB_MARGIN) / 2);

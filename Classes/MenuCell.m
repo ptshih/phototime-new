@@ -19,11 +19,11 @@
     return self;
 }
 
-+ (CGFloat)rowHeightForObject:(id)object forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
++ (CGFloat)rowHeightForObject:(id)object atIndexPath:(NSIndexPath *)indexPath forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return 44.0;
 }
 
-- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object {
+- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object atIndexPath:(NSIndexPath *)indexPath {
     Timeline *t = (Timeline *)object;
     self.textLabel.text = [NSString stringWithFormat:@"%@ - %@", t.id, t.ownerId];
     self.detailTextLabel.text = t.members;

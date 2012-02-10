@@ -423,13 +423,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     Class cellClass = [self cellClassAtIndexPath:indexPath];
     //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    return [cellClass rowHeightForObject:object forInterfaceOrientation:self.interfaceOrientation];
+    return [cellClass rowHeightForObject:object atIndexPath:indexPath forInterfaceOrientation:self.interfaceOrientation];
 }
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
     //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [cell tableView:tableView fillCellWithObject:object];
+    [cell tableView:tableView fillCellWithObject:object atIndexPath:indexPath];
 }
 
 #pragma mark - Blah
