@@ -70,6 +70,7 @@
 - (void)snap;
 
 - (void)loadFromRemote;
+- (void)refreshOnAppear;
 
 @end
 
@@ -80,7 +81,7 @@ moc = _moc,
 timeline = _timeline,
 leftButton = _leftButton,
 rightButton = _rightButton,
-shouldFetch = _shouldFetch;
+shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Init
 - (id)initWithTimeline:(Timeline *)timeline {
@@ -97,8 +98,9 @@ shouldFetch = _shouldFetch;
         self.moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
         [self.moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
         
-        self.shouldFetch = YES;
+        self.shouldRefreshOnAppear = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
     }
     return self;
 }
@@ -111,11 +113,16 @@ shouldFetch = _shouldFetch;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     RELEASE_SAFELY(_timeline);
     RELEASE_SAFELY(_moc);
     // Views
     [super dealloc];
+}
+
+- (void)refreshOnAppear {
+    self.shouldRefreshOnAppear = YES;
 }
 
 #pragma mark - View Config
@@ -143,6 +150,11 @@ shouldFetch = _shouldFetch;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (self.shouldRefreshOnAppear) {
+        self.shouldRefreshOnAppear = NO;
+        [self reloadDataSource];
+    }
 }
 
 #pragma mark - Config Subviews
@@ -157,8 +169,8 @@ shouldFetch = _shouldFetch;
     [self.view addSubview:self.leftButton];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateHighlighted];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.rightButton];
     
     [self.tableView addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
@@ -188,7 +200,7 @@ shouldFetch = _shouldFetch;
 }
 
 - (void)rightAction {
-    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithTimeline:self.timeline] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
 
@@ -417,7 +429,7 @@ shouldFetch = _shouldFetch;
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
     //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [cell fillCellWithObject:object];
+    [cell tableView:tableView fillCellWithObject:object];
 }
 
 #pragma mark - Blah

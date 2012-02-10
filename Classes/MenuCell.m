@@ -23,7 +23,7 @@
     return 44.0;
 }
 
-- (void)fillCellWithObject:(id)object {
+- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object {
     Timeline *t = (Timeline *)object;
     self.textLabel.text = [NSString stringWithFormat:@"%@ - %@", t.id, t.ownerId];
     self.detailTextLabel.text = t.members;

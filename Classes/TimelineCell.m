@@ -56,9 +56,11 @@ profileIconSize = _profileIconSize;
     [super prepareForReuse];
     
     [self.profileViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.profileViews makeObjectsPerformSelector:@selector(prepareForReuse)];
     [self.profileViews removeAllObjects];
     
     [self.imageViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.imageViews makeObjectsPerformSelector:@selector(prepareForReuse)];
     [__reusableImageViews addObjectsFromArray:self.imageViews];
     [self.imageViews removeAllObjects];
     
@@ -109,7 +111,7 @@ profileIconSize = _profileIconSize;
     return height;
 }
 
-- (void)fillCellWithObject:(id)object {
+- (void)tableView:(UITableView *)tableView fillCellWithObject:(id)object {
     self.object = object;
     
     // Fill Data

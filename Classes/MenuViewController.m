@@ -162,7 +162,7 @@
 
 - (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
     id object = [self.frc objectAtIndexPath:indexPath];
-    [cell fillCellWithObject:object];
+    [cell tableView:tableView fillCellWithObject:object];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

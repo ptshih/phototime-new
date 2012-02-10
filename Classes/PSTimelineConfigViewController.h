@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PSTableViewController.h"
 
+@class Timeline;
+
 @interface PSTimelineConfigViewController : PSTableViewController
+
+@property (nonatomic, retain) Timeline *timeline;
+
+- (id)initWithTimeline:(Timeline *)timeline;
 
 @end
