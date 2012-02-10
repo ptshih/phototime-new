@@ -116,22 +116,24 @@
                     NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
                     // We got an HTTP OK code, start reading the response
                     id results = [data objectFromJSONData];
-                    NSArray *friends = [[results objectForKey:@"data"] objectForKey:@"friends"];
+                    NSDictionary *friends = [[results objectForKey:@"data"] objectForKey:@"friends"];
+                    NSArray *friendsInTimeline = [friends objectForKey:@"friendsInTimeline"];
+                    NSArray *friendsNotInTimeline = [friends objectForKey:@"friendsNotInTimeline"];
+                    NSArray *friendsNotOnPhototime = [friends objectForKey:@"friendsNotOnPhototime"];
                     NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
                     
                     // Section 1
                     //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
-                    NSArray *fbFriends = [friends sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
-                    [items addObject:fbFriends];
+                    [items addObject:friendsInTimeline];
                     [self.sectionTitles addObject:@"Friends in Timeline"];
                     
                     // Section 2
-                    [items addObject:[NSMutableArray array]];
-                    [self.sectionTitles addObject:@"Friends on Phototime"];
+                    [items addObject:friendsNotInTimeline];
+                    [self.sectionTitles addObject:@"Friends not in Timeline"];
                     
                     // Section 3
-                    [items addObject:[NSMutableArray array]];
-                    [self.sectionTitles addObject:@"Friends on Facebook"];
+                    [items addObject:friendsNotOnPhototime];
+                    [self.sectionTitles addObject:@"Friends not on Phototime"];
                     
                     [self dataSourceShouldLoadObjects:items animated:NO];
                     [self endRefresh];
