@@ -106,6 +106,7 @@
                     [self downloadTimelines];
                 } else {
                     // Failed, read status code
+                    NSLog(@"Failed with status code: %d", statusCode);
                     [self loginDidNotSucceed];
                 }
             }
@@ -131,7 +132,7 @@
 #pragma mark - Login
 - (void)loginIfNecessary {
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        [SVProgressHUD showWithStatus:@"Talking with Facebook" maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+        [SVProgressHUD showWithStatus:@"Asking Facebook for permission." maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
         [[PSFacebookCenter defaultCenter] authorizeBasicPermissions];
     } else {
         [self loginDidSucceed:NO];
@@ -163,8 +164,8 @@
 }
 
 - (void)loginDidNotSucceed {
-    [SVProgressHUD dismissWithError:@"Epic Fail"];
-    [self loginIfNecessary];
+    [SVProgressHUD dismissWithError:@"Facebook dropped the ball, please try again."];
+    [[PSFacebookCenter defaultCenter] logout];
 }
 
 - (void)downloadTimelines {
