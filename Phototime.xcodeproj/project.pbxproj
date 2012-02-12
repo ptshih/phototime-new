@@ -52,12 +52,8 @@
 		284BB0551487904B0046ABEF /* PSCachedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 284BB0521487904B0046ABEF /* PSCachedImageView.m */; };
 		284BB0561487904B0046ABEF /* PSImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 284BB0541487904B0046ABEF /* PSImageCache.m */; };
 		284EA207147CF5B600C4F3CE /* me.json in Resources */ = {isa = PBXBuildFile; fileRef = 284EA206147CF5B600C4F3CE /* me.json */; };
-		285420BB14A30FCF0091F331 /* IconBackGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 285420B714A30FCF0091F331 /* IconBackGray@2x.png */; };
-		285420BC14A30FCF0091F331 /* IconBackGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 285420B814A30FCF0091F331 /* IconBackGray.png */; };
 		28603B3114A7B20B00541BB1 /* IconNextBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B2D14A7B20A00541BB1 /* IconNextBlack.png */; };
 		28603B3214A7B20B00541BB1 /* IconNextBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B2E14A7B20A00541BB1 /* IconNextBlack@2x.png */; };
-		28603B3314A7B20B00541BB1 /* IconNextGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B2F14A7B20A00541BB1 /* IconNextGray.png */; };
-		28603B3414A7B20B00541BB1 /* IconNextGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B3014A7B20B00541BB1 /* IconNextGray@2x.png */; };
 		28603B4414AA860700541BB1 /* PSZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28603B4314AA860700541BB1 /* PSZoomView.m */; };
 		28603B5B14AC4A1D00541BB1 /* TimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28603B5A14AC4A1D00541BB1 /* TimelineViewController.m */; };
 		28603B5F14AC4D9300541BB1 /* TimelineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28603B5E14AC4D9300541BB1 /* TimelineCell.m */; };
@@ -71,8 +67,6 @@
 		28603B7014AF9EC500541BB1 /* facebook.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28603B6F14AF9EC500541BB1 /* facebook.jpg */; };
 		28603B7514AFB2B500541BB1 /* IconCameraBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B7114AFB2B400541BB1 /* IconCameraBlack.png */; };
 		28603B7614AFB2B500541BB1 /* IconCameraBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B7214AFB2B400541BB1 /* IconCameraBlack@2x.png */; };
-		28603B7714AFB2B500541BB1 /* IconCameraGray.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B7314AFB2B400541BB1 /* IconCameraGray.png */; };
-		28603B7814AFB2B500541BB1 /* IconCameraGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B7414AFB2B400541BB1 /* IconCameraGray@2x.png */; };
 		28603B7F14AFB3AC00541BB1 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28603B7E14AFB3AB00541BB1 /* CameraViewController.m */; };
 		28603B8114AFBD4E00541BB1 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */; };
 		28633AAB14A30E910074A674 /* IconBackBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28633AA914A30E910074A674 /* IconBackBlack@2x.png */; };
@@ -302,12 +296,8 @@
 		284BB0531487904B0046ABEF /* PSImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageCache.h; sourceTree = "<group>"; };
 		284BB0541487904B0046ABEF /* PSImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageCache.m; sourceTree = "<group>"; };
 		284EA206147CF5B600C4F3CE /* me.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = me.json; sourceTree = "<group>"; };
-		285420B714A30FCF0091F331 /* IconBackGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconBackGray@2x.png"; sourceTree = "<group>"; };
-		285420B814A30FCF0091F331 /* IconBackGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconBackGray.png; sourceTree = "<group>"; };
 		28603B2D14A7B20A00541BB1 /* IconNextBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconNextBlack.png; sourceTree = "<group>"; };
 		28603B2E14A7B20A00541BB1 /* IconNextBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconNextBlack@2x.png"; sourceTree = "<group>"; };
-		28603B2F14A7B20A00541BB1 /* IconNextGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconNextGray.png; sourceTree = "<group>"; };
-		28603B3014A7B20B00541BB1 /* IconNextGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconNextGray@2x.png"; sourceTree = "<group>"; };
 		28603B4214AA860700541BB1 /* PSZoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSZoomView.h; sourceTree = "<group>"; };
 		28603B4314AA860700541BB1 /* PSZoomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSZoomView.m; sourceTree = "<group>"; };
 		28603B5914AC4A1D00541BB1 /* TimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineViewController.h; sourceTree = "<group>"; };
@@ -324,8 +314,6 @@
 		28603B6F14AF9EC500541BB1 /* facebook.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = facebook.jpg; sourceTree = "<group>"; };
 		28603B7114AFB2B400541BB1 /* IconCameraBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCameraBlack.png; sourceTree = "<group>"; };
 		28603B7214AFB2B400541BB1 /* IconCameraBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCameraBlack@2x.png"; sourceTree = "<group>"; };
-		28603B7314AFB2B400541BB1 /* IconCameraGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCameraGray.png; sourceTree = "<group>"; };
-		28603B7414AFB2B400541BB1 /* IconCameraGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCameraGray@2x.png"; sourceTree = "<group>"; };
 		28603B7D14AFB3AB00541BB1 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		28603B7E14AFB3AB00541BB1 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -1311,8 +1299,6 @@
 				D0269E3D14E1B2F300B690A2 /* IconGearBlack@2x.png */,
 				28603B7114AFB2B400541BB1 /* IconCameraBlack.png */,
 				28603B7214AFB2B400541BB1 /* IconCameraBlack@2x.png */,
-				28603B7314AFB2B400541BB1 /* IconCameraGray.png */,
-				28603B7414AFB2B400541BB1 /* IconCameraGray@2x.png */,
 				288CE08B14A3D0B800BA93A6 /* IconArrowDown@2x.png */,
 				288CE08C14A3D0B800BA93A6 /* IconArrowDown.png */,
 				288CE08314A3CC4800BA93A6 /* IconCaptionBlack@2x.png */,
@@ -1321,12 +1307,8 @@
 				288CE08614A3CC4800BA93A6 /* IconCaptionGray.png */,
 				28633AA914A30E910074A674 /* IconBackBlack@2x.png */,
 				28633AAA14A30E910074A674 /* IconBackBlack.png */,
-				285420B714A30FCF0091F331 /* IconBackGray@2x.png */,
-				285420B814A30FCF0091F331 /* IconBackGray.png */,
 				28603B2D14A7B20A00541BB1 /* IconNextBlack.png */,
 				28603B2E14A7B20A00541BB1 /* IconNextBlack@2x.png */,
-				28603B2F14A7B20A00541BB1 /* IconNextGray.png */,
-				28603B3014A7B20B00541BB1 /* IconNextGray@2x.png */,
 				28F38D601498442E009D58BA /* IconMore.png */,
 				28F38D611498442E009D58BA /* IconMore@2x.png */,
 				28F38D5C14983E75009D58BA /* IconCaption.png */,
@@ -1526,8 +1508,6 @@
 				28F38D631498442E009D58BA /* IconMore@2x.png in Resources */,
 				28633AAB14A30E910074A674 /* IconBackBlack@2x.png in Resources */,
 				28633AAC14A30E910074A674 /* IconBackBlack.png in Resources */,
-				285420BB14A30FCF0091F331 /* IconBackGray@2x.png in Resources */,
-				285420BC14A30FCF0091F331 /* IconBackGray.png in Resources */,
 				28C3335B14A3B24300B833F1 /* BackgroundCloth.jpg in Resources */,
 				28C3335C14A3B24300B833F1 /* BackgroundCloth@2x.jpg in Resources */,
 				28C3335D14A3B24300B833F1 /* BackgroundCloth~ipad.jpg in Resources */,
@@ -1541,8 +1521,6 @@
 				288CE08E14A3D0B800BA93A6 /* IconArrowDown.png in Resources */,
 				28603B3114A7B20B00541BB1 /* IconNextBlack.png in Resources */,
 				28603B3214A7B20B00541BB1 /* IconNextBlack@2x.png in Resources */,
-				28603B3314A7B20B00541BB1 /* IconNextGray.png in Resources */,
-				28603B3414A7B20B00541BB1 /* IconNextGray@2x.png in Resources */,
 				28603B6114AC9FFE00541BB1 /* albums.json in Resources */,
 				28603B6314AD3F4800541BB1 /* janet.jpg in Resources */,
 				28603B6914AD44A400541BB1 /* bubbles.jpg in Resources */,
@@ -1551,8 +1529,6 @@
 				28603B7014AF9EC500541BB1 /* facebook.jpg in Resources */,
 				28603B7514AFB2B500541BB1 /* IconCameraBlack.png in Resources */,
 				28603B7614AFB2B500541BB1 /* IconCameraBlack@2x.png in Resources */,
-				28603B7714AFB2B500541BB1 /* IconCameraGray.png in Resources */,
-				28603B7814AFB2B500541BB1 /* IconCameraGray@2x.png in Resources */,
 				D0269E3E14E1B2F300B690A2 /* IconClockBlack.png in Resources */,
 				D0269E3F14E1B2F300B690A2 /* IconClockBlack@2x.png in Resources */,
 				D0269E4014E1B2F300B690A2 /* IconGearBlack.png in Resources */,

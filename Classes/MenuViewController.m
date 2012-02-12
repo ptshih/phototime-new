@@ -81,12 +81,12 @@
     
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
-    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
-    [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
-    [headerView addSubview:leftButton];
+//    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
+//    [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
+//    [leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
+//    [headerView addSubview:leftButton];
     
-    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
+    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(rightAction)];
     [rightButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateNormal];
     [rightButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateHighlighted];
     [headerView addSubview:rightButton];

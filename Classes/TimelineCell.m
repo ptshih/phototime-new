@@ -12,8 +12,8 @@
 #import "Photo.h"
 
 #define TL_THUMB_SIZE 96.0
-#define TL_THUMB_MARGIN 6.0
-#define TL_MARGIN 10.0
+#define TL_THUMB_MARGIN 8.0
+#define TL_MARGIN 8.0
 
 static NSMutableSet *__reusableImageViews = nil;
 
@@ -38,7 +38,7 @@ profileIconSize = _profileIconSize;
         self.imageDicts = [NSMutableArray arrayWithCapacity:1];
         self.imageViews = [NSMutableArray arrayWithCapacity:1];
         self.profileViews = [NSMutableArray arrayWithCapacity:1];
-        self.profileIconSize = 40.0;
+        self.profileIconSize = 32.0;
     }
     return self;
 }
@@ -74,6 +74,7 @@ profileIconSize = _profileIconSize;
         iv.contentMode = UIViewContentModeScaleAspectFill;
         iv.clipsToBounds = YES;
         iv.userInteractionEnabled = YES;
+        iv.shouldAnimate = YES;
     } else {
         if ([iv.gestureRecognizers count] > 0) {
             [iv.gestureRecognizers enumerateObjectsUsingBlock:^(UIGestureRecognizer *gr, NSUInteger idx, BOOL *stop) {
@@ -125,7 +126,7 @@ profileIconSize = _profileIconSize;
     NSInteger numPhotos = [photos count];
     [self.imageDicts addObjectsFromArray:photos];
     
-    self.profileIconSize = (numPhotos > 1) ? 30.0 : 40.0;
+    self.profileIconSize = (numPhotos > 1) ? 32.0 : 32.0;
 
     [self.imageDicts enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
         PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[dict objectForKey:@"source"]]];

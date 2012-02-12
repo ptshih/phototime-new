@@ -82,9 +82,9 @@ timeline = _timeline;
     
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
-    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
-    [leftButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateHighlighted];
+    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
+    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateHighlighted];
     [headerView addSubview:leftButton];
     
 //    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
@@ -206,7 +206,7 @@ timeline = _timeline;
     
     // Configure accessoryView
     if (indexPath.section == 0 || indexPath.section == 1) {
-        UIButton *accessoryButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 44, 44) andStyle:nil target:self action:@selector(accessoryButtonTapped:withEvent:)];
+        UIButton *accessoryButton = [UIButton buttonWithFrame:CGRectMake(8, 8, 32, 32) andStyle:nil target:self action:@selector(accessoryButtonTapped:withEvent:)];
         UIImage *accessoryImage = nil;
         if (indexPath.section == 0) {
             accessoryImage = [UIImage imageNamed:@"IconMinusBlack"];

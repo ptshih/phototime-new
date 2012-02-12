@@ -22,13 +22,13 @@
 }
 
 + (CGFloat)rowHeight {
-    return 44.0;
+    return 48.0;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    static CGFloat margin = 5.0;
+    static CGFloat margin = 8.0;
     
     // Layout
     CGFloat left = margin;
@@ -36,11 +36,11 @@
     CGFloat width = self.contentView.width - margin * 2;
     
     // Image
-    self.psImageView.frame = CGRectMake(left, top, 34.0, 34.0);
+    self.psImageView.frame = CGRectMake(left, top, 32.0, 32.0);
     left = self.psImageView.right + margin;
     width -= self.psImageView.width - margin;
     
-    self.textLabel.frame = CGRectMake(left, top, width, 34.0);
+    self.textLabel.frame = CGRectMake(left, top, width, 32.0);
     top = self.textLabel.bottom;
     
 //    self.detailTextLabel.frame = CGRectMake(left, top, width, 25.0);

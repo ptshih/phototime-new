@@ -162,13 +162,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [self setupTableViewWithFrame:CGRectMake(0.0, 0.0, self.view.width, self.view.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
     
     // Setup perma left/right buttons
-    static CGFloat margin = 10.0;
-    self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(leftAction)];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateNormal];
-    //    [self.leftButton setImage:[UIImage imageNamed:@"IconMore"] forState:UIControlStateHighlighted];
+    static CGFloat margin = 8.0;
+    self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.leftButton];
     
-    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
+    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(rightAction)];
     [self.rightButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateNormal];
     [self.rightButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.rightButton];
@@ -177,7 +177,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    static CGFloat top = 6.0;
+    static CGFloat top = 8.0;
     if ([object isEqual:self.tableView]) {
         CGPoint contentOffset = self.tableView.contentOffset;
         CGFloat y = contentOffset.y;
