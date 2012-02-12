@@ -5,7 +5,7 @@
 
 const struct PhotoAttributes PhotoAttributes = {
 	.createdAt = @"createdAt",
-	.fbId = @"fbId",
+	.fbPhotoId = @"fbPhotoId",
 	.formattedDate = @"formattedDate",
 	.height = @"height",
 	.id = @"id",
@@ -70,7 +70,7 @@ const struct PhotoFetchedProperties PhotoFetchedProperties = {
 
 
 
-@dynamic fbId;
+@dynamic fbPhotoId;
 
 
 

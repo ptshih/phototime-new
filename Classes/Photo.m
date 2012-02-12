@@ -5,7 +5,7 @@
 
 - (void)updateAttributesWithDictionary:(NSDictionary *)dictionary {
     self.id = [dictionary objectForKey:@"id"];
-    self.fbId = [dictionary objectForKey:@"fbId"];
+    self.fbPhotoId = [dictionary objectForKey:@"fbPhotoId"];
     self.ownerId = [[dictionary objectForKey:@"fbFrom"] objectForKey:@"id"];
     self.ownerName = [[dictionary objectForKey:@"fbFrom"] objectForKey:@"name"];
     self.source = [dictionary objectForKey:@"source"];

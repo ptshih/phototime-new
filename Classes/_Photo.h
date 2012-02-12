@@ -6,7 +6,7 @@
 
 extern const struct PhotoAttributes {
 	 NSString *createdAt;
-	 NSString *fbId;
+	 NSString *fbPhotoId;
 	 NSString *formattedDate;
 	 NSString *height;
 	 NSString *id;
@@ -55,10 +55,10 @@ extern const struct PhotoFetchedProperties {
 
 
 
-@property (nonatomic, retain) NSString *fbId;
+@property (nonatomic, retain) NSString *fbPhotoId;
 
 
-//- (BOOL)validateFbId:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateFbPhotoId:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -151,8 +151,8 @@ extern const struct PhotoFetchedProperties {
 
 
 
-- (NSString*)primitiveFbId;
-- (void)setPrimitiveFbId:(NSString*)value;
+- (NSString*)primitiveFbPhotoId;
+- (void)setPrimitiveFbPhotoId:(NSString*)value;
 
 
 

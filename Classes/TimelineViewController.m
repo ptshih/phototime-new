@@ -346,7 +346,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
                         NSDictionary *data = [results objectForKey:@"data"];
                         NSArray *photos = [data objectForKey:@"photos"];
                         if ([photos count] > 0) {
-                            [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"fbId"];
+                            [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"fbPhotoId"];
                             
                             NSError *error = nil;
                             [childContext save:&error];
