@@ -177,8 +177,16 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 - (NSPredicate *)fetchPredicate {
     // [NSArray arrayWithObjects:@"548430564", @"13704812", @"2602152", nil]
     NSArray *members = [self.timeline.members componentsSeparatedByString:@","];
-    return [[NSPredicate predicateWithFormat:@"ownerId IN $members"]            
-            predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:members forKey:@"members"]];
+    NSPredicate *membersPredicate = [[NSPredicate predicateWithFormat:@"ownerId IN $members"]            
+                                     predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:members forKey:@"members"]];
+    
+    NSDate *sinceDate = [NSDate distantPast];
+    NSDate *untilDate = [NSDate date];
+    NSPredicate *datePredicate = [NSPredicate predicateWithFormat:@"(createdAt >= %@) AND (createdAt <= %@)", sinceDate, untilDate];
+    
+    NSArray *subpredicates = [NSArray arrayWithObjects:membersPredicate, datePredicate, nil];
+    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicates];
+    return compoundPredicate;
 }
 
 - (NSArray *)fetchSortDescriptors {
