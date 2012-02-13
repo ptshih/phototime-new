@@ -68,6 +68,8 @@ navigationController = _navigationController;
 {
     NSLog(@"Fonts: %@", [UIFont familyNames]);
     
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
     // PSFacebookCenter
     [PSFacebookCenter defaultCenter];
     

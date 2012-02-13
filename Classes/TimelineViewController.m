@@ -284,9 +284,8 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     
     // Download remote data
     // Setup the network request
-    NSDictionary *parameters = [NSDictionary dictionary];
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timeline.id]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {

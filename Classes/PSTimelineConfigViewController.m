@@ -146,7 +146,7 @@ timeline = _timeline;
 #pragma mark - State Machine
 - (void)beginRefresh {
     [super beginRefresh];
-    [SVProgressHUD showWithStatus:@"Finding People" maskType:SVProgressHUDMaskTypeBlack networkIndicator:YES];
+    [SVProgressHUD showWithStatus:@"Finding People" maskType:SVProgressHUDMaskTypeBlack];
 }
 
 - (void)endRefresh {
@@ -269,7 +269,7 @@ timeline = _timeline;
 }
 
 - (void)addMember:(id)member {
-    [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Adding %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+    [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Adding %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/addUser/%@", API_BASE_URL, self.timeline.id, [member objectForKey:@"id"]]];
@@ -292,7 +292,7 @@ timeline = _timeline;
 }
 
 - (void)removeMember:(id)member {
-    [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Removing %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+    [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Removing %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/removeUser/%@", API_BASE_URL, self.timeline.id, [member objectForKey:@"id"]]];

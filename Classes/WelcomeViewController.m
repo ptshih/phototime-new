@@ -114,7 +114,7 @@
 #pragma mark - Login
 - (void)loginIfNecessary {
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        [SVProgressHUD showWithStatus:@"Asking Facebook for permission." maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
+        [SVProgressHUD showWithStatus:@"Asking Facebook for permission." maskType:SVProgressHUDMaskTypeGradient];
         [[PSFacebookCenter defaultCenter] authorizeBasicPermissions];
     } else {
         [self loginDidSucceed:NO];
