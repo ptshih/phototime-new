@@ -82,27 +82,26 @@ timeline = _timeline;
     
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
-    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
-    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateHighlighted];
-    [headerView addSubview:leftButton];
+//    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
+//    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
+//    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateHighlighted];
+//    [headerView addSubview:leftButton];
     
-//    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
-//    [rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-//    [rightButton setImage:[UIImage imageNamed:@"IconCameraGray"] forState:UIControlStateHighlighted];
-//    [headerView addSubview:rightButton];
+    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
+    [rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateHighlighted];
+    [headerView addSubview:rightButton];
     
     [self.view addSubview:headerView];
 }
 
 #pragma mark - Actions
 - (void)leftAction {
-    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionRight animated:YES];
+//    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionRight animated:YES];
 }
 
 - (void)rightAction {
-    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
+    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionLeft animated:YES];
 }
 
 - (void)setupSubviews {
@@ -110,6 +109,16 @@ timeline = _timeline;
 }
 
 #pragma mark - State Machine
+- (void)beginRefresh {
+    [super beginRefresh];
+    [SVProgressHUD showWithStatus:@"Finding People" maskType:SVProgressHUDMaskTypeBlack networkIndicator:YES];
+}
+
+- (void)endRefresh {
+    [SVProgressHUD dismiss];
+    [super endRefresh];
+}
+
 - (void)loadDataSource {
     [self beginRefresh];
     

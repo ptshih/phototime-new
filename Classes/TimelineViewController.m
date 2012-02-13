@@ -8,62 +8,12 @@
 
 #import "TimelineViewController.h"
 #import "TimelineCell.h"
-#import "CameraViewController.h"
-#import "PreviewViewController.h"
-#import "AFNetworking.h"
-
-#import "PSTimelineConfigViewController.h"
-#import "MenuViewController.h"
 
 #import "Photo.h"
 #import "Timeline.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <ImageIO/ImageIO.h>
-#import <MobileCoreServices/UTCoreTypes.h>
-#import <CoreLocation/CoreLocation.h>
-
-@implementation TimelineViewController (CameraDelegateMethods)
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    
-    // Handle a still image capture
-    if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-        
-        PreviewViewController *pvc = nil;
-        
-        // First check if image was taken from camera or library
-        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-            // Taken with camera
-            UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-            NSDictionary *metadata = [info objectForKey:UIImagePickerControllerMediaMetadata];
-            pvc = [[PreviewViewController alloc] initWithImage:image metadata:metadata];
-        } else {
-            // Picked from library
-            UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-            NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
-            if (assetURL) {
-                pvc = [[PreviewViewController alloc] initWithImage:image assetURL:assetURL];
-            }
-        }
-        
-        if (pvc) {
-            [picker pushViewController:pvc animated:YES];
-            [pvc release];
-        } else {
-            [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
-        }
-    } else {
-        [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
-    }
-}
-
-@end
+#import "PSTimelineConfigViewController.h"
+#import "GalleryViewController.h"
 
 @interface TimelineViewController (Private)
 
@@ -165,13 +115,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     // Setup perma left/right buttons
     static CGFloat margin = 8.0;
     self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateHighlighted];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.leftButton];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(rightAction)];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateHighlighted];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.rightButton];
     
     [self.tableView addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
@@ -194,14 +144,12 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Actions
 - (void)leftAction {
-    //    BOOL sb = [UIApplication sharedApplication].statusBarHidden;
-    //    [[UIApplication sharedApplication] setStatusBarHidden:!sb];
-    MenuViewController *mvc = [[[MenuViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:mvc direction:PSNavigationControllerDirectionRight animated:YES];
+    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithTimeline:self.timeline] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
 - (void)rightAction {
-    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithTimeline:self.timeline] autorelease];
+    GalleryViewController *vc = [[[GalleryViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
 
@@ -431,30 +379,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     //    id object = [self.frc objectAtIndexPath:indexPath];
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [cell tableView:tableView fillCellWithObject:object atIndexPath:indexPath];
-}
-
-#pragma mark - Blah
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) return;
-    //  CameraViewController *cvc = [[CameraViewController alloc] initWithNibName:nil bundle:nil];
-    //  [self.psNavigationController pushViewController:cvc animated:YES];
-    //  [cvc release];
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        if (buttonIndex == 0) {
-            sourceType = UIImagePickerControllerSourceTypeCamera;
-        }
-    }
-    
-    //  [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.allowsEditing = NO;
-    imagePicker.delegate = self;
-    imagePicker.sourceType = sourceType;
-    imagePicker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
-    [(PSNavigationController *)self.parentViewController pushViewController:imagePicker animated:YES];
-    [imagePicker release];
 }
 
 @end

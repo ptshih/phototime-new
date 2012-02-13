@@ -229,6 +229,8 @@
 		D080F6C614E5D10B0061A38B /* IconPlusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C214E5D10B0061A38B /* IconPlusBlack.png */; };
 		D080F6C714E5D10B0061A38B /* IconPlusBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C314E5D10B0061A38B /* IconPlusBlack@2x.png */; };
 		D08E516214E8A54800B5CCCD /* PSPullRefreshView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D08E516114E8A54800B5CCCD /* PSPullRefreshView.bundle */; };
+		D08E517014E8ABB400B5CCCD /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */; };
+		D08E517614E8B4DC00B5CCCD /* lumbergh.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D08E517514E8B4DC00B5CCCD /* lumbergh.jpg */; };
 		D092D2A814DC4362001108A0 /* Phototime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D092D2A614DC4362001108A0 /* Phototime.xcdatamodeld */; };
 		D092D2B314DC458C001108A0 /* Timeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B214DC458C001108A0 /* Timeline.m */; };
 		D092D2B614DC459F001108A0 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2B514DC459E001108A0 /* Photo.m */; };
@@ -566,6 +568,9 @@
 		D080F6C214E5D10B0061A38B /* IconPlusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconPlusBlack.png; sourceTree = "<group>"; };
 		D080F6C314E5D10B0061A38B /* IconPlusBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconPlusBlack@2x.png"; sourceTree = "<group>"; };
 		D08E516114E8A54800B5CCCD /* PSPullRefreshView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PSPullRefreshView.bundle; sourceTree = "<group>"; };
+		D08E516E14E8ABB400B5CCCD /* GalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryViewController.h; sourceTree = "<group>"; };
+		D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
+		D08E517514E8B4DC00B5CCCD /* lumbergh.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lumbergh.jpg; sourceTree = "<group>"; };
 		D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Phototime-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D092D2A014DC3F2C001108A0 /* Phototime-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Phototime-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D092D2A714DC4362001108A0 /* Phototime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Phototime.xcdatamodel; sourceTree = "<group>"; };
@@ -786,6 +791,7 @@
 				288F571E14808609000EEC90 /* PhotoFrame@2x.png */,
 				28B855E7147CE137004F84EA /* IconMenu.png */,
 				28B855E8147CE137004F84EA /* IconMenu@2x.png */,
+				D08E517514E8B4DC00B5CCCD /* lumbergh.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1240,6 +1246,8 @@
 				2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */,
 				D0269E3614E1AE2C00B690A2 /* PSTimelineConfigViewController.h */,
 				D0269E3714E1AE2C00B690A2 /* PSTimelineConfigViewController.m */,
+				D08E516E14E8ABB400B5CCCD /* GalleryViewController.h */,
+				D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1539,6 +1547,7 @@
 				D080F6C614E5D10B0061A38B /* IconPlusBlack.png in Resources */,
 				D080F6C714E5D10B0061A38B /* IconPlusBlack@2x.png in Resources */,
 				D08E516214E8A54800B5CCCD /* PSPullRefreshView.bundle in Resources */,
+				D08E517614E8B4DC00B5CCCD /* lumbergh.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1653,6 +1662,7 @@
 				D0269E4A14E1BDA200B690A2 /* User.m in Sources */,
 				D031558A14E5AB8B00CC8572 /* PSCollectionView.m in Sources */,
 				D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */,
+				D08E517014E8ABB400B5CCCD /* GalleryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
