@@ -77,7 +77,7 @@ timeline = _timeline;
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     
-    NSString *title = @"Timeline Config";
+    NSString *title = @"Timeline Members";
     
     UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
     titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
@@ -103,23 +103,23 @@ timeline = _timeline;
     [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
     
     // Table header view
-    UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 48.0)] autorelease];
-    
-    UIButton *fromButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    fromButton.tag = 1001;
-    [fromButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
-    fromButton.frame = CGRectMake(0, 8, tableHeaderView.width / 2, 32);
-    [fromButton setTitle:@"From Date" forState:UIControlStateNormal];
-    [tableHeaderView addSubview:fromButton];
-    
-    UIButton *toButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    toButton.tag = 1002;
-    [toButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
-    toButton.frame = CGRectMake(tableHeaderView.width / 2, 8, tableHeaderView.width / 2, 32);
-    [toButton setTitle:@"To Date" forState:UIControlStateNormal];
-    [tableHeaderView addSubview:toButton];
-    
-    self.tableView.tableHeaderView = tableHeaderView;
+//    UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 48.0)] autorelease];
+//    
+//    UIButton *fromButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    fromButton.tag = 1001;
+//    [fromButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
+//    fromButton.frame = CGRectMake(0, 8, tableHeaderView.width / 2, 32);
+//    [fromButton setTitle:@"From Date" forState:UIControlStateNormal];
+//    [tableHeaderView addSubview:fromButton];
+//    
+//    UIButton *toButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    toButton.tag = 1002;
+//    [toButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
+//    toButton.frame = CGRectMake(tableHeaderView.width / 2, 8, tableHeaderView.width / 2, 32);
+//    [toButton setTitle:@"To Date" forState:UIControlStateNormal];
+//    [tableHeaderView addSubview:toButton];
+//    
+//    self.tableView.tableHeaderView = tableHeaderView;
 }
 
 #pragma mark - Actions
@@ -194,12 +194,12 @@ timeline = _timeline;
             [blockSelf.sectionTitles addObject:@"People not in Timeline"];
             
             // Section 3
-            [items addObject:onPhototime];
-            [blockSelf.sectionTitles addObject:@"People on Phototime"];
-            
-            // Section 4
-            [items addObject:notOnPhototime];
-            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
+//            [items addObject:onPhototime];
+//            [blockSelf.sectionTitles addObject:@"People on Phototime"];
+//            
+//            // Section 4
+//            [items addObject:notOnPhototime];
+//            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
             
             NSArray *memberIds = [inTimeline valueForKey:@"id"];
             blockSelf.timeline.members = [memberIds componentsJoinedByString:@","];

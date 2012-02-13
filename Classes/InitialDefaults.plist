@@ -11,7 +11,7 @@
 	<key>fromDate</key>
 	<date>2004-02-04T05:00:00Z</date>
 	<key>toDate</key>
-	<date>2004-02-04T05:00:00Z</date>
+	<date>2038-01-01T05:00:00Z</date>
 	<key>currentUser</key>
 	<dict>
 		<key>lastName</key>
