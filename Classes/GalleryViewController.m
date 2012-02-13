@@ -30,6 +30,7 @@ assets = _assets;
 }
 
 - (void)viewDidUnload {
+    self.collectionView = nil;
     [super viewDidUnload];
 }
 
@@ -79,6 +80,7 @@ assets = _assets;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [[[[UIAlertView alloc] initWithTitle:@"Doesn't Work Yet" message:@"Eventually this will let you choose multiple photos from your Camera Roll to directly upload to Facebook." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 }
 
 #pragma mark - Config Subviews

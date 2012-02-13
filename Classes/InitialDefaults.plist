@@ -8,6 +8,10 @@
 	<true/>
 	<key>lastExitDate</key>
 	<date>1970-01-01T08:00:00Z</date>
+	<key>fromDate</key>
+	<date>2004-02-04T05:00:00Z</date>
+	<key>toDate</key>
+	<date>2004-02-04T05:00:00Z</date>
 	<key>currentUser</key>
 	<dict>
 		<key>lastName</key>

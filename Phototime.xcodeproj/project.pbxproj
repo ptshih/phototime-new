@@ -224,6 +224,9 @@
 		D031558A14E5AB8B00CC8572 /* PSCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D031558914E5AB8B00CC8572 /* PSCollectionView.m */; };
 		D03155D514E5B90E00CC8572 /* IconFriendsBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D314E5B90E00CC8572 /* IconFriendsBlack.png */; };
 		D03155D614E5B90E00CC8572 /* IconFriendsBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */; };
+		D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639C14E90CA800150193 /* IconCalendarBlack.png */; };
+		D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */; };
+		D06063A314E90F4900150193 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06063A214E90F4900150193 /* DatePickerViewController.m */; };
 		D080F6C414E5D10B0061A38B /* IconMinusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C014E5D10B0061A38B /* IconMinusBlack.png */; };
 		D080F6C514E5D10B0061A38B /* IconMinusBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */; };
 		D080F6C614E5D10B0061A38B /* IconPlusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C214E5D10B0061A38B /* IconPlusBlack.png */; };
@@ -563,6 +566,10 @@
 		D031558914E5AB8B00CC8572 /* PSCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionView.m; sourceTree = "<group>"; };
 		D03155D314E5B90E00CC8572 /* IconFriendsBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconFriendsBlack.png; sourceTree = "<group>"; };
 		D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconFriendsBlack@2x.png"; sourceTree = "<group>"; };
+		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
+		D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendarBlack@2x.png"; sourceTree = "<group>"; };
+		D06063A114E90F4900150193 /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
+		D06063A214E90F4900150193 /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
 		D080F6C014E5D10B0061A38B /* IconMinusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconMinusBlack.png; sourceTree = "<group>"; };
 		D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMinusBlack@2x.png"; sourceTree = "<group>"; };
 		D080F6C214E5D10B0061A38B /* IconPlusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconPlusBlack.png; sourceTree = "<group>"; };
@@ -1248,6 +1255,8 @@
 				D0269E3714E1AE2C00B690A2 /* PSTimelineConfigViewController.m */,
 				D08E516E14E8ABB400B5CCCD /* GalleryViewController.h */,
 				D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */,
+				D06063A114E90F4900150193 /* DatePickerViewController.h */,
+				D06063A214E90F4900150193 /* DatePickerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1285,6 +1294,8 @@
 		28F38D4A149839B9009D58BA /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				D060639C14E90CA800150193 /* IconCalendarBlack.png */,
+				D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */,
 				D080F6C014E5D10B0061A38B /* IconMinusBlack.png */,
 				D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */,
 				D080F6C214E5D10B0061A38B /* IconPlusBlack.png */,
@@ -1548,6 +1559,8 @@
 				D080F6C714E5D10B0061A38B /* IconPlusBlack@2x.png in Resources */,
 				D08E516214E8A54800B5CCCD /* PSPullRefreshView.bundle in Resources */,
 				D08E517614E8B4DC00B5CCCD /* lumbergh.jpg in Resources */,
+				D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */,
+				D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1663,6 +1676,7 @@
 				D031558A14E5AB8B00CC8572 /* PSCollectionView.m in Sources */,
 				D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */,
 				D08E517014E8ABB400B5CCCD /* GalleryViewController.m in Sources */,
+				D06063A314E90F4900150193 /* DatePickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

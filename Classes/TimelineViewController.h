@@ -17,6 +17,7 @@
 @property (nonatomic, assign) UIButton *leftButton;
 @property (nonatomic, assign) UIButton *rightButton;
 @property (nonatomic, assign) BOOL shouldRefreshOnAppear;
+@property (nonatomic, assign) BOOL shouldRefetchOnAppear;
 
 - (id)initWithTimeline:(Timeline *)timeline;
 

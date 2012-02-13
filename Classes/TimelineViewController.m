@@ -21,6 +21,7 @@
 
 - (void)loadFromRemote;
 - (void)refreshOnAppear;
+- (void)refetchOnAppear;
 
 @end
 
@@ -31,7 +32,8 @@ moc = _moc,
 timeline = _timeline,
 leftButton = _leftButton,
 rightButton = _rightButton,
-shouldRefreshOnAppear = _shouldRefreshOnAppear;
+shouldRefreshOnAppear = _shouldRefreshOnAppear,
+shouldRefetchOnAppear = _shouldRefetchOnAppear;
 
 #pragma mark - Init
 - (id)initWithTimeline:(Timeline *)timeline {
@@ -49,8 +51,11 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
         [self.moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
         
         self.shouldRefreshOnAppear = NO;
+        self.shouldRefetchOnAppear = NO;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refetchOnAppear) name:kTimelineShouldRefetchOnAppear object:nil];
     }
     return self;
 }
@@ -64,6 +69,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefetchOnAppear object:nil];
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     RELEASE_SAFELY(_timeline);
     RELEASE_SAFELY(_moc);
@@ -75,9 +81,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.shouldRefreshOnAppear = YES;
 }
 
+- (void)refetchOnAppear {
+    self.shouldRefetchOnAppear = YES;
+}
+
 #pragma mark - View Config
 - (UIColor *)baseBackgroundColor {
-    return [UIColor blackColor];
+    return [UIColor whiteColor];
 }
 
 //- (UIView *)baseBackgroundView {
@@ -103,20 +113,25 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     if (self.shouldRefreshOnAppear) {
         self.shouldRefreshOnAppear = NO;
+        self.shouldRefetchOnAppear = NO;
         [self reloadDataSource];
+    } else if (self.shouldRefetchOnAppear) {
+        self.shouldRefetchOnAppear = NO;
+        [self loadFromCache];
     }
 }
 
 #pragma mark - Config Subviews
 - (void)setupSubviews {
     [self setupTableViewWithFrame:CGRectMake(0.0, 0.0, self.view.width, self.view.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
-    self.tableView.backgroundColor = [UIColor clearColor];
+    
+    self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]] autorelease];
     
     // Setup perma left/right buttons
     static CGFloat margin = 8.0;
     self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateNormal];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconFriendsBlack"] forState:UIControlStateHighlighted];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateHighlighted];
     [self.view addSubview:self.leftButton];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(rightAction)];
@@ -180,9 +195,9 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     NSPredicate *membersPredicate = [[NSPredicate predicateWithFormat:@"ownerId IN $members"]            
                                      predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:members forKey:@"members"]];
     
-    NSDate *sinceDate = [NSDate distantPast];
-    NSDate *untilDate = [NSDate date];
-    NSPredicate *datePredicate = [NSPredicate predicateWithFormat:@"(createdAt >= %@) AND (createdAt <= %@)", sinceDate, untilDate];
+    NSDate *fromDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"fromDate"];
+    NSDate *toDate = [NSDate date];
+    NSPredicate *datePredicate = [NSPredicate predicateWithFormat:@"(createdAt >= %@) AND (createdAt <= %@)", fromDate, toDate];
     
     NSArray *subpredicates = [NSArray arrayWithObjects:membersPredicate, datePredicate, nil];
     NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicates];

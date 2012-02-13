@@ -16,6 +16,7 @@
  */
 #define kLoginSucceeded @"kLoginSucceeded"
 #define kTimelineShouldRefreshOnAppear @"kTimelineShouldRefreshOnAppear"
+#define kTimelineShouldRefetchOnAppear @"kTimelineShouldRefetchOnAppear"
 
 // Facebook APP ID is in PSFacebookCenter.h
 

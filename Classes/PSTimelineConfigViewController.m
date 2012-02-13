@@ -10,6 +10,8 @@
 #import "Timeline.h"
 #import "UserCell.h"
 
+#import "DatePickerViewController.h"
+
 @interface PSTimelineConfigViewController ()
 
 - (void)addMember:(id)member;
@@ -65,6 +67,8 @@ timeline = _timeline;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [[[[UIAlertView alloc] initWithTitle:@"What is this?" message:@"By adding friends to your timeline, their photos will also show up when viewing your timeline." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 }
 
 #pragma mark - Config Subviews
@@ -73,7 +77,7 @@ timeline = _timeline;
     headerView.backgroundColor = [UIColor whiteColor];
     headerView.userInteractionEnabled = YES;
     
-    NSString *title = @"Timeline Members";
+    NSString *title = @"Timeline Config";
     
     UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
     titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
@@ -95,6 +99,29 @@ timeline = _timeline;
     [self.view addSubview:headerView];
 }
 
+- (void)setupSubviews {
+    [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
+    
+    // Table header view
+    UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 48.0)] autorelease];
+    
+    UIButton *fromButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    fromButton.tag = 1001;
+    [fromButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
+    fromButton.frame = CGRectMake(0, 8, tableHeaderView.width / 2, 32);
+    [fromButton setTitle:@"From Date" forState:UIControlStateNormal];
+    [tableHeaderView addSubview:fromButton];
+    
+    UIButton *toButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    toButton.tag = 1002;
+    [toButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
+    toButton.frame = CGRectMake(tableHeaderView.width / 2, 8, tableHeaderView.width / 2, 32);
+    [toButton setTitle:@"To Date" forState:UIControlStateNormal];
+    [tableHeaderView addSubview:toButton];
+    
+    self.tableView.tableHeaderView = tableHeaderView;
+}
+
 #pragma mark - Actions
 - (void)leftAction {
 //    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionRight animated:YES];
@@ -104,8 +131,16 @@ timeline = _timeline;
     [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionLeft animated:YES];
 }
 
-- (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
+- (void)showDatePicker:(UIButton *)sender {
+    PSDatePickerMode mode;
+    if (sender.tag == 1001) {
+        mode = PSDatePickerModeFrom;
+    } else {
+        mode = PSDatePickerModeTo;
+    }
+    // Present a modal date picker
+    DatePickerViewController *vc = [[[DatePickerViewController alloc] initWithMode:mode] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
 }
 
 #pragma mark - State Machine
