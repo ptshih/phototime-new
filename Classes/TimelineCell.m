@@ -130,7 +130,12 @@ profileIconSize = _profileIconSize;
     self.profileIconSize = (numPhotos > 1) ? 32.0 : 32.0;
 
     [self.imageDicts enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
-        PSCachedImageView *iv = [self dequeueImageViewWithURL:[NSURL URLWithString:[dict objectForKey:@"source"]]];
+        NSURL *sourceURL = [NSURL URLWithString:[dict objectForKey:@"source"]];
+        NSURL *thumbnailURL = [NSURL URLWithString:[dict objectForKey:@"picture"]];
+        NSURL *URL = (numPhotos > 1) ? thumbnailURL : sourceURL;
+        PSCachedImageView *iv = [self dequeueImageViewWithURL:URL];
+        [iv setSourceURL:sourceURL];
+        [iv setThumbnailURL:thumbnailURL];
         UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(zoom:)] autorelease];
         [iv addGestureRecognizer:gr];
         iv.layer.borderWidth = 0.0;
@@ -198,13 +203,35 @@ profileIconSize = _profileIconSize;
 
 #pragma mark - Zoom
 - (void)zoom:(UITapGestureRecognizer *)gestureRecognizer {
+    static BOOL isZooming;
+    
+    if (isZooming) {
+        return;
+    }
+    isZooming = YES;
+    
     PSCachedImageView *imageView = (PSCachedImageView *)gestureRecognizer.view;
     if (!imageView.image) return;
     
-    UIViewContentMode contentMode = imageView.contentMode;
-    PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:imageView.image contentMode:contentMode] autorelease];
-    CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
-    [zoomView showInRect:[self convertRect:imageRect toView:nil]];
+    // make sure to zoom the full res image here
+    NSURL *sourceURL = imageView.sourceURL;
+    UIActivityIndicatorViewStyle oldStyle = imageView.loadingIndicator.activityIndicatorViewStyle;
+    imageView.loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    [imageView.loadingIndicator startAnimating];
+    
+    [[PSImageCache sharedCache] cachedImageDataForURL:sourceURL withCompletionBlock:^(NSData *imageData) {
+        [imageView.loadingIndicator stopAnimating];
+        imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
+        isZooming = NO;
+        
+        UIImage *sourceImage = [UIImage imageWithData:imageData];
+        if (sourceImage) {
+            UIViewContentMode contentMode = imageView.contentMode;
+            PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
+            CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
+            [zoomView showInRect:[self convertRect:imageRect toView:nil]];
+        }
+    }];
 }
 
 @end

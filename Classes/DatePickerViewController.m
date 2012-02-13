@@ -77,7 +77,9 @@ datePicker = _datePicker;
 - (void)finishedPickingDate {
     [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefetchOnAppear object:nil];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionUp animated:YES];
+//    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionUp animated:YES];
+    
+    [(PSNavigationController *)self.parentViewController popToRootViewControllerAnimated:YES];
 }
 
 
