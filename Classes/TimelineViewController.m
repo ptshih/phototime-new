@@ -127,7 +127,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - View Config
 - (UIColor *)baseBackgroundColor {
-    return [UIColor whiteColor];
+    return [UIColor blackColor];
 }
 
 //- (UIView *)baseBackgroundView {
@@ -160,6 +160,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 #pragma mark - Config Subviews
 - (void)setupSubviews {
     [self setupTableViewWithFrame:CGRectMake(0.0, 0.0, self.view.width, self.view.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+    self.tableView.backgroundColor = [UIColor clearColor];
     
     // Setup perma left/right buttons
     static CGFloat margin = 8.0;

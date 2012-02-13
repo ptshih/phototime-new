@@ -34,6 +34,7 @@ profileIconSize = _profileIconSize;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.contentView.backgroundColor = [UIColor whiteColor];
         
         self.imageDicts = [NSMutableArray arrayWithCapacity:1];
         self.imageViews = [NSMutableArray arrayWithCapacity:1];
