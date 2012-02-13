@@ -8,8 +8,8 @@
 #import "PSFacebookCenter.h"
 #import "Parse/Parse.h"
 #import "JSONKit.h"
-#import "UIImageView+AFNetworking.h"
 #import "SVProgressHUD.h"
+#import "AFNetworking.h"
 
 /**
  Notifications

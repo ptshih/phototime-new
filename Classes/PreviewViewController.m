@@ -8,7 +8,6 @@
 
 #import "PreviewViewController.h"
 #import "PSLocationCenter.h"
-#import "AFNetworking.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/UTCoreTypes.h>
