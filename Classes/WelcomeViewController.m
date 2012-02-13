@@ -85,35 +85,7 @@
 }
 
 - (void)uploadAccessToken {
-    // This block is passed in to NSURLConnection equivalent to a finish block, it is run inside the provided operation queue
-    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
-    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
-        
-        // How to check response
-        // First check error and data
-        if (!error && data) {
-            // This is equivalent to the completion block
-            // Check the HTTP Status code if available
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode = [httpResponse statusCode];
-                if (statusCode == 200) {
-                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
-                    // We got an HTTP OK code, start reading the response
-                    
-                    
-                    [self downloadTimelines];
-                } else {
-                    // Failed, read status code
-                    NSLog(@"Failed with status code: %d", statusCode);
-                    [self loginDidNotSucceed];
-                }
-            }
-        } else {
-            [self loginDidNotSucceed];
-        }
-    };
+    BLOCK_SELF;
     
     // Setup the network request
     NSDictionary *me = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbMe"];
@@ -126,7 +98,17 @@
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users", API_BASE_URL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"POST" headers:nil parameters:parameters];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+        if ([response statusCode] != 200) {
+            // Handle server status codes?
+            [blockSelf loginDidNotSucceed];
+        } else {
+            [blockSelf downloadTimelines];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [blockSelf loginDidNotSucceed];
+    }];
+    [op start];
 }
 
 #pragma mark - Login
@@ -169,49 +151,37 @@
 }
 
 - (void)downloadTimelines {
-    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
-    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
-        if (!error && data) {
-            // This is equivalent to the completion block
-            // Check the HTTP Status code if available
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode = [httpResponse statusCode];
-                if (statusCode == 200) {
-                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
-                    id results = [self parseData:data httpResponse:httpResponse];
-                    NSDictionary *timeline = [[[results objectForKey:@"data"] objectForKey:@"timelines"] lastObject];
-                    
-                    NSManagedObjectContext *moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-                    [moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
-                    [moc performBlock:^{
-                        [Timeline updateOrInsertInManagedObjectContext:moc entity:timeline uniqueKey:@"id"];
-                        
-                        NSError *error = nil;
-                        [moc save:&error];
-                        
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            [self loginDidSucceed:YES];
-                        }];
-                    }];
-                } else {
-                    // Failed, read status code
-                    [self loginDidNotSucceed];
-                }
-            }
-        } else {
-            [self loginDidNotSucceed];
-        }
-    };
-
+    BLOCK_SELF;
     
     // Setup the network request
     NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/%@/timelines", API_BASE_URL, fbId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+        if ([response statusCode] != 200) {
+            // Handle server status codes?
+            [blockSelf loginDidNotSucceed];
+        } else {
+            NSDictionary *timeline = [[[JSON objectForKey:@"data"] objectForKey:@"timelines"] lastObject];
+            
+            NSManagedObjectContext *moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
+            [moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
+            [moc performBlock:^{
+                [Timeline updateOrInsertInManagedObjectContext:moc entity:timeline uniqueKey:@"id"];
+                
+                NSError *error = nil;
+                [moc save:&error];
+                
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [blockSelf loginDidSucceed:YES];
+                }];
+            }];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [blockSelf loginDidNotSucceed];
+    }];
+    [op start];
 }
 
 @end

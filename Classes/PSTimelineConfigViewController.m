@@ -157,6 +157,8 @@ timeline = _timeline;
 - (void)loadDataSource {
     [self beginRefresh];
     
+    BLOCK_SELF;
+    
     /**
      Sections:
      Friends in Timeline
@@ -164,70 +166,53 @@ timeline = _timeline;
      Friends on Facebook
      */
     
-    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
-    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
-        
-        // How to check response
-        // First check error and data
-        if (!error && data) {
-            // This is equivalent to the completion block
-            // Check the HTTP Status code if available
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode = [httpResponse statusCode];
-                if (statusCode == 200) {
-                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
-                    // We got an HTTP OK code, start reading the response
-                    id results = [data objectFromJSONData];
-                    NSDictionary *members = [[results objectForKey:@"data"] objectForKey:@"members"];
-                    NSArray *inTimeline = [members objectForKey:@"inTimeline"];
-                    NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
-                    NSArray *onPhototime = [members objectForKey:@"onPhototime"];
-                    NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
-                    NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
-                    
-                    // Section 1
-                    //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
-                    [items addObject:inTimeline];
-                    [self.sectionTitles addObject:@"People in Timeline"];
-                    
-                    // Section 2
-                    [items addObject:notInTimeline];
-                    [self.sectionTitles addObject:@"People not in Timeline"];
-                    
-                    // Section 3
-                    [items addObject:onPhototime];
-                    [self.sectionTitles addObject:@"People on Phototime"];
-                    
-                    // Section 4
-                    [items addObject:notOnPhototime];
-                    [self.sectionTitles addObject:@"People not on Phototime"];
-                    
-                    NSArray *memberIds = [inTimeline valueForKey:@"id"];
-                    self.timeline.members = [memberIds componentsJoinedByString:@","];
-                    NSError *error = nil;
-                    [self.timeline.managedObjectContext save:&error];
-                    
-                    [self dataSourceShouldLoadObjects:items animated:NO];
-                    [self endRefresh];
-                } else {
-                    // Failed, read status code
-                    [self endRefresh];
-                }
-            }
-        } else {
-            [self endRefresh];
-        }
-    };
-    
     // Setup the network request
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, self.timeline.id]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+        if ([response statusCode] != 200) {
+            // Handle server status codes?
+            [blockSelf endRefresh];
+        } else {
+            // We got an HTTP OK code, start reading the response
+            NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
+            NSArray *inTimeline = [members objectForKey:@"inTimeline"];
+            NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
+            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
+            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
+            NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
+            
+            // Section 1
+            //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
+            [items addObject:inTimeline];
+            [blockSelf.sectionTitles addObject:@"People in Timeline"];
+            
+            // Section 2
+            [items addObject:notInTimeline];
+            [blockSelf.sectionTitles addObject:@"People not in Timeline"];
+            
+            // Section 3
+            [items addObject:onPhototime];
+            [blockSelf.sectionTitles addObject:@"People on Phototime"];
+            
+            // Section 4
+            [items addObject:notOnPhototime];
+            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
+            
+            NSArray *memberIds = [inTimeline valueForKey:@"id"];
+            blockSelf.timeline.members = [memberIds componentsJoinedByString:@","];
+            NSError *error = nil;
+            [blockSelf.timeline.managedObjectContext save:&error];
+            
+            [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+            [blockSelf endRefresh];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [blockSelf endRefresh];
+    }];
+    [op start];
 }
 
 #pragma mark - TableView
@@ -286,79 +271,48 @@ timeline = _timeline;
 - (void)addMember:(id)member {
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Adding %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
     
-    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
-    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
-        
-        // How to check response
-        // First check error and data
-        if (!error && data) {
-            // This is equivalent to the completion block
-            // Check the HTTP Status code if available
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode = [httpResponse statusCode];
-                if (statusCode == 200) {
-                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
-                    // We got an HTTP OK code, start reading the response
-                    //                    id results = [data objectFromJSONData];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefreshOnAppear object:nil];
-                    [SVProgressHUD dismissWithSuccess:@"Success"];
-                    [self loadDataSource];
-                } else {
-                    // Failed, read status code
-                    [SVProgressHUD dismissWithError:@"Error"];
-                }
-            }
-        } else {
-            [SVProgressHUD dismissWithError:@"Error"];
-        }
-    };
-    
     // Setup the network request
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/addUser/%@", API_BASE_URL, self.timeline.id, [member objectForKey:@"id"]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+        if ([response statusCode] != 200) {
+            // Handle server status codes?
+            [SVProgressHUD dismissWithError:@"Error"];
+        } else {
+            // We got an HTTP OK code, start reading the response
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefreshOnAppear object:nil];
+            [SVProgressHUD dismissWithSuccess:@"Success"];
+            [self loadDataSource];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [SVProgressHUD dismissWithError:@"Error"];
+    }];
+    [op start];
 }
 
 - (void)removeMember:(id)member {
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Removing %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient networkIndicator:YES];
     
-    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
-    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
-        
-        // How to check response
-        // First check error and data
-        if (!error && data) {
-            // This is equivalent to the completion block
-            // Check the HTTP Status code if available
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode = [httpResponse statusCode];
-                if (statusCode == 200) {
-                    NSLog(@"# NSURLConnection succeeded with statusCode: %d", statusCode);
-                    // We got an HTTP OK code, start reading the response
-//                    id results = [data objectFromJSONData];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefreshOnAppear object:nil];
-                    [SVProgressHUD dismissWithSuccess:@"Success"];
-                    [self loadDataSource];
-                } else {
-                    // Failed, read status code
-                    [SVProgressHUD dismissWithError:@"Error"];
-                }
-            }
-        } else {
-            [SVProgressHUD dismissWithError:@"Error"];
-        }
-    };
-    
     // Setup the network request
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/removeUser/%@", API_BASE_URL, self.timeline.id, [member objectForKey:@"id"]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
+    
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+        if ([response statusCode] != 200) {
+            // Handle server status codes?
+            [SVProgressHUD dismissWithError:@"Error"];
+        } else {
+            // We got an HTTP OK code, start reading the response
+            [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefreshOnAppear object:nil];
+            [SVProgressHUD dismissWithSuccess:@"Success"];
+            [self loadDataSource];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [SVProgressHUD dismissWithError:@"Error"];
+    }];
+    [op start];
 }
 
 #pragma mark - Action

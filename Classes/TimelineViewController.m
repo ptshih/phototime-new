@@ -279,78 +279,56 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 
 - (void)loadFromRemote {
     [self beginRefresh];
-
+    
     BLOCK_SELF;
     
-    void (^finishBlock)();
-    finishBlock = ^() {
-        [self endRefresh];
-        [self loadFromCache];
-        NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
-    };
-    
-    void (^failureBlock)();
-    failureBlock = ^() {
-        [self endRefresh];
-        NSLog(@"# NSURLConnection failed on thread: %@", [NSThread currentThread]);
-    };
-    
-    void (^handlerBlock)(NSURLResponse *response, NSData *data, NSError *error);
-    handlerBlock = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSLog(@"# NSURLConnection completed on thread: %@", [NSThread currentThread]);
-        
-        // First check error and data
-        if (!error && data) {
-            // Check the HTTP Status code if available
-            if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSInteger statusCode = [httpResponse statusCode];
-                if (statusCode == 200) {
-                    // Create a child context
-                    NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-                    [childContext setParentContext:blockSelf.moc];
-                    
-                    [childContext performBlock:^{
-                        NSLog(@"# NSURLConnection Parsing/Serializing on thread: %@", [NSThread currentThread]);
-                        id results = [self parseData:data httpResponse:httpResponse];
-                        
-                        // Serialize to Core Data
-                        NSDictionary *data = [results objectForKey:@"data"];
-                        NSArray *photos = [data objectForKey:@"photos"];
-                        if ([photos count] > 0) {
-                            [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"fbPhotoId"];
-                            
-                            NSError *error = nil;
-                            [childContext save:&error];
-                            
-                            if ([blockSelf.moc hasChanges]) {
-                                [blockSelf.moc performBlock:^{
-                                    NSError *error = nil;
-                                    [blockSelf.moc save:&error];
-                                }];
-                            }
-                        }
-                        
-                        // Make sure to call the finish block on the main queue
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:finishBlock];
-                    }];
-                } else {
-                    // Failed, read status code
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:failureBlock];
-                }
-            }
-        } else {
-            // This is equivalent to a connection failure block
-            [[NSOperationQueue mainQueue] addOperationWithBlock:failureBlock];
-        }
-    };
-    
+    // Download remote data
     // Setup the network request
     NSDictionary *parameters = [NSDictionary dictionary];
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timeline.id]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:handlerBlock];
+    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+        if ([response statusCode] != 200) {
+            // Handle server status codes?
+            [blockSelf endRefresh];
+        } else {
+            // Create a child context
+            NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
+            [childContext setParentContext:blockSelf.moc];
+            
+            [childContext performBlock:^{
+                NSLog(@"# NSURLConnection Parsing/Serializing on thread: %@", [NSThread currentThread]);
+                
+                // Serialize to Core Data
+                NSDictionary *data = [JSON objectForKey:@"data"];
+                NSArray *photos = [data objectForKey:@"photos"];
+                if ([photos count] > 0) {
+                    [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"fbPhotoId"];
+                    
+                    NSError *error = nil;
+                    [childContext save:&error];
+                    
+                    if ([blockSelf.moc hasChanges]) {
+                        [blockSelf.moc performBlock:^{
+                            NSError *error = nil;
+                            [blockSelf.moc save:&error];
+                        }];
+                    }
+                }
+                
+                // Make sure to call the finish block on the main queue
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [blockSelf endRefresh];
+                    [blockSelf loadFromCache];
+                    NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
+                }];
+            }];
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        [blockSelf endRefresh];
+    }];
+    [op start];
 }
 
 
