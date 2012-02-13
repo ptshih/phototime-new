@@ -205,13 +205,13 @@ profileIconSize = _profileIconSize;
 - (void)zoom:(UITapGestureRecognizer *)gestureRecognizer {
     static BOOL isZooming;
     
-    if (isZooming) {
-        return;
-    }
-    isZooming = YES;
-    
+    // If the image hasn't loaded, don't allow zoom
     PSCachedImageView *imageView = (PSCachedImageView *)gestureRecognizer.view;
     if (!imageView.image) return;
+    
+    // If already zooming, don't rezoom
+    if (isZooming) return;
+    else isZooming = YES;
     
     // make sure to zoom the full res image here
     NSURL *sourceURL = imageView.sourceURL;
