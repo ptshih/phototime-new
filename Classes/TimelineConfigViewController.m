@@ -156,15 +156,18 @@ timeline = _timeline;
 
 - (void)loadDataSource {
     [super loadDataSource];
+    [self loadFromRemoteWithCompletionBlock:^{
+        [self dataSourceDidLoad];
+    } failureBlock:^{
+        [self dataSourceDidError];
+    }];
+    
+
+}
+
+- (void)loadFromRemoteWithCompletionBlock:(void (^)(void))completionBlock failureBlock:(void (^)(void))failureBlock {
     
     BLOCK_SELF;
-    
-    /**
-     Sections:
-     Friends in Timeline
-     Friends on Phototime
-     Friends on Facebook
-     */
     
     // Setup the network request
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -173,15 +176,14 @@ timeline = _timeline;
     
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
-            // Handle server status codes?
-            [blockSelf dataSourceDidError];
+            failureBlock();
         } else {
             // We got an HTTP OK code, start reading the response
             NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
             NSArray *inTimeline = [members objectForKey:@"inTimeline"];
             NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
-//            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
-//            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
+            //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
+            //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
             NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
             
             // Section 1
@@ -194,12 +196,12 @@ timeline = _timeline;
             [blockSelf.sectionTitles addObject:@"People not in Timeline"];
             
             // Section 3
-//            [items addObject:onPhototime];
-//            [blockSelf.sectionTitles addObject:@"People on Phototime"];
-//            
-//            // Section 4
-//            [items addObject:notOnPhototime];
-//            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
+            //            [items addObject:onPhototime];
+            //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
+            //            
+            // Section 4
+            //            [items addObject:notOnPhototime];
+            //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
             
             NSArray *memberIds = [inTimeline valueForKey:@"id"];
             blockSelf.timeline.members = [memberIds componentsJoinedByString:@","];
@@ -207,9 +209,11 @@ timeline = _timeline;
             [blockSelf.timeline.managedObjectContext save:&error];
             
             [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+            
+            completionBlock();
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [blockSelf dataSourceDidError];
+        failureBlock();
     }];
     [op start];
 }

@@ -117,7 +117,11 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
         [self reloadDataSource];
     } else if (self.shouldRefetchOnAppear) {
         self.shouldRefetchOnAppear = NO;
-        [self loadFromCache];
+        [self loadFromCacheWithCompletionBlock:^{
+            [self dataSourceDidLoad];
+        } failureBlock:^{
+            [self dataSourceDidError];
+        }];
     }
 }
 
@@ -213,17 +217,41 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 #pragma mark - State Machine
 - (void)loadDataSource {
     [super loadDataSource];
-    [self loadFromRemote];
-    [self loadFromCache];
+    
+    // First just load from cache
+    [self loadFromCacheWithCompletionBlock:^{
+        [self dataSourceDidLoad];
+    } failureBlock:^{
+        [self dataSourceDidError];
+    }];
+    
+    // Next load from both remote and cache
+    [self loadFromRemoteWithCompletionBlock:^{
+        [self loadFromCacheWithCompletionBlock:^{
+            [self dataSourceDidLoad];
+        } failureBlock:^{
+            [self dataSourceDidError];
+        }];
+    } failureBlock:^{
+        [self dataSourceDidError];
+    }];
 }
 
 - (void)reloadDataSource {
     [super reloadDataSource];
-    [self loadFromRemote];
+    [self loadFromRemoteWithCompletionBlock:^{
+        [self loadFromCacheWithCompletionBlock:^{
+            [self dataSourceDidLoad];
+        } failureBlock:^{
+            [self dataSourceDidError];
+        }];
+    } failureBlock:^{
+        [self dataSourceDidError];
+    }];
 }
 
 #warning NEEDS OPTIMIZING (SLOW)
-- (void)loadFromCache {
+- (void)loadFromCacheWithCompletionBlock:(void (^)(void))completionBlock failureBlock:(void (^)(void))failureBlock {
     BLOCK_SELF;
     
     NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
@@ -275,12 +303,12 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             blockSelf.sectionTitles = sectionTitles;
             [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+            completionBlock();
         }];
     }];
 }
 
-- (void)loadFromRemote {
-    
+- (void)loadFromRemoteWithCompletionBlock:(void (^)(void))completionBlock failureBlock:(void (^)(void))failureBlock {
     BLOCK_SELF;
     
     // Download remote data
@@ -291,7 +319,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
             // Handle server status codes?
-            [blockSelf dataSourceDidError];
+            failureBlock();
         } else {
             // Create a child context
             NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
@@ -319,13 +347,13 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
                 
                 // Make sure to call the finish block on the main queue
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [blockSelf loadFromCache];
+                    completionBlock();
                     NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
                 }];
             }];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [blockSelf dataSourceDidError];
+        failureBlock();
     }];
     [op start];
 }
