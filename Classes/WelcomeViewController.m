@@ -93,7 +93,7 @@
     [parameters setObject:[[PSFacebookCenter defaultCenter] accessToken] forKey:@"fbAccessToken"];
     [parameters setObject:[NSNumber numberWithDouble:[[[PSFacebookCenter defaultCenter] expirationDate] timeIntervalSince1970]] forKey:@"fbExpirationDate"];
     [parameters setObject:[me objectForKey:@"id"] forKey:@"fbId"];
-    [parameters setObject:[me JSONString] forKey:@"fbMe"];
+    [parameters setObject:[NSJSONSerialization stringWithJSONObject:me options:NSJSONWritingPrettyPrinted error:nil] forKey:@"fbMe"];
     
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users", API_BASE_URL]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"POST" headers:nil parameters:parameters];
@@ -141,7 +141,7 @@
         TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
         [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
     } else {
-#warning handle this edge error case
+        // NOTE: THIS IS AN EDGE CASE
     }
 }
 

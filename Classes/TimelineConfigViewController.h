@@ -1,5 +1,5 @@
 //
-//  PSTimelineConfigViewController.h
+//  TimelineConfigViewController.h
 //  Phototime
 //
 //  Created by Peter on 2/7/12.
@@ -11,7 +11,7 @@
 
 @class Timeline;
 
-@interface PSTimelineConfigViewController : PSTableViewController
+@interface TimelineConfigViewController : PSTableViewController
 
 @property (nonatomic, retain) Timeline *timeline;
 

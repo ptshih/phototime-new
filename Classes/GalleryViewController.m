@@ -61,7 +61,7 @@ assets = _assets;
             
             [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
-                    ALAssetRepresentation *rep = result.defaultRepresentation;
+//                    ALAssetRepresentation *rep = result.defaultRepresentation;
                     NSMutableDictionary *assetDict = [NSMutableDictionary dictionary];
                     UIImage *thumbnail = [UIImage imageWithCGImage:result.thumbnail];
                     [assetDict setObject:thumbnail forKey:@"thumbnail"];

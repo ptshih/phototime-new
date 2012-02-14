@@ -1,25 +1,25 @@
 //
-//  PSTimelineConfigViewController.m
+//  TimelineConfigViewController.m
 //  Phototime
 //
 //  Created by Peter on 2/7/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "PSTimelineConfigViewController.h"
+#import "TimelineConfigViewController.h"
 #import "Timeline.h"
 #import "UserCell.h"
 
 #import "DatePickerViewController.h"
 
-@interface PSTimelineConfigViewController ()
+@interface TimelineConfigViewController ()
 
 - (void)addMember:(id)member;
 - (void)removeMember:(id)member;
 
 @end
 
-@implementation PSTimelineConfigViewController
+@implementation TimelineConfigViewController
 
 @synthesize
 timeline = _timeline;
@@ -180,8 +180,8 @@ timeline = _timeline;
             NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
             NSArray *inTimeline = [members objectForKey:@"inTimeline"];
             NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
-            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
-            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
+//            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
+//            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
             NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
             
             // Section 1

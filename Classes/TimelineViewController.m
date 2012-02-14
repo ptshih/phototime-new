@@ -12,7 +12,7 @@
 #import "Photo.h"
 #import "Timeline.h"
 
-#import "PSTimelineConfigViewController.h"
+#import "TimelineConfigViewController.h"
 #import "GalleryViewController.h"
 
 @interface TimelineViewController (Private)
@@ -159,7 +159,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 
 #pragma mark - Actions
 - (void)leftAction {
-    PSTimelineConfigViewController *vc = [[[PSTimelineConfigViewController alloc] initWithTimeline:self.timeline] autorelease];
+    TimelineConfigViewController *vc = [[[TimelineConfigViewController alloc] initWithTimeline:self.timeline] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
@@ -222,6 +222,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     [self loadFromRemote];
 }
 
+#warning NEEDS OPTIMIZING (SLOW)
 - (void)loadFromCache {
     BLOCK_SELF;
     

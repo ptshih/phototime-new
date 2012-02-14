@@ -167,7 +167,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    id object = [self.frc objectAtIndexPath:indexPath];
+//    id object = [self.frc objectAtIndexPath:indexPath];
 //    TimelineViewController *tvc = [[[TimelineViewController alloc] initWithTimeline:object] autorelease];
     
     [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionUp animated:YES];
