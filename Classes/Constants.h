@@ -7,7 +7,6 @@
 // Vendor imports
 #import "PSFacebookCenter.h"
 #import "Parse/Parse.h"
-#import "JSONKit.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 

@@ -138,7 +138,6 @@
 		286988541475CEEC00B40860 /* TTTOrdinalNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987F11475CEEC00B40860 /* TTTOrdinalNumberFormatter.m */; };
 		286988551475CEEC00B40860 /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987F41475CEEC00B40860 /* TTTTimeIntervalFormatter.m */; };
 		286988561475CEEC00B40860 /* TTTURLRequestFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987F71475CEEC00B40860 /* TTTURLRequestFormatter.m */; };
-		286988571475CEEC00B40860 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987FA1475CEEC00B40860 /* JSONKit.m */; };
 		2869885A1475CEEC00B40860 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 286988011475CEEC00B40860 /* Reachability.m */; };
 		2869885B1475CEEC00B40860 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 286988031475CEEC00B40860 /* SVProgressHUD.bundle */; };
 		2869885C1475CEEC00B40860 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 286988051475CEEC00B40860 /* SVProgressHUD.m */; };
@@ -452,8 +451,6 @@
 		286987F41475CEEC00B40860 /* TTTTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTTimeIntervalFormatter.m; sourceTree = "<group>"; };
 		286987F61475CEEC00B40860 /* TTTURLRequestFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTURLRequestFormatter.h; sourceTree = "<group>"; };
 		286987F71475CEEC00B40860 /* TTTURLRequestFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTURLRequestFormatter.m; sourceTree = "<group>"; };
-		286987F91475CEEC00B40860 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		286987FA1475CEEC00B40860 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		286988001475CEEC00B40860 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		286988011475CEEC00B40860 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		286988031475CEEC00B40860 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
@@ -1035,7 +1032,6 @@
 				286987D11475CEEC00B40860 /* egodatabase */,
 				286987DA1475CEEC00B40860 /* Facebook */,
 				286987E51475CEEC00B40860 /* FormatterKit */,
-				286987F81475CEEC00B40860 /* JSONKit */,
 				286987FF1475CEEC00B40860 /* Reachability */,
 				286988021475CEEC00B40860 /* SVProgressHUD */,
 				286988061475CEEC00B40860 /* TTTAttributedLabel */,
@@ -1177,15 +1173,6 @@
 				286987F71475CEEC00B40860 /* TTTURLRequestFormatter.m */,
 			);
 			path = TTTURLRequestFormatter;
-			sourceTree = "<group>";
-		};
-		286987F81475CEEC00B40860 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				286987F91475CEEC00B40860 /* JSONKit.h */,
-				286987FA1475CEEC00B40860 /* JSONKit.m */,
-			);
-			path = JSONKit;
 			sourceTree = "<group>";
 		};
 		286987FF1475CEEC00B40860 /* Reachability */ = {
@@ -1626,7 +1613,6 @@
 				286988541475CEEC00B40860 /* TTTOrdinalNumberFormatter.m in Sources */,
 				286988551475CEEC00B40860 /* TTTTimeIntervalFormatter.m in Sources */,
 				286988561475CEEC00B40860 /* TTTURLRequestFormatter.m in Sources */,
-				286988571475CEEC00B40860 /* JSONKit.m in Sources */,
 				2869885A1475CEEC00B40860 /* Reachability.m in Sources */,
 				2869885C1475CEEC00B40860 /* SVProgressHUD.m in Sources */,
 				2869885D1475CEEC00B40860 /* TTTAttributedLabel.m in Sources */,
@@ -1708,8 +1694,12 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
@@ -1727,8 +1717,12 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -1748,6 +1742,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				INFOPLIST_FILE = "Phototime-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Phototime;
@@ -1765,6 +1760,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				INFOPLIST_FILE = "Phototime-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Phototime;
