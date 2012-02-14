@@ -212,12 +212,13 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 
 #pragma mark - State Machine
 - (void)loadDataSource {
+    [super loadDataSource];
     [self loadFromRemote];
     [self loadFromCache];
 }
 
 - (void)reloadDataSource {
-    if (self.reloading) return;
+    [super reloadDataSource];
     [self loadFromRemote];
 }
 
@@ -278,7 +279,6 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 }
 
 - (void)loadFromRemote {
-    [self beginRefresh];
     
     BLOCK_SELF;
     
@@ -290,7 +290,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
             // Handle server status codes?
-            [blockSelf endRefresh];
+            [blockSelf dataSourceDidError];
         } else {
             // Create a child context
             NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
@@ -318,18 +318,16 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
                 
                 // Make sure to call the finish block on the main queue
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [blockSelf endRefresh];
                     [blockSelf loadFromCache];
                     NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
                 }];
             }];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [blockSelf endRefresh];
+        [blockSelf dataSourceDidError];
     }];
     [op start];
 }
-
 
 #pragma mark - TableView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {

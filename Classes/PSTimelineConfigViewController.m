@@ -150,12 +150,12 @@ timeline = _timeline;
 }
 
 - (void)endRefresh {
-    [SVProgressHUD dismiss];
     [super endRefresh];
+    [SVProgressHUD dismiss];
 }
 
 - (void)loadDataSource {
-    [self beginRefresh];
+    [super loadDataSource];
     
     BLOCK_SELF;
     
@@ -174,7 +174,7 @@ timeline = _timeline;
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
             // Handle server status codes?
-            [blockSelf endRefresh];
+            [blockSelf dataSourceDidError];
         } else {
             // We got an HTTP OK code, start reading the response
             NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
@@ -207,10 +207,9 @@ timeline = _timeline;
             [blockSelf.timeline.managedObjectContext save:&error];
             
             [blockSelf dataSourceShouldLoadObjects:items animated:NO];
-            [blockSelf endRefresh];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [blockSelf endRefresh];
+        [blockSelf dataSourceDidError];
     }];
     [op start];
 }
