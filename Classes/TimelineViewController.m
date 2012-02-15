@@ -220,9 +220,9 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     
     // First just load from cache
     [self loadFromCacheWithCompletionBlock:^{
-        [self dataSourceDidLoad];
+//        [self dataSourceDidLoad];
     } failureBlock:^{
-        [self dataSourceDidError];
+//        [self dataSourceDidError];
     }];
     
     // Next load from both remote and cache
