@@ -231,6 +231,10 @@ profileIconSize = _profileIconSize;
             CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
             [zoomView showInRect:[self convertRect:imageRect toView:nil]];
         }
+    } failureBlock:^{
+        [imageView.loadingIndicator stopAnimating];
+        imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
+        isZooming = NO;
     }];
 }
 
