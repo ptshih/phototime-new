@@ -151,7 +151,6 @@
 		288F572514808856000EEC90 /* CardPicturePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 288F572314808856000EEC90 /* CardPicturePlaceholder.png */; };
 		288F572614808856000EEC90 /* CardPicturePlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 288F572414808856000EEC90 /* CardPicturePlaceholder@2x.png */; };
 		28983B3914871C42005BD4C5 /* DosEquisMan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 28983B3814871C42005BD4C5 /* DosEquisMan.jpg */; };
-		289C362A148EC48E00D02BAB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 289C3629148EC48E00D02BAB /* Parse.framework */; };
 		289C362F148EC53300D02BAB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 289C362C148EC53300D02BAB /* AudioToolbox.framework */; };
 		289C3630148EC53300D02BAB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 289C362D148EC53300D02BAB /* CFNetwork.framework */; };
 		289C3631148EC53300D02BAB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 289C362E148EC53300D02BAB /* Security.framework */; };
@@ -447,7 +446,6 @@
 		288F572314808856000EEC90 /* CardPicturePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CardPicturePlaceholder.png; sourceTree = "<group>"; };
 		288F572414808856000EEC90 /* CardPicturePlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CardPicturePlaceholder@2x.png"; sourceTree = "<group>"; };
 		28983B3814871C42005BD4C5 /* DosEquisMan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = DosEquisMan.jpg; sourceTree = "<group>"; };
-		289C3629148EC48E00D02BAB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		289C362C148EC53300D02BAB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		289C362D148EC53300D02BAB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		289C362E148EC53300D02BAB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -587,7 +585,6 @@
 				283818C314723F1D007E4827 /* UIKit.framework in Frameworks */,
 				283818C514723F1D007E4827 /* Foundation.framework in Frameworks */,
 				283818C714723F1D007E4827 /* CoreGraphics.framework in Frameworks */,
-				289C362A148EC48E00D02BAB /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,7 +637,6 @@
 				28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */,
 				28603B6614AD41ED00541BB1 /* CoreImage.framework */,
 				28603B6414AD414E00541BB1 /* ImageIO.framework */,
-				289C3629148EC48E00D02BAB /* Parse.framework */,
 				289C362C148EC53300D02BAB /* AudioToolbox.framework */,
 				289C362D148EC53300D02BAB /* CFNetwork.framework */,
 				289C362E148EC53300D02BAB /* Security.framework */,
