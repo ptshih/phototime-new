@@ -9,6 +9,9 @@
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 
+#define CORE_DATA_MOM @"Phototime"
+#define CORE_DATA_SQL_FILE @"Phototime.sqlite"
+
 /**
  Notifications
  */
