@@ -188,7 +188,6 @@
 		28F38D5F14983E75009D58BA /* IconCaption@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D5D14983E75009D58BA /* IconCaption@2x.png */; };
 		28F38D621498442E009D58BA /* IconMore.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D601498442E009D58BA /* IconMore.png */; };
 		28F38D631498442E009D58BA /* IconMore@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D611498442E009D58BA /* IconMore@2x.png */; };
-		28FD7A9A14B120F300E9ADDE /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD7A9914B120F300E9ADDE /* TestViewController.m */; };
 		D0269E3814E1AE2C00B690A2 /* TimelineConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0269E3714E1AE2C00B690A2 /* TimelineConfigViewController.m */; };
 		D0269E3E14E1B2F300B690A2 /* IconClockBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D0269E3A14E1B2F200B690A2 /* IconClockBlack.png */; };
 		D0269E3F14E1B2F300B690A2 /* IconClockBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0269E3B14E1B2F200B690A2 /* IconClockBlack@2x.png */; };
@@ -487,8 +486,6 @@
 		28F38D5D14983E75009D58BA /* IconCaption@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCaption@2x.png"; sourceTree = "<group>"; };
 		28F38D601498442E009D58BA /* IconMore.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconMore.png; sourceTree = "<group>"; };
 		28F38D611498442E009D58BA /* IconMore@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMore@2x.png"; sourceTree = "<group>"; };
-		28FD7A9814B120F300E9ADDE /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		28FD7A9914B120F300E9ADDE /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		D0269E3614E1AE2C00B690A2 /* TimelineConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineConfigViewController.h; sourceTree = "<group>"; };
 		D0269E3714E1AE2C00B690A2 /* TimelineConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineConfigViewController.m; sourceTree = "<group>"; };
 		D0269E3A14E1B2F200B690A2 /* IconClockBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconClockBlack.png; sourceTree = "<group>"; };
@@ -1127,8 +1124,6 @@
 				28603B5A14AC4A1D00541BB1 /* TimelineViewController.m */,
 				28603B7D14AFB3AB00541BB1 /* CameraViewController.h */,
 				28603B7E14AFB3AB00541BB1 /* CameraViewController.m */,
-				28FD7A9814B120F300E9ADDE /* TestViewController.h */,
-				28FD7A9914B120F300E9ADDE /* TestViewController.m */,
 				2812CFEA14B5C53D00F3B8CA /* PreviewViewController.h */,
 				2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */,
 				D0269E3614E1AE2C00B690A2 /* TimelineConfigViewController.h */,
@@ -1514,7 +1509,6 @@
 				28603B5B14AC4A1D00541BB1 /* TimelineViewController.m in Sources */,
 				28603B5F14AC4D9300541BB1 /* TimelineCell.m in Sources */,
 				28603B7F14AFB3AC00541BB1 /* CameraViewController.m in Sources */,
-				28FD7A9A14B120F300E9ADDE /* TestViewController.m in Sources */,
 				288CB07114B2D72800233B45 /* CoreGraphics-PSKit.m in Sources */,
 				2812CFEC14B5C53D00F3B8CA /* PreviewViewController.m in Sources */,
 				D092D2A814DC4362001108A0 /* Phototime.xcdatamodeld in Sources */,
