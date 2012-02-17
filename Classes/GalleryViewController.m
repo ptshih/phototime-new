@@ -92,7 +92,7 @@ assets = _assets;
     NSString *title = @"Select Photos";
     
     UILabel *titleLabel = [UILabel labelWithText:title style:@"timelineSectionTitle"];
-    titleLabel.frame = CGRectMake(0, 0, headerView.width - 80.0, headerView.height);
+    titleLabel.frame = CGRectMake(0, 0, headerView.width - 88.0, headerView.height);
     titleLabel.center = headerView.center;
     [headerView addSubview:titleLabel];
     
