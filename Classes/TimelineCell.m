@@ -82,7 +82,6 @@ profileIconSize = _profileIconSize;
                 [iv removeGestureRecognizer:gr];
             }];
         }
-        [iv unloadImage];
         [__reusableImageViews removeObject:iv];
     }
     [iv loadImageWithURL:URL];
@@ -134,7 +133,7 @@ profileIconSize = _profileIconSize;
         NSURL *thumbnailURL = [NSURL URLWithString:[dict objectForKey:@"picture"]];
         NSURL *URL = (numPhotos > 1) ? thumbnailURL : sourceURL;
         PSCachedImageView *iv = [self dequeueImageViewWithURL:URL];
-        [iv setSourceURL:sourceURL];
+        [iv setOriginalURL:sourceURL];
         [iv setThumbnailURL:thumbnailURL];
         UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(zoom:)] autorelease];
         [iv addGestureRecognizer:gr];
@@ -214,12 +213,12 @@ profileIconSize = _profileIconSize;
     else isZooming = YES;
     
     // make sure to zoom the full res image here
-    NSURL *sourceURL = imageView.sourceURL;
+    NSURL *originalURL = imageView.originalURL;
     UIActivityIndicatorViewStyle oldStyle = imageView.loadingIndicator.activityIndicatorViewStyle;
     imageView.loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     [imageView.loadingIndicator startAnimating];
     
-    [[PSImageCache sharedCache] cachedImageDataForURL:sourceURL withCompletionBlock:^(NSData *imageData) {
+    [[PSImageCache sharedCache] loadImageDataWithURL:originalURL cacheType:PSImageCacheTypeSession completionBlock:^(NSData *imageData, NSURL *cachedURL) {
         [imageView.loadingIndicator stopAnimating];
         imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
         isZooming = NO;
@@ -231,7 +230,7 @@ profileIconSize = _profileIconSize;
             CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
             [zoomView showInRect:[self convertRect:imageRect toView:nil]];
         }
-    } failureBlock:^{
+    } failureBlock:^(NSError *error) {
         [imageView.loadingIndicator stopAnimating];
         imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
         isZooming = NO;
