@@ -115,24 +115,16 @@ navigationController = _navigationController;
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationSuspended object:nil];
+- (void)applicationWillResignActive:(UIApplication *)application {
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationBackgrounded object:nil];
+- (void)applicationDidEnterBackground:(UIApplication *)application {
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationForegrounded object:nil];
+- (void)applicationWillEnterForeground:(UIApplication *)application {
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationResumed object:nil];
+- (void)applicationDidBecomeActive:(UIApplication *)application {
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -56,7 +56,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refetchOnAppear) name:kTimelineShouldRefetchOnAppear object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:kApplicationForegrounded object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
 }
@@ -71,7 +71,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefetchOnAppear object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kApplicationForegrounded object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     RELEASE_SAFELY(_timeline);
     RELEASE_SAFELY(_moc);
