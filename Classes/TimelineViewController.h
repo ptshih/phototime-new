@@ -8,18 +8,14 @@
 
 #import "PSTableViewController.h"
 
-@class Timeline;
-
 @interface TimelineViewController : PSTableViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (nonatomic, retain) NSManagedObjectContext *moc;
-@property (nonatomic, retain) Timeline *timeline;
+@property (nonatomic, copy) NSString *timelineId;
 @property (nonatomic, assign) UIButton *leftButton;
 @property (nonatomic, assign) UIButton *rightButton;
 @property (nonatomic, assign) BOOL shouldRefreshOnAppear;
-@property (nonatomic, assign) BOOL shouldRefetchOnAppear;
 
-- (id)initWithTimeline:(Timeline *)timeline;
+- (id)initWithTimelineId:(NSString *)timelineId;
 
 
 @end

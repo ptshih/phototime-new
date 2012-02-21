@@ -9,9 +9,6 @@
 #import "TimelineViewController.h"
 #import "TimelineCell.h"
 
-#import "Photo.h"
-#import "Timeline.h"
-
 #import "TimelineConfigViewController.h"
 #import "GalleryViewController.h"
 
@@ -21,25 +18,22 @@
 
 - (void)loadFromRemote;
 - (void)refreshOnAppear;
-- (void)refetchOnAppear;
 
 @end
 
 @implementation TimelineViewController
 
 @synthesize
-moc = _moc,
-timeline = _timeline,
+timelineId = _timelineId,
 leftButton = _leftButton,
 rightButton = _rightButton,
-shouldRefreshOnAppear = _shouldRefreshOnAppear,
-shouldRefetchOnAppear = _shouldRefetchOnAppear;
+shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Init
-- (id)initWithTimeline:(Timeline *)timeline {
+- (id)initWithTimelineId:(NSString *)timelineId {
     self = [self initWithNibName:nil bundle:nil];
     if (self) {
-        self.timeline = timeline;
+        self.timelineId = timelineId;
     }
     return self;
 }
@@ -47,15 +41,10 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-        [self.moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
-        
         self.shouldRefreshOnAppear = NO;
-        self.shouldRefetchOnAppear = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refetchOnAppear) name:kTimelineShouldRefetchOnAppear object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
@@ -70,21 +59,15 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefetchOnAppear object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
-    RELEASE_SAFELY(_timeline);
-    RELEASE_SAFELY(_moc);
+    
     // Views
     [super dealloc];
 }
 
 - (void)refreshOnAppear {
     self.shouldRefreshOnAppear = YES;
-}
-
-- (void)refetchOnAppear {
-    self.shouldRefetchOnAppear = YES;
 }
 
 #pragma mark - View Config
@@ -115,15 +98,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     
     if (self.shouldRefreshOnAppear) {
         self.shouldRefreshOnAppear = NO;
-        self.shouldRefetchOnAppear = NO;
         [self reloadDataSource];
-    } else if (self.shouldRefetchOnAppear) {
-        self.shouldRefetchOnAppear = NO;
-        [self loadFromCacheWithCompletionBlock:^{
-            [self dataSourceDidLoad];
-        } failureBlock:^{
-            [self dataSourceDidError];
-        }];
     }
 }
 
@@ -165,7 +140,7 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
 
 #pragma mark - Actions
 - (void)leftAction {
-    TimelineConfigViewController *vc = [[[TimelineConfigViewController alloc] initWithTimeline:self.timeline] autorelease];
+    TimelineConfigViewController *vc = [[[TimelineConfigViewController alloc] initWithTimelineId:self.timelineId] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
@@ -184,180 +159,80 @@ shouldRefetchOnAppear = _shouldRefetchOnAppear;
     [as showInView:[APP_DELEGATE window]];
 }
 
-#pragma mark - Core Data
-- (NSFetchRequest *)fetchRequest {
-    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    [fr setEntity:[Photo entityInManagedObjectContext:self.moc]];
-    [fr setPredicate:[self fetchPredicate]];
-    [fr setSortDescriptors:[self fetchSortDescriptors]];
-    [fr setReturnsObjectsAsFaults:NO];
-    [fr setResultType:NSDictionaryResultType];
-    return [fr autorelease];
-}
-
-- (NSPredicate *)fetchPredicate {
-    // [NSArray arrayWithObjects:@"548430564", @"13704812", @"2602152", nil]
-    NSArray *members = [self.timeline.members componentsSeparatedByString:@","];
-    NSPredicate *membersPredicate = [[NSPredicate predicateWithFormat:@"ownerId IN $members"]            
-                                     predicateWithSubstitutionVariables:[NSDictionary dictionaryWithObject:members forKey:@"members"]];
-    
-    NSDate *fromDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"fromDate"];
-    NSDate *toDate = [NSDate date];
-    NSPredicate *datePredicate = [NSPredicate predicateWithFormat:@"(createdAt >= %@) AND (createdAt <= %@)", fromDate, toDate];
-    
-    NSArray *subpredicates = [NSArray arrayWithObjects:membersPredicate, datePredicate, nil];
-    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicates];
-    return compoundPredicate;
-}
-
-- (NSArray *)fetchSortDescriptors {
-    return [NSArray arrayWithObjects:
-            [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO],
-            nil];
-}
-
 #pragma mark - State Machine
 - (void)loadDataSource {
     [super loadDataSource];
     
-    // First just load from cache
-    [self loadFromCacheWithCompletionBlock:^{
-//        [self dataSourceDidLoad];
-    } failureBlock:^{
-//        [self dataSourceDidError];
-    }];
-    
-    // Next load from both remote and cache
-    [self loadFromRemoteWithCompletionBlock:^{
-        [self loadFromCacheWithCompletionBlock:^{
-            [self dataSourceDidLoad];
-        } failureBlock:^{
-            [self dataSourceDidError];
-        }];
-    } failureBlock:^{
-        [self dataSourceDidError];
-    }];
+    [self loadDataSourceFromRemoteUsingCache:YES];
 }
 
 - (void)reloadDataSource {
     [super reloadDataSource];
-    [self loadFromRemoteWithCompletionBlock:^{
-        [self loadFromCacheWithCompletionBlock:^{
-            [self dataSourceDidLoad];
-        } failureBlock:^{
-            [self dataSourceDidError];
-        }];
-    } failureBlock:^{
-        [self dataSourceDidError];
-    }];
+
+    [self loadDataSourceFromRemoteUsingCache:NO];
 }
 
-#warning NEEDS OPTIMIZING (SLOW)
-- (void)loadFromCacheWithCompletionBlock:(void (^)(void))completionBlock failureBlock:(void (^)(void))failureBlock {
+- (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
     BLOCK_SELF;
     
-    NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-    [childContext setParentContext:self.moc];
-    
-    [childContext performBlock:^{
-        NSError *error = nil;
-        NSArray *fetchedEntities = [childContext executeFetchRequest:self.fetchRequest error:&error];
-        
-        NSMutableArray *sectionTitles = [NSMutableArray array];
-        NSMutableArray *items = [NSMutableArray array];
-        
-        __block BOOL isNewSection = NO;
-        __block NSInteger i = 0; // counter for photos per row
-        __block NSString *lastDate = nil;
-        [fetchedEntities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
-            NSString *currentDate = [entity objectForKey:@"formattedDate"];
-            if ([currentDate isEqualToString:lastDate]) {
-                // Add to existing section
-                NSMutableArray *rows = [items lastObject];
-                
-                if (isNewSection || (i == 3)) {
-                    i = 0;
-                    isNewSection = NO;
-                    NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:3];
-                    [rows addObject:photos];
-                    [photos release];
-                }
-                NSMutableArray *photos = [rows lastObject];
-                [photos addObject:entity];
-                i++;
-            } else {
-                lastDate = currentDate;
-                [sectionTitles addObject:currentDate];
-                
-                // Create a new section
-                NSMutableArray *rows = [[NSMutableArray alloc] init];
-                NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:1];
-                [photos addObject:entity];
-                [rows addObject:photos];
-                [photos release];
-                [items addObject:rows];
-                [rows release];
-                i = 0;
-                isNewSection = YES;
-            }
-        }];
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            blockSelf.sectionTitles = sectionTitles;
-            [blockSelf dataSourceShouldLoadObjects:items animated:NO];
-            completionBlock();
-        }];
-    }];
-}
-
-- (void)loadFromRemoteWithCompletionBlock:(void (^)(void))completionBlock failureBlock:(void (^)(void))failureBlock {
-    BLOCK_SELF;
-    
-    // Download remote data
-    // Setup the network request
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timeline.id]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
-    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
-        if ([response statusCode] != 200) {
-            // Handle server status codes?
-            failureBlock();
-        } else {
-            // Create a child context
-            NSManagedObjectContext *childContext = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-            [childContext setParentContext:blockSelf.moc];
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL) {
+        [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
+            id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
             
-            [childContext performBlock:^{
-                NSLog(@"# NSURLConnection Parsing/Serializing on thread: %@", [NSThread currentThread]);
-                
-                // Serialize to Core Data
-                NSDictionary *data = [JSON objectForKey:@"data"];
-                NSArray *photos = [data objectForKey:@"photos"];
-                if ([photos count] > 0) {
-                    [Photo updateOrInsertInManagedObjectContext:childContext entities:photos uniqueKey:@"fbPhotoId"];
-                    
-                    NSError *error = nil;
-                    [childContext save:&error];
-                    
-                    if ([blockSelf.moc hasChanges]) {
-                        [blockSelf.moc performBlock:^{
-                            NSError *error = nil;
-                            [blockSelf.moc save:&error];
-                        }];
+            NSArray *entities = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
+            
+            NSMutableArray *sectionTitles = [NSMutableArray array];
+            NSMutableArray *items = [NSMutableArray array];
+            
+            __block BOOL isNewSection = NO;
+            __block NSInteger i = 0; // counter for photos per row
+            __block NSString *lastDate = nil;
+            [entities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
+                NSString *currentDate = [entity objectForKey:@"formattedDate"];
+                if ([currentDate isEqualToString:lastDate]) {
+                    // Add to existing section
+                    NSMutableArray *rows = [items lastObject];
+  
+                    if (isNewSection || (i == 3)) {
+                        i = 0;
+                        isNewSection = NO;
+                        NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:3];
+                        [rows addObject:photos];
+                        [photos release];
                     }
+                    NSMutableArray *photos = [rows lastObject];
+                    [photos addObject:entity];
+                    i++;
+                } else {
+                    lastDate = currentDate;
+                    [sectionTitles addObject:currentDate];
+                    
+                    // Create a new section
+                    NSMutableArray *rows = [[NSMutableArray alloc] init];
+                    NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:1];
+                    [photos addObject:entity];
+                    [rows addObject:photos];
+                    [photos release];
+                    [items addObject:rows];
+                    [rows release];
+                    i = 0;
+                    isNewSection = YES;
                 }
-                
-                // Make sure to call the finish block on the main queue
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    completionBlock();
-                    NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
-                }];
             }];
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        failureBlock();
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
+                blockSelf.sectionTitles = sectionTitles;
+                [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+                [blockSelf dataSourceDidLoad];
+            }];
+        }];
+    } failureBlock:^(NSError *error) {
+        [blockSelf dataSourceDidError];
     }];
-    [op start];
 }
 
 #pragma mark - TableView

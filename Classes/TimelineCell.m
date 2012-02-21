@@ -9,7 +9,6 @@
 #import "TimelineCell.h"
 #import "PSCachedImageView.h"
 #import "PSZoomView.h"
-#import "Photo.h"
 
 #define TL_THUMB_SIZE 96.0
 #define TL_THUMB_MARGIN 8.0
@@ -143,7 +142,7 @@ profileIconSize = _profileIconSize;
         [self.imageViews addObject:iv];
         
         // Add profile view
-        PSCachedImageView *pv = [self dequeueImageViewWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [dict objectForKey:@"ownerId"]]]];
+        PSCachedImageView *pv = [self dequeueImageViewWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [[dict objectForKey:@"fbFrom"] objectForKey:@"id"]]]];
         // TODO
         // Detect (using flipboard's method) if pixel contrast is dark/light and choose black/white border
         pv.layer.borderWidth = 1.0;
@@ -218,12 +217,12 @@ profileIconSize = _profileIconSize;
     imageView.loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     [imageView.loadingIndicator startAnimating];
     
-    [[PSImageCache sharedCache] loadImageDataWithURL:originalURL cacheType:PSImageCacheTypeSession completionBlock:^(NSData *imageData, NSURL *cachedURL) {
+    [[PSURLCache sharedCache] loadURL:originalURL cacheType:PSURLCacheTypeSession usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL) {
         [imageView.loadingIndicator stopAnimating];
         imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
         isZooming = NO;
         
-        UIImage *sourceImage = [UIImage imageWithData:imageData];
+        UIImage *sourceImage = [UIImage imageWithData:cachedData];
         if (sourceImage) {
             UIViewContentMode contentMode = imageView.contentMode;
             PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];

@@ -2,7 +2,6 @@
 
 #import "PSConstants.h"
 #import "PSNavigationController.h"
-#import "PSCoreDataStack.h"
 
 // Vendor imports
 #import "PSFacebookCenter.h"
@@ -17,7 +16,6 @@
  */
 #define kLoginSucceeded @"kLoginSucceeded"
 #define kTimelineShouldRefreshOnAppear @"kTimelineShouldRefreshOnAppear"
-#define kTimelineShouldRefetchOnAppear @"kTimelineShouldRefetchOnAppear"
 
 // Facebook APP ID is in PSFacebookCenter.h
 

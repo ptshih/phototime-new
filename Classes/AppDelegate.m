@@ -11,7 +11,6 @@
 #import "PSLocationCenter.h"
 #import "WelcomeViewController.h"
 #import "TimelineViewController.h"
-#import "Timeline.h"
 
 static NSMutableDictionary *_captionsCache;
 
@@ -91,20 +90,11 @@ navigationController = _navigationController;
     // Setup initial view controller based on authentication
     // @"4f2b65e2e4b024f14205b3ad"
     
-    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
-    Timeline *t = nil;
-    NSFetchRequest *fr = [[[NSFetchRequest alloc] initWithEntityName:[Timeline entityName]] autorelease];
-    [fr setEntity:[Timeline entityInManagedObjectContext:[PSCoreDataStack mainThreadContext]]];
-    [fr setPredicate:[NSPredicate predicateWithFormat:@"ownerId = %@", fbId]];
-    [fr setReturnsObjectsAsFaults:NO];
-    NSArray *results = [[PSCoreDataStack mainThreadContext] executeFetchRequest:fr error:nil];
-    if (results && [results count] > 0) {
-        t = [results lastObject];
-    }
+    NSString *timelineId = [[NSUserDefaults standardUserDefaults] objectForKey:@"timelineId"];
     
     id controller = nil;
-    if ([[PSFacebookCenter defaultCenter] isLoggedIn] && t) {
-        controller = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
+    if ([[PSFacebookCenter defaultCenter] isLoggedIn] && timelineId) {
+        controller = [[[TimelineViewController alloc] initWithTimelineId:timelineId] autorelease];
     } else {
         controller = [[[WelcomeViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     }

@@ -8,7 +8,6 @@
 
 #import "WelcomeViewController.h"
 #import "TimelineViewController.h"
-#import "Timeline.h"
 
 @interface WelcomeViewController (Private)
 
@@ -16,7 +15,7 @@
 - (void)loginDidSucceed:(BOOL)animated;
 - (void)loginDidNotSucceed;
 
-- (void)downloadTimelines;
+//- (void)downloadTimelines;
 
 // Notifications
 - (void)fbDidLogin;
@@ -103,7 +102,12 @@
             // Handle server status codes?
             [blockSelf loginDidNotSucceed];
         } else {
-            [blockSelf downloadTimelines];
+            NSDictionary *data = [JSON objectForKey:@"data"];
+            NSDictionary *user = [data objectForKey:@"user"];
+            NSString *timelineId = [user objectForKey:@"timelineId"];
+            [[NSUserDefaults standardUserDefaults] setObject:timelineId forKey:@"timelineId"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [blockSelf loginDidSucceed:YES];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         [blockSelf loginDidNotSucceed];
@@ -126,22 +130,13 @@
 //    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
     [SVProgressHUD dismissWithSuccess:@"Hurray!"];
     
-    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
-    Timeline *t = nil;
-    NSFetchRequest *fr = [[[NSFetchRequest alloc] initWithEntityName:[Timeline entityName]] autorelease];
-    [fr setEntity:[Timeline entityInManagedObjectContext:[PSCoreDataStack mainThreadContext]]];
-    [fr setPredicate:[NSPredicate predicateWithFormat:@"ownerId = %@", fbId]];
-    [fr setReturnsObjectsAsFaults:NO];
-    NSArray *results = [[PSCoreDataStack mainThreadContext] executeFetchRequest:fr error:nil];
-    if (results && [results count] > 0) {
-        t = [results lastObject];
-    }
+    NSString *timelineId = [[NSUserDefaults standardUserDefaults] objectForKey:@"timelineId"];
     
-    if (t) {
-        TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimeline:t] autorelease];
+    if (timelineId) {
+        TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimelineId:timelineId] autorelease];
         [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
     } else {
-        // NOTE: THIS IS AN EDGE CASE
+        [self loginDidNotSucceed];
     }
 }
 
@@ -150,38 +145,38 @@
     [[PSFacebookCenter defaultCenter] logout];
 }
 
-- (void)downloadTimelines {
-    BLOCK_SELF;
-    
-    // Setup the network request
-    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/%@/timelines", API_BASE_URL, fbId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
-    
-    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
-        if ([response statusCode] != 200) {
-            // Handle server status codes?
-            [blockSelf loginDidNotSucceed];
-        } else {
-            NSDictionary *timeline = [[[JSON objectForKey:@"data"] objectForKey:@"timelines"] lastObject];
-            
-            NSManagedObjectContext *moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-            [moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
-            [moc performBlock:^{
-                [Timeline updateOrInsertInManagedObjectContext:moc entity:timeline uniqueKey:@"id"];
-                
-                NSError *error = nil;
-                [moc save:&error];
-                
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [blockSelf loginDidSucceed:YES];
-                }];
-            }];
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [blockSelf loginDidNotSucceed];
-    }];
-    [op start];
-}
+//- (void)downloadTimelines {
+//    BLOCK_SELF;
+//    
+//    // Setup the network request
+//    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
+//    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/%@/timelines", API_BASE_URL, fbId]];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
+//    
+//    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
+//        if ([response statusCode] != 200) {
+//            // Handle server status codes?
+//            [blockSelf loginDidNotSucceed];
+//        } else {
+//            NSDictionary *timeline = [[[JSON objectForKey:@"data"] objectForKey:@"timelines"] lastObject];
+//            
+//            NSManagedObjectContext *moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
+//            [moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
+//            [moc performBlock:^{
+//                [Timeline updateOrInsertInManagedObjectContext:moc entity:timeline uniqueKey:@"id"];
+//                
+//                NSError *error = nil;
+//                [moc save:&error];
+//                
+//                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//                    [blockSelf loginDidSucceed:YES];
+//                }];
+//            }];
+//        }
+//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+//        [blockSelf loginDidNotSucceed];
+//    }];
+//    [op start];
+//}
 
 @end

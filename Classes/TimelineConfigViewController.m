@@ -7,7 +7,6 @@
 //
 
 #import "TimelineConfigViewController.h"
-#import "Timeline.h"
 #import "UserCell.h"
 
 #import "DatePickerViewController.h"
@@ -22,14 +21,14 @@
 @implementation TimelineConfigViewController
 
 @synthesize
-timeline = _timeline;
+timelineId = _timelineId;
 
 #pragma mark - Init
 
-- (id)initWithTimeline:(Timeline *)timeline {
+- (id)initWithTimelineId:(NSString *)timelineId {
     self = [self initWithNibName:nil bundle:nil];
     if (self) {
-        self.timeline = timeline;
+        self.timelineId = timelineId;
     }
     return self;
 }
@@ -46,7 +45,7 @@ timeline = _timeline;
 }
 
 - (void)dealloc {
-    RELEASE_SAFELY(_timeline);
+    self.timelineId = nil;
     [super dealloc];
 }
 
@@ -156,66 +155,52 @@ timeline = _timeline;
 
 - (void)loadDataSource {
     [super loadDataSource];
-    [self loadFromRemoteWithCompletionBlock:^{
+ 
+    [self loadDataSourceFromRemoteUsingCache:NO];
+}
+
+- (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
+    BLOCK_SELF;
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, self.timelineId]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
+    
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypeSession usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL) {
+        id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
+        
+        // We got an HTTP OK code, start reading the response
+        NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
+        NSArray *inTimeline = [members objectForKey:@"inTimeline"];
+        NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
+        //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
+        //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
+        NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
+        
+        // Section 1
+        //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
+        [items addObject:inTimeline];
+        [blockSelf.sectionTitles addObject:@"People in Timeline"];
+        
+        // Section 2
+        [items addObject:notInTimeline];
+        [blockSelf.sectionTitles addObject:@"People not in Timeline"];
+        
+        // Section 3
+        //            [items addObject:onPhototime];
+        //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
+        //            
+        // Section 4
+        //            [items addObject:notOnPhototime];
+        //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
+        
+        [blockSelf dataSourceShouldLoadObjects:items animated:NO];
         [self dataSourceDidLoad];
-    } failureBlock:^{
+
+    } failureBlock:^(NSError *error) {
         [self dataSourceDidError];
     }];
     
-
-}
-
-- (void)loadFromRemoteWithCompletionBlock:(void (^)(void))completionBlock failureBlock:(void (^)(void))failureBlock {
-    
-    BLOCK_SELF;
-    
-    // Setup the network request
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, self.timeline.id]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
-    
-    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
-        if ([response statusCode] != 200) {
-            failureBlock();
-        } else {
-            // We got an HTTP OK code, start reading the response
-            NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
-            NSArray *inTimeline = [members objectForKey:@"inTimeline"];
-            NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
-            //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
-            //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
-            NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
-            
-            // Section 1
-            //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
-            [items addObject:inTimeline];
-            [blockSelf.sectionTitles addObject:@"People in Timeline"];
-            
-            // Section 2
-            [items addObject:notInTimeline];
-            [blockSelf.sectionTitles addObject:@"People not in Timeline"];
-            
-            // Section 3
-            //            [items addObject:onPhototime];
-            //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
-            //            
-            // Section 4
-            //            [items addObject:notOnPhototime];
-            //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
-            
-            NSArray *memberIds = [inTimeline valueForKey:@"id"];
-            blockSelf.timeline.members = [memberIds componentsJoinedByString:@","];
-            NSError *error = nil;
-            [blockSelf.timeline.managedObjectContext save:&error];
-            
-            [blockSelf dataSourceShouldLoadObjects:items animated:NO];
-            
-            completionBlock();
-        }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        failureBlock();
-    }];
-    [op start];
 }
 
 #pragma mark - TableView
@@ -275,7 +260,7 @@ timeline = _timeline;
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Adding %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/addUser/%@", API_BASE_URL, self.timeline.id, [member objectForKey:@"id"]]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/addUser/%@", API_BASE_URL, self.timelineId, [member objectForKey:@"id"]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
@@ -298,7 +283,7 @@ timeline = _timeline;
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Removing %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/removeUser/%@", API_BASE_URL, self.timeline.id, [member objectForKey:@"id"]]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/removeUser/%@", API_BASE_URL, self.timelineId, [member objectForKey:@"id"]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
     

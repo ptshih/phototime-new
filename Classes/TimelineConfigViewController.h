@@ -9,12 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "PSTableViewController.h"
 
-@class Timeline;
-
 @interface TimelineConfigViewController : PSTableViewController
 
-@property (nonatomic, retain) Timeline *timeline;
+@property (nonatomic, copy) NSString *timelineId;
 
-- (id)initWithTimeline:(Timeline *)timeline;
+- (id)initWithTimelineId:(NSString *)timelineId;
 
 @end
