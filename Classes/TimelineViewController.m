@@ -178,7 +178,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
-    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL) {
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached) {
         [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
             id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
             
@@ -228,6 +228,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
                 blockSelf.sectionTitles = sectionTitles;
                 [blockSelf dataSourceShouldLoadObjects:items animated:NO];
                 [blockSelf dataSourceDidLoad];
+                
+                // If this is the first load and we loaded cached data, we should refreh from remote now
+                if (!self.hasLoadedOnce && isCached) {
+                    self.hasLoadedOnce = YES;
+                    [self reloadDataSource];
+                    NSLog(@"first load, stale cache");
+                }
             }];
         }];
     } failureBlock:^(NSError *error) {

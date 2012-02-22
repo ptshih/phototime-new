@@ -217,7 +217,7 @@ profileIconSize = _profileIconSize;
     imageView.loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     [imageView.loadingIndicator startAnimating];
     
-    [[PSURLCache sharedCache] loadURL:originalURL cacheType:PSURLCacheTypeSession usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL) {
+    [[PSURLCache sharedCache] loadURL:originalURL cacheType:PSURLCacheTypeSession usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached) {
         [imageView.loadingIndicator stopAnimating];
         imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
         isZooming = NO;
