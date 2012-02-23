@@ -115,7 +115,6 @@ assets = _assets;
     self.collectionView = [[[PSCollectionView alloc] initWithFrame:CGRectMake(0, 44.0, self.view.width, self.view.height - 44.0)] autorelease];
     self.collectionView.collectionViewDelegate = self;
     self.collectionView.collectionViewDataSource = self;
-    self.collectionView.rowHeight = 96.0;
     self.collectionView.numCols = 3;
     [self.view addSubview:self.collectionView];
 }

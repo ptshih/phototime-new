@@ -18,5 +18,6 @@ build/*
 xcuserdata
 profile
 *.moved-aside
+Info.h
 
 # PSKit

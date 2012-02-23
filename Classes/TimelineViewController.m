@@ -45,7 +45,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.shouldRefreshOnAppear = NO;
-        self.fromDate = [NSDate dateWithTimeIntervalSince1970:1207283215];
+        self.fromDate = [NSDate dateWithTimeIntervalSince1970:1287283215];
         self.toDate = [NSDate distantFuture];
         
         self.items = [NSMutableArray array];
@@ -120,7 +120,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.collectionView = [[[PSCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, self.view.width, self.view.height - self.headerView.height)] autorelease];
     self.collectionView.collectionViewDelegate = self;
     self.collectionView.collectionViewDataSource = self;
-    self.collectionView.rowHeight = 96.0;
     self.collectionView.numCols = 3;
     [self.view addSubview:self.collectionView];
 }
@@ -244,6 +243,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     UIView *v = [self.collectionView dequeueReusableView];
     if (!v) {
         v = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
+        v.contentMode = UIViewContentModeScaleAspectFill;
+        v.clipsToBounds = NO;
     }
     v.width = [[photo objectForKey:@"width"] floatValue];
     v.height = [[photo objectForKey:@"height"] floatValue];
