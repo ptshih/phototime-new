@@ -69,7 +69,7 @@ rightButton = _rightButton;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [[[[UIAlertView alloc] initWithTitle:@"What is this?" message:@"By adding friends to your timeline, their photos will also show up when viewing your timeline." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+//    [[[[UIAlertView alloc] initWithTitle:@"What is this?" message:@"By adding friends to your timeline, their photos will also show up when viewing your timeline." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 }
 
 #pragma mark - Config Subviews
@@ -142,6 +142,27 @@ rightButton = _rightButton;
     [self loadDataSourceFromRemoteUsingCache:NO];
 }
 
+- (void)reloadDataSource {
+    [super reloadDataSource];
+    
+    [self loadDataSourceFromRemoteUsingCache:NO];
+}
+
+- (void)dataSourceDidError {
+    [super dataSourceDidError];
+    UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    errorButton.frame = self.tableView.frame;
+    [errorButton addTarget:self action:@selector(reloadAfterError:) forControlEvents:UIControlEventTouchUpInside];
+    [errorButton setImage:[UIImage imageNamed:@"NetworkErrorBlack"] forState:UIControlStateNormal];
+    errorButton.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:errorButton];
+}
+
+- (void)reloadAfterError:(UIButton *)button {
+    [button removeFromSuperview];
+    [self reloadDataSource];
+}
+
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
     BLOCK_SELF;
     
@@ -153,35 +174,46 @@ rightButton = _rightButton;
         if (error) {
             [self dataSourceDidError];
         } else {
+            // Parse JSON
             id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
-            
-            // We got an HTTP OK code, start reading the response
-            NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
-            NSArray *inTimeline = [members objectForKey:@"inTimeline"];
-            NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
-            //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
-            //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
-            NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
-            
-            // Section 1
-            //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
-            [items addObject:inTimeline];
-            [blockSelf.sectionTitles addObject:@"People in Timeline"];
-            
-            // Section 2
-            [items addObject:notInTimeline];
-            [blockSelf.sectionTitles addObject:@"People not in Timeline"];
-            
-            // Section 3
-            //            [items addObject:onPhototime];
-            //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
-            //            
-            // Section 4
-            //            [items addObject:notOnPhototime];
-            //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
-            
-            [blockSelf dataSourceShouldLoadObjects:items animated:NO];
-            [self dataSourceDidLoad];
+            if (!JSON) {
+                // invalid json
+                [self dataSourceDidError];
+            } else {
+                // Check for our own success codes
+                id metaCode = [JSON objectForKey:@"code"];
+                if (!metaCode || [metaCode integerValue] != 200) {
+                    [self dataSourceDidError];
+                } else {
+                    // Success
+                    NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
+                    NSArray *inTimeline = [members objectForKey:@"inTimeline"];
+                    NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
+                    //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
+                    //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
+                    NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
+                    
+                    // Section 1
+                    //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
+                    [items addObject:inTimeline];
+                    [blockSelf.sectionTitles addObject:@"People in Timeline"];
+                    
+                    // Section 2
+                    [items addObject:notInTimeline];
+                    [blockSelf.sectionTitles addObject:@"People not in Timeline"];
+                    
+                    // Section 3
+                    //            [items addObject:onPhototime];
+                    //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
+                    //            
+                    // Section 4
+                    //            [items addObject:notOnPhototime];
+                    //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
+                    
+                    [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+                    [self dataSourceDidLoad];
+                }
+            }
         }
     }];
     

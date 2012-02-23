@@ -212,6 +212,20 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [self.collectionView reloadViews];
 }
 
+- (void)dataSourceDidError {
+    [super dataSourceDidError];
+    UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    errorButton.frame = self.collectionView.frame;
+    [errorButton addTarget:self action:@selector(reloadAfterError:) forControlEvents:UIControlEventTouchUpInside];
+    [errorButton setImage:[UIImage imageNamed:@"NetworkErrorBlack"] forState:UIControlStateNormal];
+    [self.view addSubview:errorButton];
+}
+
+- (void)reloadAfterError:(UIButton *)button {
+    [button removeFromSuperview];
+    [self reloadDataSource];
+}
+
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
     BLOCK_SELF;
     
@@ -229,20 +243,32 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
             [blockSelf dataSourceDidError];
         } else {
             [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
+                // Parse JSON
                 id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
-                
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
-                    self.items = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
-                    [blockSelf dataSourceDidLoad];
-                    
-                    // If this is the first load and we loaded cached data, we should refreh from remote now
-                    if (!blockSelf.hasLoadedOnce && isCached) {
-                        blockSelf.hasLoadedOnce = YES;
-                        [blockSelf reloadDataSource];
-                        NSLog(@"first load, stale cache");
+                if (!JSON) {
+                    // invalid json
+                    [self dataSourceDidError];
+                } else {
+                    // Check for our own success codes
+                    id metaCode = [JSON objectForKey:@"code"];
+                    if (!metaCode || [metaCode integerValue] != 200) {
+                        [self dataSourceDidError];
+                    } else {
+                        // Success
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
+                            self.items = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
+                            [blockSelf dataSourceDidLoad];
+                            
+                            // If this is the first load and we loaded cached data, we should refreh from remote now
+                            if (!blockSelf.hasLoadedOnce && isCached) {
+                                blockSelf.hasLoadedOnce = YES;
+                                [blockSelf reloadDataSource];
+                                NSLog(@"first load, stale cache");
+                            }
+                        }];
                     }
-                }];
+                }
             }];
         }
     }];
