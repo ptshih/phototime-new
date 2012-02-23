@@ -217,22 +217,20 @@ profileIconSize = _profileIconSize;
     imageView.loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
     [imageView.loadingIndicator startAnimating];
     
-    [[PSURLCache sharedCache] loadURL:originalURL cacheType:PSURLCacheTypeSession usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached) {
+    [[PSURLCache sharedCache] loadURL:originalURL cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
         [imageView.loadingIndicator stopAnimating];
         imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
         isZooming = NO;
         
-        UIImage *sourceImage = [UIImage imageWithData:cachedData];
-        if (sourceImage) {
-            UIViewContentMode contentMode = imageView.contentMode;
-            PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
-            CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
-            [zoomView showInRect:[self convertRect:imageRect toView:nil]];
+        if (!error) {
+            UIImage *sourceImage = [UIImage imageWithData:cachedData];
+            if (sourceImage) {
+                UIViewContentMode contentMode = imageView.contentMode;
+                PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
+                CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
+                [zoomView showInRect:[self convertRect:imageRect toView:nil]];
+            }
         }
-    } failureBlock:^(NSError *error) {
-        [imageView.loadingIndicator stopAnimating];
-        imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
-        isZooming = NO;
     }];
 }
 

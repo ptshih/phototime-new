@@ -166,39 +166,40 @@ timelineId = _timelineId;
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
-    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypeSession usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached) {
-        id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
-        
-        // We got an HTTP OK code, start reading the response
-        NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
-        NSArray *inTimeline = [members objectForKey:@"inTimeline"];
-        NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
-        //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
-        //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
-        NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
-        
-        // Section 1
-        //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
-        [items addObject:inTimeline];
-        [blockSelf.sectionTitles addObject:@"People in Timeline"];
-        
-        // Section 2
-        [items addObject:notInTimeline];
-        [blockSelf.sectionTitles addObject:@"People not in Timeline"];
-        
-        // Section 3
-        //            [items addObject:onPhototime];
-        //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
-        //            
-        // Section 4
-        //            [items addObject:notOnPhototime];
-        //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
-        
-        [blockSelf dataSourceShouldLoadObjects:items animated:NO];
-        [self dataSourceDidLoad];
-
-    } failureBlock:^(NSError *error) {
-        [self dataSourceDidError];
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypeSession usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
+        if (error) {
+            [self dataSourceDidError];
+        } else {
+            id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
+            
+            // We got an HTTP OK code, start reading the response
+            NSDictionary *members = [[JSON objectForKey:@"data"] objectForKey:@"members"];
+            NSArray *inTimeline = [members objectForKey:@"inTimeline"];
+            NSArray *notInTimeline = [members objectForKey:@"notInTimeline"];
+            //            NSArray *onPhototime = [members objectForKey:@"onPhototime"];
+            //            NSArray *notOnPhototime = [members objectForKey:@"notOnPhototime"];
+            NSMutableArray *items = [NSMutableArray arrayWithCapacity:1];
+            
+            // Section 1
+            //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
+            [items addObject:inTimeline];
+            [blockSelf.sectionTitles addObject:@"People in Timeline"];
+            
+            // Section 2
+            [items addObject:notInTimeline];
+            [blockSelf.sectionTitles addObject:@"People not in Timeline"];
+            
+            // Section 3
+            //            [items addObject:onPhototime];
+            //            [blockSelf.sectionTitles addObject:@"People on Phototime"];
+            //            
+            // Section 4
+            //            [items addObject:notOnPhototime];
+            //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
+            
+            [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+            [self dataSourceDidLoad];
+        }
     }];
     
 }

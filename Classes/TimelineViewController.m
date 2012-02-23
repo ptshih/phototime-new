@@ -178,67 +178,69 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
-    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached) {
-        [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
-            id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
-            
-            NSArray *entities = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
-            
-            NSMutableArray *sectionTitles = [NSMutableArray array];
-            NSMutableArray *items = [NSMutableArray array];
-            
-            __block BOOL isNewSection = NO;
-            __block NSInteger i = 0; // counter for photos per row
-            __block NSString *lastDate = nil;
-            [entities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
-                NSString *currentDate = [entity objectForKey:@"formattedDate"];
-                if ([currentDate isEqualToString:lastDate]) {
-                    // Add to existing section
-                    NSMutableArray *rows = [items lastObject];
-  
-                    if (isNewSection || (i == 3)) {
-                        i = 0;
-                        isNewSection = NO;
-                        NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:3];
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
+        if (error) {
+            [self dataSourceDidError];
+        } else {
+            [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
+                id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
+                
+                NSArray *entities = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
+                
+                NSMutableArray *sectionTitles = [NSMutableArray array];
+                NSMutableArray *items = [NSMutableArray array];
+                
+                __block BOOL isNewSection = NO;
+                __block NSInteger i = 0; // counter for photos per row
+                __block NSString *lastDate = nil;
+                [entities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
+                    NSString *currentDate = [entity objectForKey:@"formattedDate"];
+                    if ([currentDate isEqualToString:lastDate]) {
+                        // Add to existing section
+                        NSMutableArray *rows = [items lastObject];
+                        
+                        if (isNewSection || (i == 3)) {
+                            i = 0;
+                            isNewSection = NO;
+                            NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:3];
+                            [rows addObject:photos];
+                            [photos release];
+                        }
+                        NSMutableArray *photos = [rows lastObject];
+                        [photos addObject:entity];
+                        i++;
+                    } else {
+                        lastDate = currentDate;
+                        [sectionTitles addObject:currentDate];
+                        
+                        // Create a new section
+                        NSMutableArray *rows = [[NSMutableArray alloc] init];
+                        NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:1];
+                        [photos addObject:entity];
                         [rows addObject:photos];
                         [photos release];
+                        [items addObject:rows];
+                        [rows release];
+                        i = 0;
+                        isNewSection = YES;
                     }
-                    NSMutableArray *photos = [rows lastObject];
-                    [photos addObject:entity];
-                    i++;
-                } else {
-                    lastDate = currentDate;
-                    [sectionTitles addObject:currentDate];
-                    
-                    // Create a new section
-                    NSMutableArray *rows = [[NSMutableArray alloc] init];
-                    NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:1];
-                    [photos addObject:entity];
-                    [rows addObject:photos];
-                    [photos release];
-                    [items addObject:rows];
-                    [rows release];
-                    i = 0;
-                    isNewSection = YES;
-                }
-            }];
-            
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
-                blockSelf.sectionTitles = sectionTitles;
-                [blockSelf dataSourceShouldLoadObjects:items animated:NO];
-                [blockSelf dataSourceDidLoad];
+                }];
                 
-                // If this is the first load and we loaded cached data, we should refreh from remote now
-                if (!self.hasLoadedOnce && isCached) {
-                    self.hasLoadedOnce = YES;
-                    [self reloadDataSource];
-                    NSLog(@"first load, stale cache");
-                }
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
+                    blockSelf.sectionTitles = sectionTitles;
+                    [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+                    [blockSelf dataSourceDidLoad];
+                    
+                    // If this is the first load and we loaded cached data, we should refreh from remote now
+                    if (!self.hasLoadedOnce && isCached) {
+                        self.hasLoadedOnce = YES;
+                        [self reloadDataSource];
+                        NSLog(@"first load, stale cache");
+                    }
+                }];
             }];
-        }];
-    } failureBlock:^(NSError *error) {
-        [blockSelf dataSourceDidError];
+        }
     }];
 }
 

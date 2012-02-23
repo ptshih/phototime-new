@@ -12,6 +12,9 @@
 #import "WelcomeViewController.h"
 #import "TimelineViewController.h"
 
+#import "BWHockeyManager.h"
+#import "BWQuincyManager.h"
+
 static NSMutableDictionary *_captionsCache;
 
 @interface AppDelegate (Private)
@@ -65,7 +68,13 @@ navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"Fonts: %@", [UIFont familyNames]);
+//    NSLog(@"Fonts: %@", [UIFont familyNames]);
+    
+#ifdef RELEASE
+    [[BWHockeyManager sharedHockeyManager] setAppIdentifier:@"4e1669c1ec68aae5f6c0adb8c3c48367"];
+    [[BWHockeyManager sharedHockeyManager] setAlwaysShowUpdateReminder:YES];
+#endif
+    [[BWQuincyManager sharedQuincyManager] setAppIdentifier:@"4e1669c1ec68aae5f6c0adb8c3c48367"];    
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
