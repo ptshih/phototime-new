@@ -192,6 +192,8 @@
 		D03155D514E5B90E00CC8572 /* IconFriendsBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D314E5B90E00CC8572 /* IconFriendsBlack.png */; };
 		D03155D614E5B90E00CC8572 /* IconFriendsBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */; };
 		D048787214EF193B00DE6AC8 /* NSMutableArray+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D048787114EF193A00DE6AC8 /* NSMutableArray+PSKit.m */; };
+		D054E96514F63CDE00B03306 /* BackgroundPaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D054E96314F63CDE00B03306 /* BackgroundPaper.jpg */; };
+		D054E96614F63CDE00B03306 /* BackgroundPaper@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D054E96414F63CDE00B03306 /* BackgroundPaper@2x.jpg */; };
 		D05B5F9314EB068200970969 /* NSJSONSerialization+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */; };
 		D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639C14E90CA800150193 /* IconCalendarBlack.png */; };
 		D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */; };
@@ -493,6 +495,8 @@
 		D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconFriendsBlack@2x.png"; sourceTree = "<group>"; };
 		D048787014EF193A00DE6AC8 /* NSMutableArray+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+PSKit.h"; sourceTree = "<group>"; };
 		D048787114EF193A00DE6AC8 /* NSMutableArray+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+PSKit.m"; sourceTree = "<group>"; };
+		D054E96314F63CDE00B03306 /* BackgroundPaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackgroundPaper.jpg; sourceTree = "<group>"; };
+		D054E96414F63CDE00B03306 /* BackgroundPaper@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "BackgroundPaper@2x.jpg"; sourceTree = "<group>"; };
 		D05B5F9114EB068200970969 /* NSJSONSerialization+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+PSKit.h"; sourceTree = "<group>"; };
 		D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PSKit.m"; sourceTree = "<group>"; };
 		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
@@ -1193,6 +1197,8 @@
 		28F38D4C149839C2009D58BA /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				D054E96314F63CDE00B03306 /* BackgroundPaper.jpg */,
+				D054E96414F63CDE00B03306 /* BackgroundPaper@2x.jpg */,
 				288F570C147F04D0000EEC90 /* BackgroundCellLeather.png */,
 				288F570D147F04D0000EEC90 /* BackgroundCellLeather@2x.png */,
 				288F5707147F02AF000EEC90 /* BackgroundSectionHeader.png */,
@@ -1460,6 +1466,8 @@
 				D0B910B514F5C6A800587682 /* ButtonBlockCenter@2x.png in Resources */,
 				D0B910B614F5C6A800587682 /* ButtonBlockLeft@2x.png in Resources */,
 				D0B910B714F5C6A800587682 /* ButtonBlockRight@2x.png in Resources */,
+				D054E96514F63CDE00B03306 /* BackgroundPaper.jpg in Resources */,
+				D054E96614F63CDE00B03306 /* BackgroundPaper@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

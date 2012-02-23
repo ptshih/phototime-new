@@ -8,14 +8,16 @@
 
 #import "PSBaseViewController.h"
 #import "PSCollectionView.h"
+#import "PSPullRefreshView.h"
 
-@interface TimelineViewController : PSBaseViewController <PSCollectionViewDelegate, PSCollectionViewDataSource>
+@interface TimelineViewController : PSBaseViewController <PSCollectionViewDelegate, PSCollectionViewDataSource, PSPullRefreshViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, copy) NSString *timelineId;
 @property (nonatomic, copy) NSDate *fromDate;
 @property (nonatomic, copy) NSDate *toDate;
 @property (nonatomic, retain) NSMutableArray *items;
 @property (nonatomic, retain) PSCollectionView *collectionView;
+@property (nonatomic, retain) PSPullRefreshView *pullRefreshView;
 @property (nonatomic, assign) UIButton *leftButton;
 @property (nonatomic, assign) UIButton *centerButton;
 @property (nonatomic, assign) UIButton *rightButton;

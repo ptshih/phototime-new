@@ -27,6 +27,7 @@ fromDate = _fromDate,
 toDate = _toDate,
 items = _items,
 collectionView = _collectionView,
+pullRefreshView = _pullRefreshView,
 leftButton = _leftButton,
 centerButton = _centerButton,
 rightButton = _rightButton,
@@ -59,6 +60,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 - (void)viewDidUnload {
     // Views
+    self.pullRefreshView = nil;
     self.collectionView = nil;
     [super viewDidUnload];
 }
@@ -73,6 +75,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     
     // Views
+    self.pullRefreshView = nil;
     self.collectionView = nil;
     [super dealloc];
 }
@@ -115,13 +118,25 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Config Subviews
 - (void)setupSubviews {
+    [self.view addSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]] autorelease]];
+    
     [self setupHeader];
     
     self.collectionView = [[[PSCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, self.view.width, self.view.height - self.headerView.height)] autorelease];
+    self.collectionView.delegate = self; // scrollViewDelegate
     self.collectionView.collectionViewDelegate = self;
     self.collectionView.collectionViewDataSource = self;
     self.collectionView.numCols = 3;
+    self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper.jpg"]];
+    
     [self.view addSubview:self.collectionView];
+    
+    if (self.pullRefreshView == nil) {
+        self.pullRefreshView = [[[PSPullRefreshView alloc] initWithFrame:CGRectMake(0.0, 0.0 - 48.0, self.view.frame.size.width, 48.0) style:PSPullRefreshStyleBlack] autorelease];
+        self.pullRefreshView.scrollView = self.collectionView;
+        self.pullRefreshView.delegate = self;
+        [self.collectionView addSubview:self.pullRefreshView];		
+    }
 }
 
 - (void)setupHeader {
@@ -209,7 +224,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
-    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
         if (error) {
             [blockSelf dataSourceDidError];
         } else {
@@ -299,5 +314,41 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     }];
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (self.pullRefreshView) {
+        [self.pullRefreshView pullRefreshScrollViewDidEndDragging:scrollView
+                                                   willDecelerate:decelerate];
+    }
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+//    [[PSURLCache sharedCache] suspend];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.pullRefreshView) {
+        [self.pullRefreshView pullRefreshScrollViewDidScroll:scrollView];
+    }
+}
+
+#pragma mark - PSPullRefreshViewDelegate
+- (void)pullRefreshViewDidBeginRefreshing:(PSPullRefreshView *)pullRefreshView {
+    [self reloadDataSource];
+}
+
+#pragma mark - Refresh
+- (void)beginRefresh {
+    [super beginRefresh];
+    [self.pullRefreshView setState:PSPullRefreshStateRefreshing];
+}
+
+- (void)endRefresh {
+    [super endRefresh];
+    [self.pullRefreshView setState:PSPullRefreshStateIdle];
+}
 
 @end
