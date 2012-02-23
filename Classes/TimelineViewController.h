@@ -11,7 +11,10 @@
 @interface TimelineViewController : PSTableViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, copy) NSString *timelineId;
+@property (nonatomic, copy) NSDate *fromDate;
+@property (nonatomic, copy) NSDate *toDate;
 @property (nonatomic, assign) UIButton *leftButton;
+@property (nonatomic, assign) UIButton *centerButton;
 @property (nonatomic, assign) UIButton *rightButton;
 @property (nonatomic, assign) BOOL shouldRefreshOnAppear;
 

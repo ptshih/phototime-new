@@ -21,7 +21,10 @@
 @implementation TimelineConfigViewController
 
 @synthesize
-timelineId = _timelineId;
+timelineId = _timelineId,
+leftButton = _leftButton,
+centerButton = _centerButton,
+rightButton = _rightButton;
 
 #pragma mark - Init
 
@@ -60,7 +63,6 @@ timelineId = _timelineId;
     
     [self loadDataSource];
     
-    [self setupHeader];
     [self setupSubviews];
 }
 
@@ -71,59 +73,40 @@ timelineId = _timelineId;
 }
 
 #pragma mark - Config Subviews
-- (void)setupHeader {
-    UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
-    headerView.backgroundColor = [UIColor whiteColor];
-    headerView.userInteractionEnabled = YES;
-    
-    NSString *title = @"Timeline Members";
-    
-    UILabel *titleLabel = [UILabel labelWithText:title style:@"navigationTitleLabel"];
-    titleLabel.frame = CGRectMake(0, 0, headerView.width - 88.0, headerView.height);
-    titleLabel.center = headerView.center;
-    [headerView addSubview:titleLabel];
-    
-    // Setup perma left/right buttons
-    static CGFloat margin = 10.0;
-//    UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
-//    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
-//    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateHighlighted];
-//    [headerView addSubview:leftButton];
-    
-    UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 6.0, 28.0, 32.0) andStyle:nil target:self action:@selector(rightAction)];
-    [rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateNormal];
-    [rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateHighlighted];
-    [headerView addSubview:rightButton];
-    
-    [self.view addSubview:headerView];
+- (void)setupSubviews {
+    [self setupHeader];
+    [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
 }
 
-- (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
+- (void)setupHeader {
+    // Setup perma header
+    self.headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)] autorelease];
     
-    // Table header view
-//    UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 48.0)] autorelease];
-//    
-//    UIButton *fromButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    fromButton.tag = 1001;
-//    [fromButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
-//    fromButton.frame = CGRectMake(0, 8, tableHeaderView.width / 2, 32);
-//    [fromButton setTitle:@"From Date" forState:UIControlStateNormal];
-//    [tableHeaderView addSubview:fromButton];
-//    
-//    UIButton *toButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    toButton.tag = 1002;
-//    [toButton addTarget:self action:@selector(showDatePicker:) forControlEvents:UIControlEventTouchUpInside];
-//    toButton.frame = CGRectMake(tableHeaderView.width / 2, 8, tableHeaderView.width / 2, 32);
-//    [toButton setTitle:@"To Date" forState:UIControlStateNormal];
-//    [tableHeaderView addSubview:toButton];
-//    
-//    self.tableView.tableHeaderView = tableHeaderView;
+    self.leftButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 44, 44) andStyle:nil target:self action:@selector(leftAction)];
+    [self.leftButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockLeft" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateNormal];
+    
+    self.centerButton = [UIButton buttonWithFrame:CGRectMake(44, 0, self.headerView.width - 88, 44) andStyle:@"timelineSectionTitle" target:self action:@selector(centerAction)];
+    [self.centerButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockCenter" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    [self.centerButton setTitle:@"Timeline Members" forState:UIControlStateNormal];
+    
+    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
+    [self.rightButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockRight" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateNormal];
+    
+    [self.headerView addSubview:self.leftButton];
+    [self.headerView addSubview:self.centerButton];
+    [self.headerView addSubview:self.rightButton];
+    [self.view addSubview:self.headerView];
 }
 
 #pragma mark - Actions
 - (void)leftAction {
 //    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionRight animated:YES];
+}
+
+- (void)centerAction {
+    
 }
 
 - (void)rightAction {

@@ -12,6 +12,9 @@
 @interface TimelineConfigViewController : PSTableViewController
 
 @property (nonatomic, copy) NSString *timelineId;
+@property (nonatomic, assign) UIButton *leftButton;
+@property (nonatomic, assign) UIButton *centerButton;
+@property (nonatomic, assign) UIButton *rightButton;
 
 - (id)initWithTimelineId:(NSString *)timelineId;
 

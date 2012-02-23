@@ -14,9 +14,7 @@
 
 @interface TimelineViewController (Private)
 
-- (void)snap;
-
-- (void)loadFromRemote;
+- (void)setDateRange;
 - (void)refreshOnAppear;
 
 @end
@@ -25,7 +23,10 @@
 
 @synthesize
 timelineId = _timelineId,
+fromDate = _fromDate,
+toDate = _toDate,
 leftButton = _leftButton,
+centerButton = _centerButton,
 rightButton = _rightButton,
 shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
@@ -42,6 +43,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.shouldRefreshOnAppear = NO;
+        self.fromDate = [NSDate dateWithTimeIntervalSince1970:1327283215];
+        self.toDate = [NSDate distantFuture];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
@@ -52,15 +55,16 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 - (void)viewDidUnload {
     // Views
-    [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     [super viewDidUnload];
 }
 
 - (void)dealloc {
+    self.fromDate = nil;
+    self.toDate = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-    [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
     
     // Views
     [super dealloc];
@@ -104,38 +108,51 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Config Subviews
 - (void)setupSubviews {
-    [self setupTableViewWithFrame:CGRectMake(0.0, 0.0, self.view.width, self.view.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
+    [self setupHeader];
+    
+    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.bottom, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
     
     self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]] autorelease];
-    
-    // Setup perma left/right buttons
-    static CGFloat margin = 8.0;
-    self.leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateNormal];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateHighlighted];
-    [self.view addSubview:self.leftButton];
-    
-    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.tableView.width - 28.0 - margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(rightAction)];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateHighlighted];
-    [self.view addSubview:self.rightButton];
-    
-    [self.tableView addObserver:self forKeyPath:@"contentOffset" options:0 context:nil];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    static CGFloat top = 8.0;
-    if ([object isEqual:self.tableView]) {
-        CGPoint contentOffset = self.tableView.contentOffset;
-        CGFloat y = contentOffset.y;
-        if (y < 0) {
-            self.leftButton.top = top - y;
-            self.rightButton.top = top - y;
-        } else {
-            self.leftButton.top = top;
-            self.rightButton.top = top;
-        }
+- (void)setupHeader {
+    // Setup perma header
+    self.headerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)] autorelease];
+    
+    self.leftButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 44, 44) andStyle:nil target:self action:@selector(leftAction)];
+    [self.leftButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockLeft" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconGearBlack"] forState:UIControlStateNormal];
+    
+    self.centerButton = [UIButton buttonWithFrame:CGRectMake(44, 0, self.headerView.width - 88, 44) andStyle:@"timelineSectionTitle" target:self action:@selector(centerAction)];
+    [self.centerButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockCenter" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    [self setDateRange];
+    
+    self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
+    [self.rightButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockRight" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+    
+    [self.headerView addSubview:self.leftButton];
+    [self.headerView addSubview:self.centerButton];
+    [self.headerView addSubview:self.rightButton];
+    [self.view addSubview:self.headerView];
+}
+
+- (void)setDateRange {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = nil;
+    components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.fromDate];
+    NSString *fromString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
+    
+    NSString *toString = nil;
+    NSDate *nowDate = [NSDate date];
+    if ([[nowDate earlierDate:self.toDate] isEqualToDate:nowDate]) {
+        toString = @"Now";
+    } else {
+        components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.toDate];
+        toString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
     }
+    
+    [self.centerButton setTitle:[NSString stringWithFormat:@"%@ - %@", fromString, toString] forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
@@ -144,19 +161,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
+- (void)centerAction {
+    
+}
+
 - (void)rightAction {
     GalleryViewController *vc = [[[GalleryViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
-}
-
-- (void)snap {
-    UIActionSheet *as = nil;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        as = [[[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo", @"Choose From Library", nil] autorelease];
-    } else {
-        as = [[[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Choose From Library", nil] autorelease];
-    }
-    [as showInView:[APP_DELEGATE window]];
 }
 
 #pragma mark - State Machine
@@ -172,11 +183,25 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [self loadDataSourceFromRemoteUsingCache:NO];
 }
 
+- (void)dataSourceDidLoad {
+    [super dataSourceDidLoad];
+//    for (NSInteger i = 0; i < self.tableView.numberOfSections; i++) {
+//        CGPoint point = [self.tableView rectForSection:i].origin;
+//        [self.sectionRects setObject:[self.sectionTitles objectAtIndex:i] forKey:NSStringFromCGPoint(point)];
+//    }
+}
+
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
     BLOCK_SELF;
     
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSNumber *fromTimestamp = [NSNumber numberWithDouble:[self.fromDate timeIntervalSince1970]];
+    NSNumber *toTimestamp = [NSNumber numberWithDouble:[self.toDate timeIntervalSince1970]];
+    [parameters setObject:fromTimestamp forKey:@"since"];
+    [parameters setObject:toTimestamp forKey:@"until"];
+    
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
     [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
         if (error) {
@@ -245,25 +270,24 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 #pragma mark - TableView
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
-    headerView.backgroundColor = [UIColor whiteColor];
-    headerView.userInteractionEnabled = YES;
-    
-    //    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
-    NSString *title = [self.sectionTitles count] > 0 ? [self.sectionTitles objectAtIndex:section] : @"Timeline";
-    
-    UILabel *titleLabel = [UILabel labelWithText:title style:@"timelineSectionTitle"];
-    titleLabel.frame = CGRectMake(0, 0, headerView.width - 88.0, headerView.height);
-    titleLabel.center = headerView.center;
-    [headerView addSubview:titleLabel];
-    
-    return headerView;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
+//    headerView.backgroundColor = [UIColor clearColor];
+//    
+//    //    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
+//    NSString *title = [self.sectionTitles count] > 0 ? [self.sectionTitles objectAtIndex:section] : @"Timeline";
+//    
+//    UILabel *titleLabel = [UILabel labelWithText:title style:@"timelineSectionTitle"];
+//    titleLabel.frame = CGRectMake(0, 0, headerView.width - 88.0, headerView.height);
+//    titleLabel.center = headerView.center;
+//    [headerView addSubview:titleLabel];
+//    
+//    return headerView;
+//}
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44.0;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 44.0;
+//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.items count];
@@ -293,5 +317,14 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [cell tableView:tableView fillCellWithObject:object atIndexPath:indexPath];
 }
+
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    CGPoint contentOffset = scrollView.contentOffset;
+//    NSLog(@"%@", NSStringFromCGPoint(contentOffset));
+//    NSString *sectionTitle = [self.sectionRects objectForKey:NSStringFromCGPoint(contentOffset)];
+//    if (sectionTitle) {
+//        [self.centerButton setTitle:sectionTitle forState:UIControlStateNormal];
+//    }
+//}
 
 @end

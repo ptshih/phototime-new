@@ -230,6 +230,9 @@
 		D0B910A914F5C4BE00587682 /* BWQuincyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9109B14F5C4BE00587682 /* BWQuincyManager.m */; };
 		D0B910AA14F5C4BE00587682 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9109C14F5C4BE00587682 /* CrashReporter.framework */; };
 		D0B910AB14F5C4BE00587682 /* Quincy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0B9109D14F5C4BE00587682 /* Quincy.bundle */; };
+		D0B910B514F5C6A800587682 /* ButtonBlockCenter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0B910B214F5C6A800587682 /* ButtonBlockCenter@2x.png */; };
+		D0B910B614F5C6A800587682 /* ButtonBlockLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0B910B314F5C6A800587682 /* ButtonBlockLeft@2x.png */; };
+		D0B910B714F5C6A800587682 /* ButtonBlockRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0B910B414F5C6A800587682 /* ButtonBlockRight@2x.png */; };
 		D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */; };
 /* End PBXBuildFile section */
 
@@ -558,6 +561,9 @@
 		D0B9109B14F5C4BE00587682 /* BWQuincyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWQuincyManager.m; sourceTree = "<group>"; };
 		D0B9109C14F5C4BE00587682 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		D0B9109D14F5C4BE00587682 /* Quincy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Quincy.bundle; sourceTree = "<group>"; };
+		D0B910B214F5C6A800587682 /* ButtonBlockCenter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlockCenter@2x.png"; sourceTree = "<group>"; };
+		D0B910B314F5C6A800587682 /* ButtonBlockLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlockLeft@2x.png"; sourceTree = "<group>"; };
+		D0B910B414F5C6A800587682 /* ButtonBlockRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlockRight@2x.png"; sourceTree = "<group>"; };
 		D0DDA67914E85DC1001FD463 /* PSPullRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSPullRefreshView.h; sourceTree = "<group>"; };
 		D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPullRefreshView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -698,6 +704,9 @@
 		28698713147312EC00B40860 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D0B910B214F5C6A800587682 /* ButtonBlockCenter@2x.png */,
+				D0B910B314F5C6A800587682 /* ButtonBlockLeft@2x.png */,
+				D0B910B414F5C6A800587682 /* ButtonBlockRight@2x.png */,
 				28F38D4C149839C2009D58BA /* Backgrounds */,
 				28F38D4A149839B9009D58BA /* Icons */,
 				2810F57D149216990028BCFE /* Toolbar */,
@@ -1448,6 +1457,9 @@
 				D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */,
 				D0B910A814F5C4BE00587682 /* Hockey.bundle in Resources */,
 				D0B910AB14F5C4BE00587682 /* Quincy.bundle in Resources */,
+				D0B910B514F5C6A800587682 /* ButtonBlockCenter@2x.png in Resources */,
+				D0B910B614F5C6A800587682 /* ButtonBlockLeft@2x.png in Resources */,
+				D0B910B714F5C6A800587682 /* ButtonBlockRight@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1608,6 +1620,8 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = Info.h;
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1623,6 +1637,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -1631,6 +1646,8 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = Info.h;
+				INFOPLIST_PREPROCESS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -1678,6 +1695,53 @@
 			};
 			name = Release;
 		};
+		D0B910BD14F5D6A600587682 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "DISTRIBUTION=1";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_PREFIX_HEADER = Info.h;
+				INFOPLIST_PREPROCESS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
+			};
+			name = Distribution;
+		};
+		D0B910BE14F5D6A600587682 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/PSKit/src/Vendor/QuincyKit\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				INFOPLIST_FILE = "Phototime-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = Phototime;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1686,6 +1750,7 @@
 			buildConfigurations = (
 				283818D414723F1D007E4827 /* Debug */,
 				283818D514723F1D007E4827 /* Release */,
+				D0B910BD14F5D6A600587682 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1695,6 +1760,7 @@
 			buildConfigurations = (
 				283818D714723F1D007E4827 /* Debug */,
 				283818D814723F1D007E4827 /* Release */,
+				D0B910BE14F5D6A600587682 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
