@@ -7,11 +7,11 @@
 //
 
 #import "PSViewController.h"
-#import "PSCollectionView.h"
+#import "PSGalleryView.h"
 
-@interface GalleryViewController : PSViewController <PSCollectionViewDelegate, PSCollectionViewDataSource>
+@interface GalleryViewController : PSViewController <PSGalleryViewDelegate, PSGalleryViewDataSource>
 
-@property (nonatomic, retain) PSCollectionView *collectionView;
+@property (nonatomic, retain) PSGalleryView *galleryView;
 @property (nonatomic, retain) NSMutableArray *assets;
 
 @end

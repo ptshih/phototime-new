@@ -16,7 +16,7 @@
 @implementation GalleryViewController
 
 @synthesize
-collectionView = _collectionView,
+galleryView = _galleryView,
 assets = _assets;
 
 
@@ -30,12 +30,12 @@ assets = _assets;
 }
 
 - (void)viewDidUnload {
-    self.collectionView = nil;
+    self.galleryView = nil;
     [super viewDidUnload];
 }
 
 - (void)dealloc {
-    self.collectionView = nil;
+    self.galleryView = nil;
     [super dealloc];
 }
 
@@ -70,7 +70,7 @@ assets = _assets;
                 }
             }];
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [blockSelf.collectionView reloadViews];
+                [blockSelf.galleryView reloadViews];
             }];
         }
     } failureBlock:^(NSError *error) {
@@ -112,11 +112,11 @@ assets = _assets;
 }
 
 - (void)setupSubviews {
-    self.collectionView = [[[PSCollectionView alloc] initWithFrame:CGRectMake(0, 44.0, self.view.width, self.view.height - 44.0)] autorelease];
-    self.collectionView.collectionViewDelegate = self;
-    self.collectionView.collectionViewDataSource = self;
-    self.collectionView.numCols = 3;
-    [self.view addSubview:self.collectionView];
+    self.galleryView = [[[PSGalleryView alloc] initWithFrame:CGRectMake(0, 44.0, self.view.width, self.view.height - 44.0)] autorelease];
+    self.galleryView.galleryViewDelegate = self;
+    self.galleryView.galleryViewDataSource = self;
+    self.galleryView.numCols = 3;
+    [self.view addSubview:self.galleryView];
 }
 
 #pragma mark - Actions
@@ -128,14 +128,14 @@ assets = _assets;
 
 }
 
-#pragma mark - PSCollectionViewDelegate
-- (NSInteger)numberOfViewsInCollectionView:(PSCollectionView *)collectionView {
+#pragma mark - PSGalleryViewDelegate
+- (NSInteger)numberOfViewsInGalleryView:(PSGalleryView *)galleryView {
     return [self.assets count];
 }
 
-- (UIView *)collectionView:(PSCollectionView *)collectionView viewAtIndex:(NSInteger)index {
+- (UIView *)galleryView:(PSGalleryView *)galleryView viewAtIndex:(NSInteger)index {
     NSDictionary *assetDict = [self.assets objectAtIndex:index];
-    UIView *v = [self.collectionView dequeueReusableView];
+    UIView *v = [self.galleryView dequeueReusableView];
     if (!v) {
         v = [[[UIImageView alloc] initWithFrame:CGRectZero] autorelease];
         v.frame = CGRectMake(0, 0, 96, 96);
