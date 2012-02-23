@@ -7,7 +7,7 @@
 //
 
 #import "TimelineViewController.h"
-#import "TimelineCell.h"
+#import "PSZoomView.h"
 
 #import "TimelineConfigViewController.h"
 #import "GalleryViewController.h"
@@ -25,6 +25,8 @@
 timelineId = _timelineId,
 fromDate = _fromDate,
 toDate = _toDate,
+items = _items,
+collectionView = _collectionView,
 leftButton = _leftButton,
 centerButton = _centerButton,
 rightButton = _rightButton,
@@ -43,8 +45,10 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.shouldRefreshOnAppear = NO;
-        self.fromDate = [NSDate dateWithTimeIntervalSince1970:1327283215];
+        self.fromDate = [NSDate dateWithTimeIntervalSince1970:1207283215];
         self.toDate = [NSDate distantFuture];
+        
+        self.items = [NSMutableArray array];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
@@ -55,18 +59,21 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 - (void)viewDidUnload {
     // Views
+    self.collectionView = nil;
     [super viewDidUnload];
 }
 
 - (void)dealloc {
     self.fromDate = nil;
     self.toDate = nil;
+    self.items = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     
     // Views
+    self.collectionView = nil;
     [super dealloc];
 }
 
@@ -90,8 +97,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     // Setup Views
     [self setupSubviews];
-    [self setupPullRefresh];
-    self.tableView.contentOffset = self.contentOffset;
+//    [self setupPullRefresh];
+//    self.tableView.contentOffset = self.contentOffset;
     
     // Load
     [self loadDataSource];
@@ -110,9 +117,12 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 - (void)setupSubviews {
     [self setupHeader];
     
-    [self setupTableViewWithFrame:CGRectMake(0.0, self.headerView.bottom, self.view.width, self.view.height - self.headerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleNone separatorColor:[UIColor lightGrayColor]];
-    
-    self.tableView.backgroundView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]] autorelease];
+    self.collectionView = [[[PSCollectionView alloc] initWithFrame:CGRectMake(0, self.headerView.bottom, self.view.width, self.view.height - self.headerView.height)] autorelease];
+    self.collectionView.collectionViewDelegate = self;
+    self.collectionView.collectionViewDataSource = self;
+    self.collectionView.rowHeight = 96.0;
+    self.collectionView.numCols = 3;
+    [self.view addSubview:self.collectionView];
 }
 
 - (void)setupHeader {
@@ -185,10 +195,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 - (void)dataSourceDidLoad {
     [super dataSourceDidLoad];
-//    for (NSInteger i = 0; i < self.tableView.numberOfSections; i++) {
-//        CGPoint point = [self.tableView rectForSection:i].origin;
-//        [self.sectionRects setObject:[self.sectionTitles objectAtIndex:i] forKey:NSStringFromCGPoint(point)];
-//    }
+    [self.collectionView reloadViews];
 }
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
@@ -205,62 +212,20 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
         if (error) {
-            [self dataSourceDidError];
+            [blockSelf dataSourceDidError];
         } else {
             [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
                 id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
                 
-                NSArray *entities = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
-                
-                NSMutableArray *sectionTitles = [NSMutableArray array];
-                NSMutableArray *items = [NSMutableArray array];
-                
-                __block BOOL isNewSection = NO;
-                __block NSInteger i = 0; // counter for photos per row
-                __block NSString *lastDate = nil;
-                [entities enumerateObjectsUsingBlock:^(NSDictionary *entity, NSUInteger idx, BOOL *stop) {
-                    NSString *currentDate = [entity objectForKey:@"formattedDate"];
-                    if ([currentDate isEqualToString:lastDate]) {
-                        // Add to existing section
-                        NSMutableArray *rows = [items lastObject];
-                        
-                        if (isNewSection || (i == 3)) {
-                            i = 0;
-                            isNewSection = NO;
-                            NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:3];
-                            [rows addObject:photos];
-                            [photos release];
-                        }
-                        NSMutableArray *photos = [rows lastObject];
-                        [photos addObject:entity];
-                        i++;
-                    } else {
-                        lastDate = currentDate;
-                        [sectionTitles addObject:currentDate];
-                        
-                        // Create a new section
-                        NSMutableArray *rows = [[NSMutableArray alloc] init];
-                        NSMutableArray *photos = [[NSMutableArray alloc] initWithCapacity:1];
-                        [photos addObject:entity];
-                        [rows addObject:photos];
-                        [photos release];
-                        [items addObject:rows];
-                        [rows release];
-                        i = 0;
-                        isNewSection = YES;
-                    }
-                }];
-                
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
-                    blockSelf.sectionTitles = sectionTitles;
-                    [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+                    self.items = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
                     [blockSelf dataSourceDidLoad];
                     
                     // If this is the first load and we loaded cached data, we should refreh from remote now
-                    if (!self.hasLoadedOnce && isCached) {
-                        self.hasLoadedOnce = YES;
-                        [self reloadDataSource];
+                    if (!blockSelf.hasLoadedOnce && isCached) {
+                        blockSelf.hasLoadedOnce = YES;
+                        [blockSelf reloadDataSource];
                         NSLog(@"first load, stale cache");
                     }
                 }];
@@ -269,62 +234,69 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     }];
 }
 
-#pragma mark - TableView
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIImageView *headerView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44.0)] autorelease];
-//    headerView.backgroundColor = [UIColor clearColor];
-//    
-//    //    NSString *title = [self.items count] > 0 ? [[[self.items objectAtIndex:section] objectAtIndex:0] objectForKey:@"formattedDate"] : @"Timeline";
-//    NSString *title = [self.sectionTitles count] > 0 ? [self.sectionTitles objectAtIndex:section] : @"Timeline";
-//    
-//    UILabel *titleLabel = [UILabel labelWithText:title style:@"timelineSectionTitle"];
-//    titleLabel.frame = CGRectMake(0, 0, headerView.width - 88.0, headerView.height);
-//    titleLabel.center = headerView.center;
-//    [headerView addSubview:titleLabel];
-//    
-//    return headerView;
-//}
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 44.0;
-//}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#pragma mark - PSCollectionViewDelegate
+- (NSInteger)numberOfViewsInCollectionView:(PSCollectionView *)collectionView {
     return [self.items count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self.items objectAtIndex:section] count];;
-}
-
-- (Class)cellClassAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        default:
-            return [TimelineCell class];
-            break;
+- (UIView *)collectionView:(PSCollectionView *)collectionView viewAtIndex:(NSInteger)index {
+    NSDictionary *photo = [self.items objectAtIndex:index];
+    UIView *v = [self.collectionView dequeueReusableView];
+    if (!v) {
+        v = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
     }
+    v.width = [[photo objectForKey:@"width"] floatValue];
+    v.height = [[photo objectForKey:@"height"] floatValue];
+    
+    [(PSCachedImageView *)v setOriginalURL:[NSURL URLWithString:[photo objectForKey:@"source"]]];
+    [(PSCachedImageView *)v setThumbnailURL:[NSURL URLWithString:[photo objectForKey:@"picture"]]];
+    [(PSCachedImageView *)v loadImageWithURL:[NSURL URLWithString:[photo objectForKey:@"picture"]] cacheType:PSURLCacheTypePermanent];
+    
+    return v;
+
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Class cellClass = [self cellClassAtIndexPath:indexPath];
-    //    id object = [self.frc objectAtIndexPath:indexPath];
-    id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    return [cellClass rowHeightForObject:object atIndexPath:indexPath forInterfaceOrientation:self.interfaceOrientation];
+- (CGSize)sizeForViewAtIndex:(NSInteger)index {
+    NSDictionary *photo = [self.items objectAtIndex:index];
+    CGFloat width = [[photo objectForKey:@"width"] floatValue];
+    CGFloat height = [[photo objectForKey:@"height"] floatValue];
+    
+    return CGSizeMake(width, height);
 }
 
-- (void)tableView:(UITableView *)tableView configureCell:(id)cell atIndexPath:(NSIndexPath *)indexPath {
-    //    id object = [self.frc objectAtIndexPath:indexPath];
-    id object = [[self.items objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [cell tableView:tableView fillCellWithObject:object atIndexPath:indexPath];
+- (void)collectionView:(PSCollectionView *)collectionView didSelectView:(UIView *)view atIndex:(NSInteger)index {
+    static BOOL isZooming;
+    
+    // If the image hasn't loaded, don't allow zoom
+    PSCachedImageView *imageView = (PSCachedImageView *)view;
+    if (!imageView.image) return;
+    
+    // If already zooming, don't rezoom
+    if (isZooming) return;
+    else isZooming = YES;
+    
+    // make sure to zoom the full res image here
+    NSURL *originalURL = imageView.originalURL;
+    UIActivityIndicatorViewStyle oldStyle = imageView.loadingIndicator.activityIndicatorViewStyle;
+    imageView.loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    [imageView.loadingIndicator startAnimating];
+    
+    [[PSURLCache sharedCache] loadURL:originalURL cacheType:PSURLCacheTypePermanent usingCache:YES completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
+        [imageView.loadingIndicator stopAnimating];
+        imageView.loadingIndicator.activityIndicatorViewStyle = oldStyle;
+        isZooming = NO;
+        
+        if (!error) {
+            UIImage *sourceImage = [UIImage imageWithData:cachedData];
+            if (sourceImage) {
+                UIViewContentMode contentMode = imageView.contentMode;
+                PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
+                CGRect imageRect = [collectionView convertRect:imageView.frame toView:collectionView];
+                [zoomView showInRect:[collectionView convertRect:imageRect toView:nil]];
+            }
+        }
+    }];
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    CGPoint contentOffset = scrollView.contentOffset;
-//    NSLog(@"%@", NSStringFromCGPoint(contentOffset));
-//    NSString *sectionTitle = [self.sectionRects objectForKey:NSStringFromCGPoint(contentOffset)];
-//    if (sectionTitle) {
-//        [self.centerButton setTitle:sectionTitle forState:UIControlStateNormal];
-//    }
-//}
 
 @end
