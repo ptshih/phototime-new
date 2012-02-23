@@ -261,7 +261,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
         v.contentMode = UIViewContentModeScaleAspectFill;
         v.clipsToBounds = YES;
         v.layer.borderWidth = 1.0;
-        v.layer.borderColor = [RGBACOLOR(225, 225, 225, 1.0) CGColor];
+        v.layer.borderColor = [RGBACOLOR(230, 230, 230, 0.8) CGColor];
     }
     v.width = [[photo objectForKey:@"width"] floatValue];
     v.height = [[photo objectForKey:@"height"] floatValue];

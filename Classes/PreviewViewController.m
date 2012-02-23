@@ -142,95 +142,95 @@
 
 #pragma mark - Camera/Photo
 - (void)getExifFromData:(NSData *)data {
-  CGImageSourceRef ref = CGImageSourceCreateWithData((CFDataRef)data, NULL);
-  NSDictionary *dict = (NSDictionary *)CGImageSourceCopyPropertiesAtIndex(ref
-                                                                          , 0, NULL);
-  NSDictionary *exif = [dict objectForKey:(NSString *)kCGImagePropertyExifDictionary];
-  NSDictionary *gps = [dict objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
-  NSDictionary *tiff = [dict objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
-  
-  NSLog(@"METADATA: %@", dict);
-  NSLog(@"Exif: %@", exif);
-  NSLog(@"GPS: %@", gps);
-  NSLog(@"TIFF: %@", tiff);
+//  CGImageSourceRef ref = CGImageSourceCreateWithData((CFDataRef)data, NULL);
+//  NSDictionary *dict = (NSDictionary *)CGImageSourceCopyPropertiesAtIndex(ref
+//                                                                          , 0, NULL);
+//  NSDictionary *exif = [dict objectForKey:(NSString *)kCGImagePropertyExifDictionary];
+//  NSDictionary *gps = [dict objectForKey:(NSString *)kCGImagePropertyGPSDictionary];
+//  NSDictionary *tiff = [dict objectForKey:(NSString *)kCGImagePropertyTIFFDictionary];
+//  
+//  NSLog(@"METADATA: %@", dict);
+//  NSLog(@"Exif: %@", exif);
+//  NSLog(@"GPS: %@", gps);
+//  NSLog(@"TIFF: %@", tiff);
 }
 
 - (void)uploadPhotoWithAssetURL:(NSURL *)assetURL {
-  ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *asset) {
-    // Read properties
-    //    NSString *assetType = [asset valueForProperty:ALAssetPropertyType];
-    //    CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
-    
-    // Get representation
-    ALAssetRepresentation *rep = [asset defaultRepresentation];
-    //    ALAssetOrientation assetOrientation = [rep orientation];
-    //    CGFloat assetScale = [rep scale];
-    
-    // Read metadata from original
-    NSDictionary *metadata = [rep metadata];
-    NSString *uti = [rep UTI];
-    
-    // get full res image
-    CGImageRef imageRef = [rep fullResolutionImage];
-    
-    /**
-     Scale image
-     
-     When scaling we don't want to pass in the orientation.
-     Raw data is written with EXIF orientation
-     
-     If we scale with orientation transform, the image will be double-rotated once during scale and another during EXIF rotation
-     */
-    CGImageRef scaledImageRef = CreateCGImageWithinSize(imageRef, CGSizeMake(720.0, 720.0), UIImageOrientationUp);
-    CGFloat scaledWidth = CGImageGetWidth(scaledImageRef);
-    CGFloat scaledHeight = CGImageGetHeight(scaledImageRef);
-    
-    // Make the metadata dictionary mutable so we can add/edit properties to it
-    NSMutableDictionary *mutableMetadata = [[metadata mutableCopy] autorelease];
-    
-    // CGImageProperties
-    // We are writing the scaled width and height into cgimage properties
-    [mutableMetadata setObject:[NSNumber numberWithFloat:scaledWidth] forKey:(NSString *)kCGImagePropertyPixelWidth];
-    [mutableMetadata setObject:[NSNumber numberWithFloat:scaledHeight] forKey:(NSString *)kCGImagePropertyPixelHeight];
-    
-    // EXIF
-    NSMutableDictionary *exifDict = [[[mutableMetadata objectForKey:(NSString *)kCGImagePropertyExifDictionary] mutableCopy] autorelease];
-    if(!exifDict) {
-      exifDict = [NSMutableDictionary dictionary];
-      
-      // We are writing the scaled width and height into exif
-      [exifDict setObject:[NSNumber numberWithFloat:scaledWidth] forKey:(NSString *)kCGImagePropertyExifPixelXDimension];
-      [exifDict setObject:[NSNumber numberWithFloat:scaledHeight] forKey:(NSString *)kCGImagePropertyExifPixelYDimension];
-      
-      if (exifDict) {
-        [mutableMetadata setObject:exifDict forKey:(NSString *)kCGImagePropertyExifDictionary];
-      }
-    }
-    
-    // GPS
-    NSMutableDictionary *gpsDict = [[[mutableMetadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary] mutableCopy] autorelease];
-    if(!gpsDict) {
-      gpsDict = [[PSLocationCenter defaultCenter] exifLocation];
-      
-      if (gpsDict) {
-        [mutableMetadata setObject:gpsDict forKey:(NSString *)kCGImagePropertyGPSDictionary];
-      }
-    }
-    
-    // Write out the new CGImage with metadata to NSMutableData
-    NSMutableData *scaledData = [NSMutableData data];
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)scaledData, (CFStringRef)uti, 1, NULL);
-    
-    // add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-    CGImageDestinationAddImage(destination, scaledImageRef, (CFDictionaryRef)mutableMetadata);
-    
-    CGImageDestinationFinalize(destination);
-    
-    [self getExifFromData:scaledData];
-    
-    [self uploadPhotoWithData:scaledData width:scaledWidth height:scaledHeight metadata:metadata];
-    
-    
+//  ALAssetsLibraryAssetForURLResultBlock resultBlock = ^(ALAsset *asset) {
+//    // Read properties
+//    //    NSString *assetType = [asset valueForProperty:ALAssetPropertyType];
+//    //    CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
+//    
+//    // Get representation
+//    ALAssetRepresentation *rep = [asset defaultRepresentation];
+//    //    ALAssetOrientation assetOrientation = [rep orientation];
+//    //    CGFloat assetScale = [rep scale];
+//    
+//    // Read metadata from original
+//    NSDictionary *metadata = [rep metadata];
+//    NSString *uti = [rep UTI];
+//    
+//    // get full res image
+//    CGImageRef imageRef = [rep fullResolutionImage];
+//    
+//    /**
+//     Scale image
+//     
+//     When scaling we don't want to pass in the orientation.
+//     Raw data is written with EXIF orientation
+//     
+//     If we scale with orientation transform, the image will be double-rotated once during scale and another during EXIF rotation
+//     */
+//    CGImageRef scaledImageRef = CreateCGImageWithinSize(imageRef, CGSizeMake(720.0, 720.0), UIImageOrientationUp);
+//    CGFloat scaledWidth = CGImageGetWidth(scaledImageRef);
+//    CGFloat scaledHeight = CGImageGetHeight(scaledImageRef);
+//    
+//    // Make the metadata dictionary mutable so we can add/edit properties to it
+//    NSMutableDictionary *mutableMetadata = [[metadata mutableCopy] autorelease];
+//    
+//    // CGImageProperties
+//    // We are writing the scaled width and height into cgimage properties
+//    [mutableMetadata setObject:[NSNumber numberWithFloat:scaledWidth] forKey:(NSString *)kCGImagePropertyPixelWidth];
+//    [mutableMetadata setObject:[NSNumber numberWithFloat:scaledHeight] forKey:(NSString *)kCGImagePropertyPixelHeight];
+//    
+//    // EXIF
+//    NSMutableDictionary *exifDict = [[[mutableMetadata objectForKey:(NSString *)kCGImagePropertyExifDictionary] mutableCopy] autorelease];
+//    if(!exifDict) {
+//      exifDict = [NSMutableDictionary dictionary];
+//      
+//      // We are writing the scaled width and height into exif
+//      [exifDict setObject:[NSNumber numberWithFloat:scaledWidth] forKey:(NSString *)kCGImagePropertyExifPixelXDimension];
+//      [exifDict setObject:[NSNumber numberWithFloat:scaledHeight] forKey:(NSString *)kCGImagePropertyExifPixelYDimension];
+//      
+//      if (exifDict) {
+//        [mutableMetadata setObject:exifDict forKey:(NSString *)kCGImagePropertyExifDictionary];
+//      }
+//    }
+//    
+//    // GPS
+//    NSMutableDictionary *gpsDict = [[[mutableMetadata objectForKey:(NSString *)kCGImagePropertyGPSDictionary] mutableCopy] autorelease];
+//    if(!gpsDict) {
+//      gpsDict = [[PSLocationCenter defaultCenter] exifLocation];
+//      
+//      if (gpsDict) {
+//        [mutableMetadata setObject:gpsDict forKey:(NSString *)kCGImagePropertyGPSDictionary];
+//      }
+//    }
+//    
+//    // Write out the new CGImage with metadata to NSMutableData
+//    NSMutableData *scaledData = [NSMutableData data];
+//    CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)scaledData, (CFStringRef)uti, 1, NULL);
+//    
+//    // add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+//    CGImageDestinationAddImage(destination, scaledImageRef, (CFDictionaryRef)mutableMetadata);
+//    
+//    CGImageDestinationFinalize(destination);
+//    
+//    [self getExifFromData:scaledData];
+//    
+//    [self uploadPhotoWithData:scaledData width:scaledWidth height:scaledHeight metadata:metadata];
+//    
+//    
     
     // Read raw data
     //    long long assetSize = rep.size;
@@ -254,14 +254,14 @@
     
     //    [self uploadPhotoWithData:rawData];
     
-  };
-  
-  ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
-    NSLog(@"cant get image - %@", [error localizedDescription]);
-  };
-  
-  ALAssetsLibrary *assetsLibrary = [[[ALAssetsLibrary alloc] init] autorelease];
-  [assetsLibrary assetForURL:assetURL resultBlock:resultBlock failureBlock:failureBlock];
+//  };
+//  
+//  ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
+//    NSLog(@"cant get image - %@", [error localizedDescription]);
+//  };
+//  
+//  ALAssetsLibrary *assetsLibrary = [[[ALAssetsLibrary alloc] init] autorelease];
+//  [assetsLibrary assetForURL:assetURL resultBlock:resultBlock failureBlock:failureBlock];
 }
 
 - (void)uploadPhotoWithData:(NSData *)data width:(CGFloat)width height:(CGFloat)height metadata:(NSDictionary *)metadata {
@@ -309,7 +309,7 @@
   
   // Upload
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/upload", API_BASE_URL]];
-  AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+  AFHTTPClient *httpClient = [[[AFHTTPClient alloc] initWithBaseURL:url] autorelease];
   NSData *uploadData = data;
   NSMutableURLRequest *request = [httpClient multipartFormRequestWithMethod:@"POST" path:@"/upload" parameters:params constructingBodyWithBlock:^(id <AFMultipartFormData>formData) {
     [formData appendPartWithFileData:uploadData name:@"photo" fileName:@"upload.jpg" mimeType:@"image/jpeg"];

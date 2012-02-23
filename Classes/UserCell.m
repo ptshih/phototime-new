@@ -41,7 +41,7 @@
     width -= self.psImageView.width - margin;
     
     self.textLabel.frame = CGRectMake(left, top, width, 32.0);
-    top = self.textLabel.bottom;
+//    top = self.textLabel.bottom;
     
 //    self.detailTextLabel.frame = CGRectMake(left, top, width, 25.0);
 //    top = self.detailTextLabel.bottom;

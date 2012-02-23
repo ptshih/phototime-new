@@ -194,9 +194,9 @@ profileIconSize = _profileIconSize;
         pv.frame = CGRectMake(iv.width - self.profileIconSize + 1, iv.height - self.profileIconSize + 1, self.profileIconSize, self.profileIconSize);
     }];
     
-    top += TL_THUMB_SIZE;
-    
-    top += TL_THUMB_MARGIN / 2;
+//    top += TL_THUMB_SIZE;
+//    
+//    top += TL_THUMB_MARGIN / 2;
 }
 
 #pragma mark - Zoom
