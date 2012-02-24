@@ -18,6 +18,7 @@
 //- (void)downloadTimelines;
 
 // Notifications
+- (void)fbDidBegin;
 - (void)fbDidLogin;
 - (void)fbDidNotLogin;
 
@@ -33,6 +34,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbDidBegin) name:kPSFacebookCenterDialogDidBegin object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbDidLogin) name:kPSFacebookCenterDialogDidSucceed object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fbDidNotLogin) name:kPSFacebookCenterDialogDidFail object:nil];
     }
@@ -44,24 +46,56 @@
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kPSFacebookCenterDialogDidBegin object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPSFacebookCenterDialogDidSucceed object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kPSFacebookCenterDialogDidFail object:nil];
     [super dealloc];
 }
 
 #pragma mark - View Config
-- (UIColor *)baseBackgroundColor {
-    return [UIColor whiteColor];
+//- (UIColor *)baseBackgroundColor {
+//    return [UIColor whiteColor];
+//}
+
+- (UIView *)baseBackgroundView {
+  UIImageView *bgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundDarkWood.jpg"]] autorelease];
+  return bgView;
 }
 
 #pragma mark - View
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIImageView *logo = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogoLargeWhite"]] autorelease];
+    logo.top = 16.0;
+    logo.left = 33.0;
+    [self.view addSubview:logo];
+    
     // Add a login button
-    UIButton *loginButton = [UIButton buttonWithFrame:self.view.bounds andStyle:@"loginButton" target:self action:@selector(login)];
-    [loginButton setTitle:@"Login to Facebook" forState:UIControlStateNormal];
+    UIButton *loginButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 254, 59) andStyle:nil target:self action:@selector(login)];
+    [loginButton setImage:[UIImage imageNamed:@"ButtonFacebook"] forState:UIControlStateNormal];
+    [loginButton setImage:[UIImage imageNamed:@"ButtonFacebookHighlighted"] forState:UIControlStateHighlighted];
+    loginButton.top = logo.bottom + 16.0;
+    loginButton.left = 33.0;
     [self.view addSubview:loginButton];
+    
+    // Add disclaimer
+    UILabel *disclaimer = [UILabel labelWithText:@"We use facebook to find your friends.\r\nWe don't post anything to your wall." style:@"welcomeDisclaimerLabel"];
+    [self.view addSubview:disclaimer];
+    CGSize dSize = [disclaimer sizeForLabelInWidth:254];
+    disclaimer.width = dSize.width;
+    disclaimer.height = dSize.height;
+    disclaimer.top = loginButton.bottom + 16.0;
+    disclaimer.left = floorf((self.view.width - disclaimer.width) / 2);
+    
+    UIImageView *postit = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundPostIt"]] autorelease];
+    postit.top = disclaimer.bottom + 16.0;
+    postit.left = 33.0;
+    [self.view addSubview:postit];
+    
+    UILabel *note = [UILabel labelWithText:@"Phototime is a visual timeline of your closest friends.\r\n\r\nLovingly made in NYC." style:@"welcomeNoteLabel"];
+    note.frame = CGRectInset(postit.bounds, 32, 16);
+    [postit addSubview:note];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -74,7 +108,12 @@
 }
 
 #pragma mark - Notifications
+- (void)fbDidBegin {
+    [SVProgressHUD showWithStatus:@"Logging in to Facebook" maskType:SVProgressHUDMaskTypeGradient];
+}
+
 - (void)fbDidLogin {
+    [SVProgressHUD showWithStatus:@"Finding your Photos" maskType:SVProgressHUDMaskTypeGradient];
     // Got fb access token, upload this to our server
     [self uploadAccessToken];
 }
@@ -118,7 +157,6 @@
 #pragma mark - Login
 - (void)loginIfNecessary {
     if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        [SVProgressHUD showWithStatus:@"Asking Facebook for permission." maskType:SVProgressHUDMaskTypeGradient];
         [[PSFacebookCenter defaultCenter] authorizeBasicPermissions];
     } else {
         [self loginDidSucceed:NO];
@@ -128,7 +166,7 @@
 - (void)loginDidSucceed:(BOOL)animated {
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
 //    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
-    [SVProgressHUD dismissWithSuccess:@"Hurray!"];
+    [SVProgressHUD dismissWithSuccess:@"Your Timeline is Ready!"];
     
     NSString *timelineId = [[NSUserDefaults standardUserDefaults] objectForKey:@"timelineId"];
     

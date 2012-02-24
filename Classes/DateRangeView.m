@@ -24,7 +24,7 @@ endYearIndex = _endYearIndex;
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper.jpg"]];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
         // popover frame is 288 x 352
 
         self.tableView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - 180) style:UITableViewStyleGrouped] autorelease];

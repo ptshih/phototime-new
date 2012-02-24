@@ -84,7 +84,7 @@ rightButton = _rightButton;
     [self.leftButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockLeft" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
     [self.leftButton setImage:[UIImage imageNamed:@"IconHeartBlack"] forState:UIControlStateNormal];
     
-    self.centerButton = [UIButton buttonWithFrame:CGRectMake(44, 0, self.headerView.width - 88, 44) andStyle:@"timelineSectionTitle" target:self action:@selector(centerAction)];
+    self.centerButton = [UIButton buttonWithFrame:CGRectMake(44, 0, self.headerView.width - 88, 44) andStyle:@"timelineTitleLabel" target:self action:@selector(centerAction)];
     [self.centerButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockCenter" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
     [self.centerButton setTitle:@"Timeline Members" forState:UIControlStateNormal];
     self.centerButton.userInteractionEnabled = NO;
