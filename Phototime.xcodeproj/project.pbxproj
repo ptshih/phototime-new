@@ -1774,8 +1774,8 @@
 					"\"$(SRCROOT)/Submodules/QuincyKit/client/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
-				INFOPLIST_FILE = "Phototime-Info.plist";
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Phototime;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1792,8 +1792,8 @@
 					"\"$(SRCROOT)/Submodules/QuincyKit/client/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
-				INFOPLIST_FILE = "Phototime-Info.plist";
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Phototime;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1838,8 +1838,8 @@
 					"\"$(SRCROOT)/Submodules/QuincyKit/client/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
-				INFOPLIST_FILE = "Phototime-Info.plist";
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Phototime;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
