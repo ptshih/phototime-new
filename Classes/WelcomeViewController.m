@@ -104,6 +104,7 @@
 
 #pragma mark - Actions
 - (void)login {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"welcome#loginButtonPressed"];
     [self loginIfNecessary];
 }
 
@@ -164,6 +165,7 @@
 }
 
 - (void)loginDidSucceed:(BOOL)animated {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"welcome#loginSucceeded"];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
 //    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
     [SVProgressHUD dismissWithSuccess:@"Your Timeline is Ready!"];

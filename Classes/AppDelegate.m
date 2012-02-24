@@ -74,7 +74,9 @@ navigationController = _navigationController;
     [[BWHockeyManager sharedHockeyManager] setAppIdentifier:@"4e1669c1ec68aae5f6c0adb8c3c48367"];
     [[BWHockeyManager sharedHockeyManager] setAlwaysShowUpdateReminder:YES];
 #endif
-    [[BWQuincyManager sharedQuincyManager] setAppIdentifier:@"4e1669c1ec68aae5f6c0adb8c3c48367"];    
+    [[BWQuincyManager sharedQuincyManager] setAppIdentifier:@"4e1669c1ec68aae5f6c0adb8c3c48367"];
+    
+    [[LocalyticsSession sharedLocalyticsSession] startSession:@"64d9fa4fc0bdc5781cea473-cbd5b426-5eb5-11e1-1b60-00a68a4c01fc"];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
@@ -118,20 +120,24 @@ navigationController = _navigationController;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[LocalyticsSession sharedLocalyticsSession] resume];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [[LocalyticsSession sharedLocalyticsSession] close];
+    [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     RELEASE_SAFELY(_navigationController);
     [_window release];

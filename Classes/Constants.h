@@ -8,6 +8,7 @@
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 #import "Appirater.h"
+#import "LocalyticsSession.h"
 
 #define CORE_DATA_MOM @"Phototime"
 #define CORE_DATA_SQL_FILE @"Phototime.sqlite"

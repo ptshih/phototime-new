@@ -195,11 +195,15 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Actions
 - (void)leftAction {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#config"];
+    
     TimelineConfigViewController *vc = [[[TimelineConfigViewController alloc] initWithTimelineId:self.timelineId] autorelease];
     [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
 - (void)centerAction {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#dateRange"];
+    
     DateRangeView *dateRangeView = [[[DateRangeView alloc] initWithFrame:CGRectMake(0, 0, 288, 352)] autorelease];
     PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Timeline Dates" contentView:dateRangeView] autorelease];
     popoverView.delegate = self;
@@ -207,6 +211,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)rightAction {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#dateRange"];
+    
     DateRangeView *dateRangeView = [[[DateRangeView alloc] initWithFrame:CGRectMake(0, 0, 288, 352)] autorelease];
     PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Timeline Dates" contentView:dateRangeView] autorelease];
     popoverView.delegate = self;
@@ -225,12 +231,16 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [super loadDataSource];
     
     [self loadDataSourceFromRemoteUsingCache:YES];
+    
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#load"];
 }
 
 - (void)reloadDataSource {
     [super reloadDataSource];
 
     [self loadDataSourceFromRemoteUsingCache:NO];
+    
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#reload"];
 }
 
 - (void)dataSourceDidLoad {

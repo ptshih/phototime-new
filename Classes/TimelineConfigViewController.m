@@ -101,6 +101,8 @@ rightButton = _rightButton;
 
 #pragma mark - Actions
 - (void)leftAction {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timelineConfig#sendLove"];
+    
     UIAlertView *av = [[[UIAlertView alloc] initWithTitle:@"Send Love" message:@"Your love makes us work harder. Rate our app now?" delegate:self cancelButtonTitle:@"No, Thanks" otherButtonTitles:@"Okay", nil] autorelease];
     [av show];
 }
@@ -246,6 +248,8 @@ rightButton = _rightButton;
 }
 
 - (void)addMember:(id)member {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timelineConfig#addMember"];
+    
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Adding %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
@@ -269,6 +273,8 @@ rightButton = _rightButton;
 }
 
 - (void)removeMember:(id)member {
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timelineConfig#removeMember"];
+    
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Removing %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
@@ -304,6 +310,8 @@ rightButton = _rightButton;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (alertView.cancelButtonIndex == buttonIndex) return;
+    
+    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timelineConfig#loveSent"];
     
     [Appirater rateApp];
 }

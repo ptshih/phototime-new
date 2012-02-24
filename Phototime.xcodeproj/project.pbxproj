@@ -223,6 +223,12 @@
 		D0C5BFFC14F764290041A364 /* BackgroundPaperLight@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5BFF814F764290041A364 /* BackgroundPaperLight@2x.jpg */; };
 		D0C5BFFF14F766C90041A364 /* BackgroundPostIt.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C5BFFD14F766C80041A364 /* BackgroundPostIt.png */; };
 		D0C5C00014F766C90041A364 /* BackgroundPostIt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C5BFFE14F766C80041A364 /* BackgroundPostIt@2x.png */; };
+		D0C5C01114F76E520041A364 /* LocalyticsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5C00B14F76E520041A364 /* LocalyticsDatabase.m */; };
+		D0C5C01214F76E520041A364 /* LocalyticsSession.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5C00D14F76E520041A364 /* LocalyticsSession.m */; };
+		D0C5C01314F76E520041A364 /* UploaderThread.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5C00F14F76E520041A364 /* UploaderThread.m */; };
+		D0C5C01514F76F920041A364 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C5C01414F76F910041A364 /* libz.dylib */; };
+		D0C5C01814F76FE60041A364 /* Default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5C01614F76FE60041A364 /* Default.jpg */; };
+		D0C5C01914F76FE60041A364 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5C01714F76FE60041A364 /* Default@2x.jpg */; };
 		D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */; };
 /* End PBXBuildFile section */
 
@@ -547,6 +553,16 @@
 		D0C5BFF814F764290041A364 /* BackgroundPaperLight@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "BackgroundPaperLight@2x.jpg"; sourceTree = "<group>"; };
 		D0C5BFFD14F766C80041A364 /* BackgroundPostIt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundPostIt.png; sourceTree = "<group>"; };
 		D0C5BFFE14F766C80041A364 /* BackgroundPostIt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundPostIt@2x.png"; sourceTree = "<group>"; };
+		D0C5C00A14F76E520041A364 /* LocalyticsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsDatabase.h; sourceTree = "<group>"; };
+		D0C5C00B14F76E520041A364 /* LocalyticsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsDatabase.m; sourceTree = "<group>"; };
+		D0C5C00C14F76E520041A364 /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalyticsSession.h; sourceTree = "<group>"; };
+		D0C5C00D14F76E520041A364 /* LocalyticsSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalyticsSession.m; sourceTree = "<group>"; };
+		D0C5C00E14F76E520041A364 /* UploaderThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploaderThread.h; sourceTree = "<group>"; };
+		D0C5C00F14F76E520041A364 /* UploaderThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploaderThread.m; sourceTree = "<group>"; };
+		D0C5C01014F76E520041A364 /* WebserviceConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebserviceConstants.h; sourceTree = "<group>"; };
+		D0C5C01414F76F910041A364 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		D0C5C01614F76FE60041A364 /* Default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Default.jpg; sourceTree = "<group>"; };
+		D0C5C01714F76FE60041A364 /* Default@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Default@2x.jpg"; sourceTree = "<group>"; };
 		D0DDA67914E85DC1001FD463 /* PSPullRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSPullRefreshView.h; sourceTree = "<group>"; };
 		D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPullRefreshView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -556,6 +572,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C5C01514F76F920041A364 /* libz.dylib in Frameworks */,
 				28603B8114AFBD4E00541BB1 /* AssetsLibrary.framework in Frameworks */,
 				28603B6714AD41ED00541BB1 /* CoreImage.framework in Frameworks */,
 				28603B6514AD414F00541BB1 /* ImageIO.framework in Frameworks */,
@@ -604,6 +621,7 @@
 		283818C114723F1D007E4827 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0C5C01414F76F910041A364 /* libz.dylib */,
 				28381A911472F88A007E4827 /* libsqlite3.dylib */,
 				28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */,
 				28603B6614AD41ED00541BB1 /* CoreImage.framework */,
@@ -1196,6 +1214,8 @@
 		D03447D114F7251300CE226A /* AppStore */ = {
 			isa = PBXGroup;
 			children = (
+				D0C5C01614F76FE60041A364 /* Default.jpg */,
+				D0C5C01714F76FE60041A364 /* Default@2x.jpg */,
 				D03447CF14F7251000CE226A /* Icon@2x.png */,
 				D03447CD14F7250D00CE226A /* Icon.png */,
 			);
@@ -1205,6 +1225,7 @@
 		D07B2DBD14F750F400304E62 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				D0C5C00914F76E520041A364 /* Localytics */,
 				D07B2DBE14F750F500304E62 /* Appirater */,
 			);
 			path = Vendor;
@@ -1273,6 +1294,20 @@
 				D0B9109D14F5C4BE00587682 /* Quincy.bundle */,
 			);
 			path = QuincyKit;
+			sourceTree = "<group>";
+		};
+		D0C5C00914F76E520041A364 /* Localytics */ = {
+			isa = PBXGroup;
+			children = (
+				D0C5C00A14F76E520041A364 /* LocalyticsDatabase.h */,
+				D0C5C00B14F76E520041A364 /* LocalyticsDatabase.m */,
+				D0C5C00C14F76E520041A364 /* LocalyticsSession.h */,
+				D0C5C00D14F76E520041A364 /* LocalyticsSession.m */,
+				D0C5C00E14F76E520041A364 /* UploaderThread.h */,
+				D0C5C00F14F76E520041A364 /* UploaderThread.m */,
+				D0C5C01014F76E520041A364 /* WebserviceConstants.h */,
+			);
+			path = Localytics;
 			sourceTree = "<group>";
 		};
 		D0DDA67814E85DAB001FD463 /* PSPullRefreshView */ = {
@@ -1439,6 +1474,8 @@
 				D0C5BFFC14F764290041A364 /* BackgroundPaperLight@2x.jpg in Resources */,
 				D0C5BFFF14F766C90041A364 /* BackgroundPostIt.png in Resources */,
 				D0C5C00014F766C90041A364 /* BackgroundPostIt@2x.png in Resources */,
+				D0C5C01814F76FE60041A364 /* Default.jpg in Resources */,
+				D0C5C01914F76FE60041A364 /* Default@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1562,6 +1599,9 @@
 				D054E98D14F6EE5F00B03306 /* PSPopoverView.m in Sources */,
 				D054E99014F6F98D00B03306 /* DateRangeView.m in Sources */,
 				D07B2DC114F750F500304E62 /* Appirater.m in Sources */,
+				D0C5C01114F76E520041A364 /* LocalyticsDatabase.m in Sources */,
+				D0C5C01214F76E520041A364 /* LocalyticsSession.m in Sources */,
+				D0C5C01314F76E520041A364 /* UploaderThread.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
