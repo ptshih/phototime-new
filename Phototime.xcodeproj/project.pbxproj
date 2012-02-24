@@ -191,6 +191,8 @@
 		D031558A14E5AB8B00CC8572 /* PSCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D031558914E5AB8B00CC8572 /* PSCollectionView.m */; };
 		D03155D514E5B90E00CC8572 /* IconFriendsBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D314E5B90E00CC8572 /* IconFriendsBlack.png */; };
 		D03155D614E5B90E00CC8572 /* IconFriendsBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */; };
+		D03447CE14F7250D00CE226A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D03447CD14F7250D00CE226A /* Icon.png */; };
+		D03447D014F7251000CE226A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03447CF14F7251000CE226A /* Icon@2x.png */; };
 		D048787214EF193B00DE6AC8 /* NSMutableArray+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D048787114EF193A00DE6AC8 /* NSMutableArray+PSKit.m */; };
 		D054E96514F63CDE00B03306 /* BackgroundPaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D054E96314F63CDE00B03306 /* BackgroundPaper.jpg */; };
 		D054E96614F63CDE00B03306 /* BackgroundPaper@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D054E96414F63CDE00B03306 /* BackgroundPaper@2x.jpg */; };
@@ -499,6 +501,8 @@
 		D031558914E5AB8B00CC8572 /* PSCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionView.m; sourceTree = "<group>"; };
 		D03155D314E5B90E00CC8572 /* IconFriendsBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconFriendsBlack.png; sourceTree = "<group>"; };
 		D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconFriendsBlack@2x.png"; sourceTree = "<group>"; };
+		D03447CD14F7250D00CE226A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		D03447CF14F7251000CE226A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		D048787014EF193A00DE6AC8 /* NSMutableArray+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+PSKit.h"; sourceTree = "<group>"; };
 		D048787114EF193A00DE6AC8 /* NSMutableArray+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+PSKit.m"; sourceTree = "<group>"; };
 		D054E96314F63CDE00B03306 /* BackgroundPaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackgroundPaper.jpg; sourceTree = "<group>"; };
@@ -636,6 +640,7 @@
 		283818B314723F1C007E4827 = {
 			isa = PBXGroup;
 			children = (
+				D03447D114F7251300CE226A /* AppStore */,
 				2869873D1475CECD00B40860 /* PSKit */,
 				283818C814723F1D007E4827 /* Classes */,
 				28698713147312EC00B40860 /* Resources */,
@@ -1255,6 +1260,15 @@
 			path = PSCollectionView;
 			sourceTree = "<group>";
 		};
+		D03447D114F7251300CE226A /* AppStore */ = {
+			isa = PBXGroup;
+			children = (
+				D03447CF14F7251000CE226A /* Icon@2x.png */,
+				D03447CD14F7250D00CE226A /* Icon.png */,
+			);
+			name = AppStore;
+			sourceTree = "<group>";
+		};
 		D0A3AC8514F42A8900748CE7 /* PSURLCache */ = {
 			isa = PBXGroup;
 			children = (
@@ -1494,6 +1508,8 @@
 				D054E98314F6E4A200B03306 /* NetworkErrorWhite@2x.png in Resources */,
 				D054E99314F7001D00B03306 /* ButtonBlue@2x.png in Resources */,
 				D054E99414F7001D00B03306 /* ButtonWhite@2x.png in Resources */,
+				D03447CE14F7250D00CE226A /* Icon.png in Resources */,
+				D03447D014F7251000CE226A /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1762,6 +1778,7 @@
 		D0B910BE14F5D6A600587682 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1773,6 +1790,7 @@
 				INFOPLIST_FILE = "Phototime-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = Phototime;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
