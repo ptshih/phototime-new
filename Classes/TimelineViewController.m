@@ -224,30 +224,19 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 - (void)dataSourceDidLoad {
     [super dataSourceDidLoad];
     [self.collectionView reloadViews];
+    
+    if ([self dataSourceIsEmpty]) {
+        // Show empty view
+        
+    }
 }
 
 - (void)dataSourceDidError {
     [super dataSourceDidError];
-    UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    errorButton.alpha = 0.0;
-    errorButton.frame = self.collectionView.frame;
-    errorButton.backgroundColor = [UIColor whiteColor];
-    errorButton.adjustsImageWhenHighlighted = NO;
-    errorButton.adjustsImageWhenDisabled = NO;
-    [errorButton addTarget:self action:@selector(reloadAfterError:) forControlEvents:UIControlEventTouchUpInside];
-    [errorButton setImage:[UIImage imageNamed:@"NetworkErrorBlack"] forState:UIControlStateNormal];
-    [self.view addSubview:errorButton];
-    [UIView animateWithDuration:0.2 animations:^{
-        errorButton.alpha = 1.0;
-    }];
 }
 
-- (void)reloadAfterError:(UIButton *)button {
-    [UIView animateWithDuration:0.2 animations:^{
-        button.alpha = 0.0;
-    }];    
-    [button removeFromSuperview];
-    [self reloadDataSource];
+- (BOOL)dataSourceIsEmpty {
+    return ([self.items count] == 0);
 }
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
@@ -398,15 +387,22 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [self reloadDataSource];
 }
 
+#pragma mark - PSErrorViewDelegate
+- (void)errorViewDidDismiss:(PSErrorView *)errorView {
+    [self reloadDataSource];
+}
+
 #pragma mark - Refresh
 - (void)beginRefresh {
     [super beginRefresh];
     [self.pullRefreshView setState:PSPullRefreshStateRefreshing];
+    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeNone];
 }
 
 - (void)endRefresh {
     [super endRefresh];
     [self.pullRefreshView setState:PSPullRefreshStateIdle];
+    [SVProgressHUD dismiss];
 }
 
 @end

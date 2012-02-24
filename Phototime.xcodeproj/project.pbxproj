@@ -95,7 +95,7 @@
 		286988241475CEEC00B40860 /* PSBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987851475CEEC00B40860 /* PSBaseViewController.m */; };
 		286988251475CEEC00B40860 /* PSCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987871475CEEC00B40860 /* PSCell.m */; };
 		286988281475CEEC00B40860 /* PSImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2869878D1475CEEC00B40860 /* PSImageView.m */; };
-		286988291475CEEC00B40860 /* PSNullView.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987901475CEEC00B40860 /* PSNullView.m */; };
+		286988291475CEEC00B40860 /* PSErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987901475CEEC00B40860 /* PSErrorView.m */; };
 		2869882A1475CEEC00B40860 /* PSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987921475CEEC00B40860 /* PSObject.m */; };
 		2869882C1475CEEC00B40860 /* PSRandomSortDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987961475CEEC00B40860 /* PSRandomSortDescriptor.m */; };
 		2869882D1475CEEC00B40860 /* PSRollupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 286987981475CEEC00B40860 /* PSRollupView.m */; };
@@ -369,8 +369,8 @@
 		286987871475CEEC00B40860 /* PSCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCell.m; sourceTree = "<group>"; };
 		2869878C1475CEEC00B40860 /* PSImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSImageView.h; sourceTree = "<group>"; };
 		2869878D1475CEEC00B40860 /* PSImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSImageView.m; sourceTree = "<group>"; };
-		2869878F1475CEEC00B40860 /* PSNullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSNullView.h; sourceTree = "<group>"; };
-		286987901475CEEC00B40860 /* PSNullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSNullView.m; sourceTree = "<group>"; };
+		2869878F1475CEEC00B40860 /* PSErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; path = PSErrorView.h; sourceTree = "<group>"; };
+		286987901475CEEC00B40860 /* PSErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSErrorView.m; sourceTree = "<group>"; };
 		286987911475CEEC00B40860 /* PSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSObject.h; sourceTree = "<group>"; };
 		286987921475CEEC00B40860 /* PSObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSObject.m; sourceTree = "<group>"; };
 		286987951475CEEC00B40860 /* PSRandomSortDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSRandomSortDescriptor.h; sourceTree = "<group>"; };
@@ -910,8 +910,8 @@
 				286987871475CEEC00B40860 /* PSCell.m */,
 				2869878C1475CEEC00B40860 /* PSImageView.h */,
 				2869878D1475CEEC00B40860 /* PSImageView.m */,
-				2869878F1475CEEC00B40860 /* PSNullView.h */,
-				286987901475CEEC00B40860 /* PSNullView.m */,
+				2869878F1475CEEC00B40860 /* PSErrorView.h */,
+				286987901475CEEC00B40860 /* PSErrorView.m */,
 				286987911475CEEC00B40860 /* PSObject.h */,
 				286987921475CEEC00B40860 /* PSObject.m */,
 				286987951475CEEC00B40860 /* PSRandomSortDescriptor.h */,
@@ -1562,7 +1562,7 @@
 				286988241475CEEC00B40860 /* PSBaseViewController.m in Sources */,
 				286988251475CEEC00B40860 /* PSCell.m in Sources */,
 				286988281475CEEC00B40860 /* PSImageView.m in Sources */,
-				286988291475CEEC00B40860 /* PSNullView.m in Sources */,
+				286988291475CEEC00B40860 /* PSErrorView.m in Sources */,
 				2869882A1475CEEC00B40860 /* PSObject.m in Sources */,
 				2869882C1475CEEC00B40860 /* PSRandomSortDescriptor.m in Sources */,
 				2869882D1475CEEC00B40860 /* PSRollupView.m in Sources */,

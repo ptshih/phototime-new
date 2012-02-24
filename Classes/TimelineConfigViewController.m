@@ -114,7 +114,7 @@ rightButton = _rightButton;
 #pragma mark - State Machine
 - (void)beginRefresh {
     [super beginRefresh];
-    [SVProgressHUD showWithStatus:@"Finding People" maskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeNone];
 }
 
 - (void)endRefresh {
@@ -132,30 +132,6 @@ rightButton = _rightButton;
     [super reloadDataSource];
     
     [self loadDataSourceFromRemoteUsingCache:NO];
-}
-
-- (void)dataSourceDidError {
-    [super dataSourceDidError];
-    UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    errorButton.alpha = 0.0;
-    errorButton.frame = self.tableView.frame;
-    errorButton.backgroundColor = [UIColor whiteColor];
-    errorButton.adjustsImageWhenHighlighted = NO;
-    errorButton.adjustsImageWhenDisabled = NO;
-    [errorButton addTarget:self action:@selector(reloadAfterError:) forControlEvents:UIControlEventTouchUpInside];
-    [errorButton setImage:[UIImage imageNamed:@"NetworkErrorBlack"] forState:UIControlStateNormal];
-    [self.view addSubview:errorButton];
-    [UIView animateWithDuration:0.2 animations:^{
-        errorButton.alpha = 1.0;
-    }];
-}
-
-- (void)reloadAfterError:(UIButton *)button {
-    [UIView animateWithDuration:0.2 animations:^{
-        button.alpha = 0.0;
-    }];    
-    [button removeFromSuperview];
-    [self reloadDataSource];
 }
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
