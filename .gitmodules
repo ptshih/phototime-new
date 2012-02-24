@@ -1,3 +1,6 @@
-[submodule "PSKit"]
-	path = PSKit
+[submodule "Submodules/PSKit"]
+	path = Submodules/PSKit
 	url = git@github.com:ptshih/PSKit.git
+[submodule "Submodules/PSStyleSheet"]
+	path = Submodules/PSStyleSheet
+	url = git@github.com:ptshih/PSStyleSheet.git
