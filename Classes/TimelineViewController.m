@@ -8,6 +8,7 @@
 
 #import "TimelineViewController.h"
 #import "PSZoomView.h"
+#import "DateRangeView.h"
 
 #import "TimelineConfigViewController.h"
 #import "GalleryViewController.h"
@@ -23,8 +24,8 @@
 
 @synthesize
 timelineId = _timelineId,
-fromDate = _fromDate,
-toDate = _toDate,
+startDate = _startDate,
+endDate = _endDate,
 items = _items,
 collectionView = _collectionView,
 pullRefreshView = _pullRefreshView,
@@ -46,8 +47,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.shouldRefreshOnAppear = NO;
-        self.fromDate = [NSDate dateWithTimeIntervalSince1970:1287283215];
-        self.toDate = [NSDate distantFuture];
         
         self.items = [NSMutableArray array];
         
@@ -66,8 +65,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)dealloc {
-    self.fromDate = nil;
-    self.toDate = nil;
+    self.startDate = nil;
+    self.endDate = nil;
     self.items = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
@@ -162,21 +161,33 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)setDateRange {
+    static NSArray *years = nil;
+    years = [[NSArray arrayWithObjects:@"2007", @"2008", @"2009", @"2010", @"2011", @"2012", nil] retain];
+    static NSDateComponents *components = nil;
+    components = [[NSDateComponents alloc] init];
+        
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = nil;
-    components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.fromDate];
-    NSString *fromString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
     
-    NSString *toString = nil;
-    NSDate *nowDate = [NSDate date];
-    if ([[nowDate earlierDate:self.toDate] isEqualToDate:nowDate]) {
-        toString = @"Now";
-    } else {
-        components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.toDate];
-        toString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
-    }
+    NSInteger startMonthIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"startMonthIndex"];
+    NSInteger startYearIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"startYearIndex"];    
+    NSInteger endMonthIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"endMonthIndex"];
+    NSInteger endYearIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"endYearIndex"];
     
-    [self.centerButton setTitle:[NSString stringWithFormat:@"%@ - %@", fromString, toString] forState:UIControlStateNormal];
+    // Parse
+    [components setMonth:startMonthIndex + 1];
+    [components setYear:[[years objectAtIndex:startYearIndex] integerValue]];
+    self.startDate = [calendar dateFromComponents:components];
+    [components setMonth:endMonthIndex + 1];
+    [components setYear:[[years objectAtIndex:endYearIndex] integerValue]];
+    self.endDate = [calendar dateFromComponents:components];
+    
+    // Display
+    components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.startDate];
+    NSString *startString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
+    components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.endDate];
+    NSString *endString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
+    
+    [self.centerButton setTitle:[NSString stringWithFormat:@"%@ - %@", startString, endString] forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
@@ -186,12 +197,15 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)centerAction {
-    
+    DateRangeView *dateRangeView = [[[DateRangeView alloc] initWithFrame:CGRectMake(0, 0, 288, 352)] autorelease];
+    PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Timeline Dates" contentView:dateRangeView] autorelease];
+    popoverView.delegate = self;
+    [popoverView show];
 }
 
 - (void)rightAction {
-    GalleryViewController *vc = [[[GalleryViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
+//    GalleryViewController *vc = [[[GalleryViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+//    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
 
 #pragma mark - State Machine
@@ -215,13 +229,23 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 - (void)dataSourceDidError {
     [super dataSourceDidError];
     UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    errorButton.alpha = 0.0;
     errorButton.frame = self.collectionView.frame;
+    errorButton.backgroundColor = [UIColor whiteColor];
+    errorButton.adjustsImageWhenHighlighted = NO;
+    errorButton.adjustsImageWhenDisabled = NO;
     [errorButton addTarget:self action:@selector(reloadAfterError:) forControlEvents:UIControlEventTouchUpInside];
     [errorButton setImage:[UIImage imageNamed:@"NetworkErrorBlack"] forState:UIControlStateNormal];
     [self.view addSubview:errorButton];
+    [UIView animateWithDuration:0.2 animations:^{
+        errorButton.alpha = 1.0;
+    }];
 }
 
 - (void)reloadAfterError:(UIButton *)button {
+    [UIView animateWithDuration:0.2 animations:^{
+        button.alpha = 0.0;
+    }];    
     [button removeFromSuperview];
     [self reloadDataSource];
 }
@@ -230,10 +254,10 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     BLOCK_SELF;
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSNumber *fromTimestamp = [NSNumber numberWithDouble:[self.fromDate timeIntervalSince1970]];
-    NSNumber *toTimestamp = [NSNumber numberWithDouble:[self.toDate timeIntervalSince1970]];
-    [parameters setObject:fromTimestamp forKey:@"since"];
-    [parameters setObject:toTimestamp forKey:@"until"];
+    NSNumber *startTimestamp = [NSNumber numberWithDouble:[self.startDate timeIntervalSince1970]];
+    NSNumber *endTimestamp = [NSNumber numberWithDouble:[self.endDate timeIntervalSince1970]];
+    [parameters setObject:startTimestamp forKey:@"since"];
+    [parameters setObject:endTimestamp forKey:@"until"];
     
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
@@ -365,6 +389,12 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - PSPullRefreshViewDelegate
 - (void)pullRefreshViewDidBeginRefreshing:(PSPullRefreshView *)pullRefreshView {
+    [self reloadDataSource];
+}
+
+#pragma mark - PSPopoverViewDelegate
+- (void)popoverViewDidDismiss:(PSPopoverView *)popoverView {
+    [self setDateRange];
     [self reloadDataSource];
 }
 

@@ -197,10 +197,13 @@
 		D054E97214F6C41F00B03306 /* PSGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = D054E97114F6C41F00B03306 /* PSGalleryView.m */; };
 		D054E98214F6E4A200B03306 /* NetworkErrorBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D054E98014F6E4A200B03306 /* NetworkErrorBlack@2x.png */; };
 		D054E98314F6E4A200B03306 /* NetworkErrorWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D054E98114F6E4A200B03306 /* NetworkErrorWhite@2x.png */; };
+		D054E98D14F6EE5F00B03306 /* PSPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = D054E98C14F6EE5F00B03306 /* PSPopoverView.m */; };
+		D054E99014F6F98D00B03306 /* DateRangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = D054E98F14F6F98D00B03306 /* DateRangeView.m */; };
+		D054E99314F7001D00B03306 /* ButtonBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D054E99114F7001D00B03306 /* ButtonBlue@2x.png */; };
+		D054E99414F7001D00B03306 /* ButtonWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D054E99214F7001D00B03306 /* ButtonWhite@2x.png */; };
 		D05B5F9314EB068200970969 /* NSJSONSerialization+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */; };
 		D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639C14E90CA800150193 /* IconCalendarBlack.png */; };
 		D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */; };
-		D06063A314E90F4900150193 /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D06063A214E90F4900150193 /* DatePickerViewController.m */; };
 		D080F6C414E5D10B0061A38B /* IconMinusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C014E5D10B0061A38B /* IconMinusBlack.png */; };
 		D080F6C514E5D10B0061A38B /* IconMinusBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */; };
 		D080F6C614E5D10B0061A38B /* IconPlusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C214E5D10B0061A38B /* IconPlusBlack.png */; };
@@ -504,12 +507,16 @@
 		D054E97114F6C41F00B03306 /* PSGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSGalleryView.m; sourceTree = "<group>"; };
 		D054E98014F6E4A200B03306 /* NetworkErrorBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NetworkErrorBlack@2x.png"; sourceTree = "<group>"; };
 		D054E98114F6E4A200B03306 /* NetworkErrorWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NetworkErrorWhite@2x.png"; sourceTree = "<group>"; };
+		D054E98B14F6EE5E00B03306 /* PSPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSPopoverView.h; sourceTree = "<group>"; };
+		D054E98C14F6EE5F00B03306 /* PSPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPopoverView.m; sourceTree = "<group>"; };
+		D054E98E14F6F98D00B03306 /* DateRangeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateRangeView.h; sourceTree = "<group>"; };
+		D054E98F14F6F98D00B03306 /* DateRangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateRangeView.m; sourceTree = "<group>"; };
+		D054E99114F7001D00B03306 /* ButtonBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlue@2x.png"; sourceTree = "<group>"; };
+		D054E99214F7001D00B03306 /* ButtonWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonWhite@2x.png"; sourceTree = "<group>"; };
 		D05B5F9114EB068200970969 /* NSJSONSerialization+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+PSKit.h"; sourceTree = "<group>"; };
 		D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PSKit.m"; sourceTree = "<group>"; };
 		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
 		D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendarBlack@2x.png"; sourceTree = "<group>"; };
-		D06063A114E90F4900150193 /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
-		D06063A214E90F4900150193 /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
 		D080F6C014E5D10B0061A38B /* IconMinusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconMinusBlack.png; sourceTree = "<group>"; };
 		D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMinusBlack@2x.png"; sourceTree = "<group>"; };
 		D080F6C214E5D10B0061A38B /* IconPlusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconPlusBlack.png; sourceTree = "<group>"; };
@@ -715,6 +722,8 @@
 		28698713147312EC00B40860 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D054E99114F7001D00B03306 /* ButtonBlue@2x.png */,
+				D054E99214F7001D00B03306 /* ButtonWhite@2x.png */,
 				D054E98014F6E4A200B03306 /* NetworkErrorBlack@2x.png */,
 				D054E98114F6E4A200B03306 /* NetworkErrorWhite@2x.png */,
 				D0B910B214F5C6A800587682 /* ButtonBlockCenter@2x.png */,
@@ -925,6 +934,8 @@
 				28A19CF614A018FD0043F7BB /* PSWindow.m */,
 				288CB06F14B2D72700233B45 /* CoreGraphics-PSKit.h */,
 				288CB07014B2D72700233B45 /* CoreGraphics-PSKit.m */,
+				D054E98B14F6EE5E00B03306 /* PSPopoverView.h */,
+				D054E98C14F6EE5F00B03306 /* PSPopoverView.m */,
 			);
 			path = PSKit;
 			sourceTree = "<group>";
@@ -1128,8 +1139,6 @@
 				D0269E3714E1AE2C00B690A2 /* TimelineConfigViewController.m */,
 				D08E516E14E8ABB400B5CCCD /* GalleryViewController.h */,
 				D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */,
-				D06063A114E90F4900150193 /* DatePickerViewController.h */,
-				D06063A214E90F4900150193 /* DatePickerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1158,6 +1167,8 @@
 				28603B5E14AC4D9300541BB1 /* TimelineCell.m */,
 				D0269E4214E1B5E100B690A2 /* UserCell.h */,
 				D0269E4314E1B5E100B690A2 /* UserCell.m */,
+				D054E98E14F6F98D00B03306 /* DateRangeView.h */,
+				D054E98F14F6F98D00B03306 /* DateRangeView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1481,6 +1492,8 @@
 				D054E96614F63CDE00B03306 /* BackgroundPaper@2x.jpg in Resources */,
 				D054E98214F6E4A200B03306 /* NetworkErrorBlack@2x.png in Resources */,
 				D054E98314F6E4A200B03306 /* NetworkErrorWhite@2x.png in Resources */,
+				D054E99314F7001D00B03306 /* ButtonBlue@2x.png in Resources */,
+				D054E99414F7001D00B03306 /* ButtonWhite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1575,7 +1588,6 @@
 				D031558A14E5AB8B00CC8572 /* PSCollectionView.m in Sources */,
 				D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */,
 				D08E517014E8ABB400B5CCCD /* GalleryViewController.m in Sources */,
-				D06063A314E90F4900150193 /* DatePickerViewController.m in Sources */,
 				D08C548C14E973F800F1DD5C /* AFHTTPClient.m in Sources */,
 				D08C548D14E973F800F1DD5C /* AFHTTPRequestOperation.m in Sources */,
 				D08C548E14E973F800F1DD5C /* AFImageCache.m in Sources */,
@@ -1602,6 +1614,8 @@
 				D0B910A714F5C4BE00587682 /* UIImage+HockeyAdditions.m in Sources */,
 				D0B910A914F5C4BE00587682 /* BWQuincyManager.m in Sources */,
 				D054E97214F6C41F00B03306 /* PSGalleryView.m in Sources */,
+				D054E98D14F6EE5F00B03306 /* PSPopoverView.m in Sources */,
+				D054E99014F6F98D00B03306 /* DateRangeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

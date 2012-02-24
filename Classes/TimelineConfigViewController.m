@@ -9,8 +9,6 @@
 #import "TimelineConfigViewController.h"
 #import "UserCell.h"
 
-#import "DatePickerViewController.h"
-
 @interface TimelineConfigViewController ()
 
 - (void)addMember:(id)member;
@@ -113,18 +111,6 @@ rightButton = _rightButton;
     [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionLeft animated:YES];
 }
 
-- (void)showDatePicker:(UIButton *)sender {
-    PSDatePickerMode mode;
-    if (sender.tag == 1001) {
-        mode = PSDatePickerModeFrom;
-    } else {
-        mode = PSDatePickerModeTo;
-    }
-    // Present a modal date picker
-    DatePickerViewController *vc = [[[DatePickerViewController alloc] initWithMode:mode] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
-}
-
 #pragma mark - State Machine
 - (void)beginRefresh {
     [super beginRefresh];
@@ -151,14 +137,23 @@ rightButton = _rightButton;
 - (void)dataSourceDidError {
     [super dataSourceDidError];
     UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    errorButton.alpha = 0.0;
     errorButton.frame = self.tableView.frame;
+    errorButton.backgroundColor = [UIColor whiteColor];
+    errorButton.adjustsImageWhenHighlighted = NO;
+    errorButton.adjustsImageWhenDisabled = NO;
     [errorButton addTarget:self action:@selector(reloadAfterError:) forControlEvents:UIControlEventTouchUpInside];
     [errorButton setImage:[UIImage imageNamed:@"NetworkErrorBlack"] forState:UIControlStateNormal];
-    errorButton.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:errorButton];
+    [UIView animateWithDuration:0.2 animations:^{
+        errorButton.alpha = 1.0;
+    }];
 }
 
 - (void)reloadAfterError:(UIButton *)button {
+    [UIView animateWithDuration:0.2 animations:^{
+        button.alpha = 0.0;
+    }];    
     [button removeFromSuperview];
     [self reloadDataSource];
 }
