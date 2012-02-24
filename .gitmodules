@@ -4,3 +4,9 @@
 [submodule "Submodules/PSStyleSheet"]
 	path = Submodules/PSStyleSheet
 	url = git@github.com:ptshih/PSStyleSheet.git
+[submodule "Submodules/HockeyKit"]
+	path = Submodules/HockeyKit
+	url = https://github.com/TheRealKerni/HockeyKit.git
+[submodule "Submodules/QuincyKit"]
+	path = Submodules/QuincyKit
+	url = https://github.com/TheRealKerni/QuincyKit.git

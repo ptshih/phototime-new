@@ -134,15 +134,6 @@
 		28C6504214883B5000729AE9 /* imgur_gallery.json in Resources */ = {isa = PBXBuildFile; fileRef = 28C6504114883B5000729AE9 /* imgur_gallery.json */; };
 		28C9469C14918257000E4277 /* BackgroundSearchBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C9469A14918257000E4277 /* BackgroundSearchBar.png */; };
 		28C9469D14918257000E4277 /* BackgroundSearchBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C9469B14918257000E4277 /* BackgroundSearchBar@2x.png */; };
-		28CDD8C714887A3400306FF2 /* Helvetica LT 37 Thin Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8BE14887A3400306FF2 /* Helvetica LT 37 Thin Condensed Oblique.otf */; };
-		28CDD8C814887A3400306FF2 /* Helvetica LT 37 Thin Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8BF14887A3400306FF2 /* Helvetica LT 37 Thin Condensed.ttf */; };
-		28CDD8C914887A3400306FF2 /* Helvetica LT 47 Light Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C014887A3400306FF2 /* Helvetica LT 47 Light Condensed.ttf */; };
-		28CDD8CA14887A3400306FF2 /* Helvetica LT 57 Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C114887A3400306FF2 /* Helvetica LT 57 Condensed Oblique.otf */; };
-		28CDD8CB14887A3400306FF2 /* Helvetica LT 57 Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C214887A3400306FF2 /* Helvetica LT 57 Condensed.ttf */; };
-		28CDD8CC14887A3400306FF2 /* Helvetica LT 67 Medium Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C314887A3400306FF2 /* Helvetica LT 67 Medium Condensed Oblique.otf */; };
-		28CDD8CD14887A3400306FF2 /* Helvetica LT 67 Medium Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C414887A3400306FF2 /* Helvetica LT 67 Medium Condensed.ttf */; };
-		28CDD8CE14887A3400306FF2 /* Helvetica LT 77 Bold Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C514887A3400306FF2 /* Helvetica LT 77 Bold Condensed Oblique.otf */; };
-		28CDD8CF14887A3400306FF2 /* Helvetica LT 77 Bold Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28CDD8C614887A3400306FF2 /* Helvetica LT 77 Bold Condensed.ttf */; };
 		28F38D55149839E0009D58BA /* IconHappyFace.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D4F149839E0009D58BA /* IconHappyFace.png */; };
 		28F38D56149839E0009D58BA /* IconHappyFace@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D50149839E0009D58BA /* IconHappyFace@2x.png */; };
 		28F38D57149839E0009D58BA /* IconSadFace.png in Resources */ = {isa = PBXBuildFile; fileRef = 28F38D51149839E0009D58BA /* IconSadFace.png */; };
@@ -161,6 +152,29 @@
 		D03155D514E5B90E00CC8572 /* IconFriendsBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D314E5B90E00CC8572 /* IconFriendsBlack.png */; };
 		D03155D614E5B90E00CC8572 /* IconFriendsBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */; };
 		D031D2ED14F84B8700DEB789 /* PSStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D2EB14F84B8700DEB789 /* PSStyleSheet.m */; };
+		D031D48B14F84CC300DEB789 /* BWQuincyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D48014F84CC300DEB789 /* BWQuincyManager.m */; };
+		D031D48C14F84CC300DEB789 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D031D48114F84CC300DEB789 /* CrashReporter.framework */; };
+		D031D48E14F84CC300DEB789 /* Quincy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D031D48314F84CC300DEB789 /* Quincy.bundle */; };
+		D031D4BD14F84CDA00DEB789 /* BWApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D49814F84CDA00DEB789 /* BWApp.m */; };
+		D031D4BE14F84CDA00DEB789 /* BWGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D49A14F84CDA00DEB789 /* BWGlobal.m */; };
+		D031D4BF14F84CDA00DEB789 /* BWHockeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D49C14F84CDA00DEB789 /* BWHockeyManager.m */; };
+		D031D4C014F84CDA00DEB789 /* BWHockeySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D49E14F84CDA00DEB789 /* BWHockeySettingsViewController.m */; };
+		D031D4C114F84CDA00DEB789 /* BWHockeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D4A014F84CDA00DEB789 /* BWHockeyViewController.m */; };
+		D031D4C214F84CDA00DEB789 /* NSString+HockeyAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D4A314F84CDA00DEB789 /* NSString+HockeyAdditions.m */; };
+		D031D4C314F84CDA00DEB789 /* PSAppStoreHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D4A514F84CDA00DEB789 /* PSAppStoreHeader.m */; };
+		D031D4C414F84CDA00DEB789 /* PSStoreButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D4A714F84CDA00DEB789 /* PSStoreButton.m */; };
+		D031D4C514F84CDA00DEB789 /* PSWebTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D4A914F84CDA00DEB789 /* PSWebTableViewCell.m */; };
+		D031D4C614F84CDA00DEB789 /* UIImage+HockeyAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D031D4AB14F84CDA00DEB789 /* UIImage+HockeyAdditions.m */; };
+		D031D4C714F84CDA00DEB789 /* Hockey.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D031D4AC14F84CDA00DEB789 /* Hockey.bundle */; };
+		D031D4D714F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4CE14F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed Oblique.otf */; };
+		D031D4D814F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4CF14F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed.ttf */; };
+		D031D4D914F84D2F00DEB789 /* Helvetica LT 47 Light Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D014F84D2F00DEB789 /* Helvetica LT 47 Light Condensed.ttf */; };
+		D031D4DA14F84D2F00DEB789 /* Helvetica LT 57 Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D114F84D2F00DEB789 /* Helvetica LT 57 Condensed Oblique.otf */; };
+		D031D4DB14F84D2F00DEB789 /* Helvetica LT 57 Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D214F84D2F00DEB789 /* Helvetica LT 57 Condensed.ttf */; };
+		D031D4DC14F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D314F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed Oblique.otf */; };
+		D031D4DD14F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D414F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed.ttf */; };
+		D031D4DE14F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D514F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed Oblique.otf */; };
+		D031D4DF14F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D031D4D614F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed.ttf */; };
 		D03447CE14F7250D00CE226A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D03447CD14F7250D00CE226A /* Icon.png */; };
 		D03447D014F7251000CE226A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03447CF14F7251000CE226A /* Icon@2x.png */; };
 		D048787214EF193B00DE6AC8 /* NSMutableArray+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D048787114EF193A00DE6AC8 /* NSMutableArray+PSKit.m */; };
@@ -194,20 +208,6 @@
 		D092D2C314DC4837001108A0 /* NSMutableURLRequest+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D092D2C214DC4837001108A0 /* NSMutableURLRequest+PSKit.m */; };
 		D0A3AC8814F42A8900748CE7 /* PSURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A3AC8714F42A8900748CE7 /* PSURLCache.m */; };
 		D0A3AC8B14F42AA300748CE7 /* PSCachedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A3AC8A14F42AA300748CE7 /* PSCachedImageView.m */; };
-		D0B9109E14F5C4BE00587682 /* BWApp.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9108414F5C4BE00587682 /* BWApp.m */; };
-		D0B9109F14F5C4BE00587682 /* BWGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9108614F5C4BE00587682 /* BWGlobal.m */; };
-		D0B910A014F5C4BE00587682 /* BWHockeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9108814F5C4BE00587682 /* BWHockeyManager.m */; };
-		D0B910A114F5C4BE00587682 /* BWHockeySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9108A14F5C4BE00587682 /* BWHockeySettingsViewController.m */; };
-		D0B910A214F5C4BE00587682 /* BWHockeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9108C14F5C4BE00587682 /* BWHockeyViewController.m */; };
-		D0B910A314F5C4BE00587682 /* NSString+HockeyAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9108F14F5C4BE00587682 /* NSString+HockeyAdditions.m */; };
-		D0B910A414F5C4BE00587682 /* PSAppStoreHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9109114F5C4BE00587682 /* PSAppStoreHeader.m */; };
-		D0B910A514F5C4BE00587682 /* PSStoreButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9109314F5C4BE00587682 /* PSStoreButton.m */; };
-		D0B910A614F5C4BE00587682 /* PSWebTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9109514F5C4BE00587682 /* PSWebTableViewCell.m */; };
-		D0B910A714F5C4BE00587682 /* UIImage+HockeyAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9109714F5C4BE00587682 /* UIImage+HockeyAdditions.m */; };
-		D0B910A814F5C4BE00587682 /* Hockey.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0B9109814F5C4BE00587682 /* Hockey.bundle */; };
-		D0B910A914F5C4BE00587682 /* BWQuincyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B9109B14F5C4BE00587682 /* BWQuincyManager.m */; };
-		D0B910AA14F5C4BE00587682 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0B9109C14F5C4BE00587682 /* CrashReporter.framework */; };
-		D0B910AB14F5C4BE00587682 /* Quincy.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D0B9109D14F5C4BE00587682 /* Quincy.bundle */; };
 		D0B910B514F5C6A800587682 /* ButtonBlockCenter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0B910B214F5C6A800587682 /* ButtonBlockCenter@2x.png */; };
 		D0B910B614F5C6A800587682 /* ButtonBlockLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0B910B314F5C6A800587682 /* ButtonBlockLeft@2x.png */; };
 		D0B910B714F5C6A800587682 /* ButtonBlockRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0B910B414F5C6A800587682 /* ButtonBlockRight@2x.png */; };
@@ -230,6 +230,23 @@
 		D0C5C01914F76FE60041A364 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5C01714F76FE60041A364 /* Default@2x.jpg */; };
 		D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D031D49014F84CC500DEB789 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D031D48514F84CC300DEB789 /* QuincyLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 36892BEC145EC96A0036932D;
+			remoteInfo = QuincyLib;
+		};
+		D031D4CC14F84CDB00DEB789 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D031D4AE14F84CDA00DEB789 /* HockeyLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = HockeyLib;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2810F576149202DE0028BCFE /* HorizontalLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HorizontalLine.png; sourceTree = "<group>"; };
@@ -425,15 +442,6 @@
 		28C6504114883B5000729AE9 /* imgur_gallery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = imgur_gallery.json; sourceTree = "<group>"; };
 		28C9469A14918257000E4277 /* BackgroundSearchBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundSearchBar.png; sourceTree = "<group>"; };
 		28C9469B14918257000E4277 /* BackgroundSearchBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundSearchBar@2x.png"; sourceTree = "<group>"; };
-		28CDD8BE14887A3400306FF2 /* Helvetica LT 37 Thin Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 37 Thin Condensed Oblique.otf"; sourceTree = "<group>"; };
-		28CDD8BF14887A3400306FF2 /* Helvetica LT 37 Thin Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 37 Thin Condensed.ttf"; sourceTree = "<group>"; };
-		28CDD8C014887A3400306FF2 /* Helvetica LT 47 Light Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 47 Light Condensed.ttf"; sourceTree = "<group>"; };
-		28CDD8C114887A3400306FF2 /* Helvetica LT 57 Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 57 Condensed Oblique.otf"; sourceTree = "<group>"; };
-		28CDD8C214887A3400306FF2 /* Helvetica LT 57 Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 57 Condensed.ttf"; sourceTree = "<group>"; };
-		28CDD8C314887A3400306FF2 /* Helvetica LT 67 Medium Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 67 Medium Condensed Oblique.otf"; sourceTree = "<group>"; };
-		28CDD8C414887A3400306FF2 /* Helvetica LT 67 Medium Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 67 Medium Condensed.ttf"; sourceTree = "<group>"; };
-		28CDD8C514887A3400306FF2 /* Helvetica LT 77 Bold Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 77 Bold Condensed Oblique.otf"; sourceTree = "<group>"; };
-		28CDD8C614887A3400306FF2 /* Helvetica LT 77 Bold Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica LT 77 Bold Condensed.ttf"; sourceTree = "<group>"; };
 		28F38D4F149839E0009D58BA /* IconHappyFace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconHappyFace.png; sourceTree = "<group>"; };
 		28F38D50149839E0009D58BA /* IconHappyFace@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHappyFace@2x.png"; sourceTree = "<group>"; };
 		28F38D51149839E0009D58BA /* IconSadFace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconSadFace.png; sourceTree = "<group>"; };
@@ -456,6 +464,43 @@
 		D03155D414E5B90E00CC8572 /* IconFriendsBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconFriendsBlack@2x.png"; sourceTree = "<group>"; };
 		D031D2EA14F84B8700DEB789 /* PSStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSStyleSheet.h; sourceTree = "<group>"; };
 		D031D2EB14F84B8700DEB789 /* PSStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSStyleSheet.m; sourceTree = "<group>"; };
+		D031D47F14F84CC300DEB789 /* BWQuincyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWQuincyManager.h; sourceTree = "<group>"; };
+		D031D48014F84CC300DEB789 /* BWQuincyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWQuincyManager.m; sourceTree = "<group>"; };
+		D031D48114F84CC300DEB789 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+		D031D48314F84CC300DEB789 /* Quincy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Quincy.bundle; sourceTree = "<group>"; };
+		D031D48514F84CC300DEB789 /* QuincyLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = QuincyLib.xcodeproj; sourceTree = "<group>"; };
+		D031D49714F84CDA00DEB789 /* BWApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWApp.h; sourceTree = "<group>"; };
+		D031D49814F84CDA00DEB789 /* BWApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWApp.m; sourceTree = "<group>"; };
+		D031D49914F84CDA00DEB789 /* BWGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWGlobal.h; sourceTree = "<group>"; };
+		D031D49A14F84CDA00DEB789 /* BWGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWGlobal.m; sourceTree = "<group>"; };
+		D031D49B14F84CDA00DEB789 /* BWHockeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHockeyManager.h; sourceTree = "<group>"; };
+		D031D49C14F84CDA00DEB789 /* BWHockeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHockeyManager.m; sourceTree = "<group>"; };
+		D031D49D14F84CDA00DEB789 /* BWHockeySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHockeySettingsViewController.h; sourceTree = "<group>"; };
+		D031D49E14F84CDA00DEB789 /* BWHockeySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHockeySettingsViewController.m; sourceTree = "<group>"; };
+		D031D49F14F84CDA00DEB789 /* BWHockeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHockeyViewController.h; sourceTree = "<group>"; };
+		D031D4A014F84CDA00DEB789 /* BWHockeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHockeyViewController.m; sourceTree = "<group>"; };
+		D031D4A214F84CDA00DEB789 /* NSString+HockeyAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HockeyAdditions.h"; sourceTree = "<group>"; };
+		D031D4A314F84CDA00DEB789 /* NSString+HockeyAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HockeyAdditions.m"; sourceTree = "<group>"; };
+		D031D4A414F84CDA00DEB789 /* PSAppStoreHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreHeader.h; sourceTree = "<group>"; };
+		D031D4A514F84CDA00DEB789 /* PSAppStoreHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreHeader.m; sourceTree = "<group>"; };
+		D031D4A614F84CDA00DEB789 /* PSStoreButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSStoreButton.h; sourceTree = "<group>"; };
+		D031D4A714F84CDA00DEB789 /* PSStoreButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSStoreButton.m; sourceTree = "<group>"; };
+		D031D4A814F84CDA00DEB789 /* PSWebTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebTableViewCell.h; sourceTree = "<group>"; };
+		D031D4A914F84CDA00DEB789 /* PSWebTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebTableViewCell.m; sourceTree = "<group>"; };
+		D031D4AA14F84CDA00DEB789 /* UIImage+HockeyAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HockeyAdditions.h"; sourceTree = "<group>"; };
+		D031D4AB14F84CDA00DEB789 /* UIImage+HockeyAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HockeyAdditions.m"; sourceTree = "<group>"; };
+		D031D4AC14F84CDA00DEB789 /* Hockey.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Hockey.bundle; sourceTree = "<group>"; };
+		D031D4AE14F84CDA00DEB789 /* HockeyLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = HockeyLib.xcodeproj; sourceTree = "<group>"; };
+		D031D4B114F84CDA00DEB789 /* HockeyLib_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HockeyLib_Prefix.pch; sourceTree = "<group>"; };
+		D031D4CE14F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 37 Thin Condensed Oblique.otf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 37 Thin Condensed Oblique.otf"; sourceTree = SOURCE_ROOT; };
+		D031D4CF14F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 37 Thin Condensed.ttf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 37 Thin Condensed.ttf"; sourceTree = SOURCE_ROOT; };
+		D031D4D014F84D2F00DEB789 /* Helvetica LT 47 Light Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 47 Light Condensed.ttf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 47 Light Condensed.ttf"; sourceTree = SOURCE_ROOT; };
+		D031D4D114F84D2F00DEB789 /* Helvetica LT 57 Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 57 Condensed Oblique.otf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 57 Condensed Oblique.otf"; sourceTree = SOURCE_ROOT; };
+		D031D4D214F84D2F00DEB789 /* Helvetica LT 57 Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 57 Condensed.ttf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 57 Condensed.ttf"; sourceTree = SOURCE_ROOT; };
+		D031D4D314F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 67 Medium Condensed Oblique.otf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 67 Medium Condensed Oblique.otf"; sourceTree = SOURCE_ROOT; };
+		D031D4D414F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 67 Medium Condensed.ttf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 67 Medium Condensed.ttf"; sourceTree = SOURCE_ROOT; };
+		D031D4D514F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 77 Bold Condensed Oblique.otf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 77 Bold Condensed Oblique.otf"; sourceTree = SOURCE_ROOT; };
+		D031D4D614F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica LT 77 Bold Condensed.ttf"; path = "Submodules/PSKit/src/Fonts/Helvetica LT 77 Bold Condensed.ttf"; sourceTree = SOURCE_ROOT; };
 		D03447CD14F7250D00CE226A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D03447CF14F7251000CE226A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		D048787014EF193A00DE6AC8 /* NSMutableArray+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+PSKit.h"; sourceTree = "<group>"; };
@@ -512,31 +557,6 @@
 		D0A3AC8714F42A8900748CE7 /* PSURLCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSURLCache.m; sourceTree = "<group>"; };
 		D0A3AC8914F42AA300748CE7 /* PSCachedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCachedImageView.h; sourceTree = "<group>"; };
 		D0A3AC8A14F42AA300748CE7 /* PSCachedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCachedImageView.m; sourceTree = "<group>"; };
-		D0B9108314F5C4BE00587682 /* BWApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWApp.h; sourceTree = "<group>"; };
-		D0B9108414F5C4BE00587682 /* BWApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWApp.m; sourceTree = "<group>"; };
-		D0B9108514F5C4BE00587682 /* BWGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWGlobal.h; sourceTree = "<group>"; };
-		D0B9108614F5C4BE00587682 /* BWGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWGlobal.m; sourceTree = "<group>"; };
-		D0B9108714F5C4BE00587682 /* BWHockeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHockeyManager.h; sourceTree = "<group>"; };
-		D0B9108814F5C4BE00587682 /* BWHockeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHockeyManager.m; sourceTree = "<group>"; };
-		D0B9108914F5C4BE00587682 /* BWHockeySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHockeySettingsViewController.h; sourceTree = "<group>"; };
-		D0B9108A14F5C4BE00587682 /* BWHockeySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHockeySettingsViewController.m; sourceTree = "<group>"; };
-		D0B9108B14F5C4BE00587682 /* BWHockeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWHockeyViewController.h; sourceTree = "<group>"; };
-		D0B9108C14F5C4BE00587682 /* BWHockeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWHockeyViewController.m; sourceTree = "<group>"; };
-		D0B9108E14F5C4BE00587682 /* NSString+HockeyAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HockeyAdditions.h"; sourceTree = "<group>"; };
-		D0B9108F14F5C4BE00587682 /* NSString+HockeyAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HockeyAdditions.m"; sourceTree = "<group>"; };
-		D0B9109014F5C4BE00587682 /* PSAppStoreHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSAppStoreHeader.h; sourceTree = "<group>"; };
-		D0B9109114F5C4BE00587682 /* PSAppStoreHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSAppStoreHeader.m; sourceTree = "<group>"; };
-		D0B9109214F5C4BE00587682 /* PSStoreButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSStoreButton.h; sourceTree = "<group>"; };
-		D0B9109314F5C4BE00587682 /* PSStoreButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSStoreButton.m; sourceTree = "<group>"; };
-		D0B9109414F5C4BE00587682 /* PSWebTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebTableViewCell.h; sourceTree = "<group>"; };
-		D0B9109514F5C4BE00587682 /* PSWebTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebTableViewCell.m; sourceTree = "<group>"; };
-		D0B9109614F5C4BE00587682 /* UIImage+HockeyAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HockeyAdditions.h"; sourceTree = "<group>"; };
-		D0B9109714F5C4BE00587682 /* UIImage+HockeyAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HockeyAdditions.m"; sourceTree = "<group>"; };
-		D0B9109814F5C4BE00587682 /* Hockey.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Hockey.bundle; sourceTree = "<group>"; };
-		D0B9109A14F5C4BE00587682 /* BWQuincyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWQuincyManager.h; sourceTree = "<group>"; };
-		D0B9109B14F5C4BE00587682 /* BWQuincyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWQuincyManager.m; sourceTree = "<group>"; };
-		D0B9109C14F5C4BE00587682 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
-		D0B9109D14F5C4BE00587682 /* Quincy.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Quincy.bundle; sourceTree = "<group>"; };
 		D0B910B214F5C6A800587682 /* ButtonBlockCenter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlockCenter@2x.png"; sourceTree = "<group>"; };
 		D0B910B314F5C6A800587682 /* ButtonBlockLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlockLeft@2x.png"; sourceTree = "<group>"; };
 		D0B910B414F5C6A800587682 /* ButtonBlockRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlockRight@2x.png"; sourceTree = "<group>"; };
@@ -587,7 +607,7 @@
 				283818C314723F1D007E4827 /* UIKit.framework in Frameworks */,
 				283818C514723F1D007E4827 /* Foundation.framework in Frameworks */,
 				283818C714723F1D007E4827 /* CoreGraphics.framework in Frameworks */,
-				D0B910AA14F5C4BE00587682 /* CrashReporter.framework in Frameworks */,
+				D031D48C14F84CC300DEB789 /* CrashReporter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,8 +919,6 @@
 		286987B61475CEEC00B40860 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				D0B9108214F5C4BE00587682 /* HockeyKit */,
-				D0B9109914F5C4BE00587682 /* QuincyKit */,
 				286987B71475CEEC00B40860 /* AFNetworking */,
 				286987CE1475CEEC00B40860 /* AFURLCache */,
 				286987DA1475CEEC00B40860 /* Facebook */,
@@ -1092,15 +1110,15 @@
 		28CDD8BD14887A3400306FF2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				28CDD8BE14887A3400306FF2 /* Helvetica LT 37 Thin Condensed Oblique.otf */,
-				28CDD8BF14887A3400306FF2 /* Helvetica LT 37 Thin Condensed.ttf */,
-				28CDD8C014887A3400306FF2 /* Helvetica LT 47 Light Condensed.ttf */,
-				28CDD8C114887A3400306FF2 /* Helvetica LT 57 Condensed Oblique.otf */,
-				28CDD8C214887A3400306FF2 /* Helvetica LT 57 Condensed.ttf */,
-				28CDD8C314887A3400306FF2 /* Helvetica LT 67 Medium Condensed Oblique.otf */,
-				28CDD8C414887A3400306FF2 /* Helvetica LT 67 Medium Condensed.ttf */,
-				28CDD8C514887A3400306FF2 /* Helvetica LT 77 Bold Condensed Oblique.otf */,
-				28CDD8C614887A3400306FF2 /* Helvetica LT 77 Bold Condensed.ttf */,
+				D031D4CE14F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed Oblique.otf */,
+				D031D4CF14F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed.ttf */,
+				D031D4D014F84D2F00DEB789 /* Helvetica LT 47 Light Condensed.ttf */,
+				D031D4D114F84D2F00DEB789 /* Helvetica LT 57 Condensed Oblique.otf */,
+				D031D4D214F84D2F00DEB789 /* Helvetica LT 57 Condensed.ttf */,
+				D031D4D314F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed Oblique.otf */,
+				D031D4D414F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed.ttf */,
+				D031D4D514F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed Oblique.otf */,
+				D031D4D614F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed.ttf */,
 			);
 			name = Fonts;
 			path = PSKit/src/Fonts;
@@ -1201,6 +1219,8 @@
 		D031D2E814F84B6B00DEB789 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				D031D49214F84CDA00DEB789 /* HockeyKit */,
+				D031D47E14F84CC300DEB789 /* QuincyKit */,
 				D031D2E914F84B8700DEB789 /* PSStyleSheet */,
 				2869873D1475CECD00B40860 /* PSKit */,
 			);
@@ -1214,6 +1234,90 @@
 				D031D2EB14F84B8700DEB789 /* PSStyleSheet.m */,
 			);
 			path = PSStyleSheet;
+			sourceTree = "<group>";
+		};
+		D031D47E14F84CC300DEB789 /* QuincyKit */ = {
+			isa = PBXGroup;
+			children = (
+				D031D47F14F84CC300DEB789 /* BWQuincyManager.h */,
+				D031D48014F84CC300DEB789 /* BWQuincyManager.m */,
+				D031D48114F84CC300DEB789 /* CrashReporter.framework */,
+				D031D48314F84CC300DEB789 /* Quincy.bundle */,
+				D031D48414F84CC300DEB789 /* QuincyLib */,
+			);
+			name = QuincyKit;
+			path = QuincyKit/client/iOS;
+			sourceTree = "<group>";
+		};
+		D031D48414F84CC300DEB789 /* QuincyLib */ = {
+			isa = PBXGroup;
+			children = (
+				D031D48514F84CC300DEB789 /* QuincyLib.xcodeproj */,
+			);
+			path = QuincyLib;
+			sourceTree = "<group>";
+		};
+		D031D48614F84CC300DEB789 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D031D49114F84CC500DEB789 /* libQuincyLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D031D49214F84CDA00DEB789 /* HockeyKit */ = {
+			isa = PBXGroup;
+			children = (
+				D031D49714F84CDA00DEB789 /* BWApp.h */,
+				D031D49814F84CDA00DEB789 /* BWApp.m */,
+				D031D49914F84CDA00DEB789 /* BWGlobal.h */,
+				D031D49A14F84CDA00DEB789 /* BWGlobal.m */,
+				D031D49B14F84CDA00DEB789 /* BWHockeyManager.h */,
+				D031D49C14F84CDA00DEB789 /* BWHockeyManager.m */,
+				D031D49D14F84CDA00DEB789 /* BWHockeySettingsViewController.h */,
+				D031D49E14F84CDA00DEB789 /* BWHockeySettingsViewController.m */,
+				D031D49F14F84CDA00DEB789 /* BWHockeyViewController.h */,
+				D031D4A014F84CDA00DEB789 /* BWHockeyViewController.m */,
+				D031D4A114F84CDA00DEB789 /* Helper */,
+				D031D4AC14F84CDA00DEB789 /* Hockey.bundle */,
+				D031D4AD14F84CDA00DEB789 /* HockeyLib */,
+			);
+			name = HockeyKit;
+			path = HockeyKit/client/iOS;
+			sourceTree = "<group>";
+		};
+		D031D4A114F84CDA00DEB789 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				D031D4A214F84CDA00DEB789 /* NSString+HockeyAdditions.h */,
+				D031D4A314F84CDA00DEB789 /* NSString+HockeyAdditions.m */,
+				D031D4A414F84CDA00DEB789 /* PSAppStoreHeader.h */,
+				D031D4A514F84CDA00DEB789 /* PSAppStoreHeader.m */,
+				D031D4A614F84CDA00DEB789 /* PSStoreButton.h */,
+				D031D4A714F84CDA00DEB789 /* PSStoreButton.m */,
+				D031D4A814F84CDA00DEB789 /* PSWebTableViewCell.h */,
+				D031D4A914F84CDA00DEB789 /* PSWebTableViewCell.m */,
+				D031D4AA14F84CDA00DEB789 /* UIImage+HockeyAdditions.h */,
+				D031D4AB14F84CDA00DEB789 /* UIImage+HockeyAdditions.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		D031D4AD14F84CDA00DEB789 /* HockeyLib */ = {
+			isa = PBXGroup;
+			children = (
+				D031D4AE14F84CDA00DEB789 /* HockeyLib.xcodeproj */,
+				D031D4B114F84CDA00DEB789 /* HockeyLib_Prefix.pch */,
+			);
+			path = HockeyLib;
+			sourceTree = "<group>";
+		};
+		D031D4AF14F84CDA00DEB789 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D031D4CD14F84CDB00DEB789 /* libHockeyLib.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D03447D114F7251300CE226A /* AppStore */ = {
@@ -1252,53 +1356,6 @@
 				D0A3AC8714F42A8900748CE7 /* PSURLCache.m */,
 			);
 			path = PSURLCache;
-			sourceTree = "<group>";
-		};
-		D0B9108214F5C4BE00587682 /* HockeyKit */ = {
-			isa = PBXGroup;
-			children = (
-				D0B9108314F5C4BE00587682 /* BWApp.h */,
-				D0B9108414F5C4BE00587682 /* BWApp.m */,
-				D0B9108514F5C4BE00587682 /* BWGlobal.h */,
-				D0B9108614F5C4BE00587682 /* BWGlobal.m */,
-				D0B9108714F5C4BE00587682 /* BWHockeyManager.h */,
-				D0B9108814F5C4BE00587682 /* BWHockeyManager.m */,
-				D0B9108914F5C4BE00587682 /* BWHockeySettingsViewController.h */,
-				D0B9108A14F5C4BE00587682 /* BWHockeySettingsViewController.m */,
-				D0B9108B14F5C4BE00587682 /* BWHockeyViewController.h */,
-				D0B9108C14F5C4BE00587682 /* BWHockeyViewController.m */,
-				D0B9108D14F5C4BE00587682 /* Helper */,
-				D0B9109814F5C4BE00587682 /* Hockey.bundle */,
-			);
-			path = HockeyKit;
-			sourceTree = "<group>";
-		};
-		D0B9108D14F5C4BE00587682 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				D0B9108E14F5C4BE00587682 /* NSString+HockeyAdditions.h */,
-				D0B9108F14F5C4BE00587682 /* NSString+HockeyAdditions.m */,
-				D0B9109014F5C4BE00587682 /* PSAppStoreHeader.h */,
-				D0B9109114F5C4BE00587682 /* PSAppStoreHeader.m */,
-				D0B9109214F5C4BE00587682 /* PSStoreButton.h */,
-				D0B9109314F5C4BE00587682 /* PSStoreButton.m */,
-				D0B9109414F5C4BE00587682 /* PSWebTableViewCell.h */,
-				D0B9109514F5C4BE00587682 /* PSWebTableViewCell.m */,
-				D0B9109614F5C4BE00587682 /* UIImage+HockeyAdditions.h */,
-				D0B9109714F5C4BE00587682 /* UIImage+HockeyAdditions.m */,
-			);
-			path = Helper;
-			sourceTree = "<group>";
-		};
-		D0B9109914F5C4BE00587682 /* QuincyKit */ = {
-			isa = PBXGroup;
-			children = (
-				D0B9109A14F5C4BE00587682 /* BWQuincyManager.h */,
-				D0B9109B14F5C4BE00587682 /* BWQuincyManager.m */,
-				D0B9109C14F5C4BE00587682 /* CrashReporter.framework */,
-				D0B9109D14F5C4BE00587682 /* Quincy.bundle */,
-			);
-			path = QuincyKit;
 			sourceTree = "<group>";
 		};
 		D0C5C00914F76E520041A364 /* Localytics */ = {
@@ -1364,12 +1421,39 @@
 			mainGroup = 283818B314723F1C007E4827;
 			productRefGroup = 283818BF14723F1D007E4827 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D031D4AF14F84CDA00DEB789 /* Products */;
+					ProjectRef = D031D4AE14F84CDA00DEB789 /* HockeyLib.xcodeproj */;
+				},
+				{
+					ProductGroup = D031D48614F84CC300DEB789 /* Products */;
+					ProjectRef = D031D48514F84CC300DEB789 /* QuincyLib.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				283818BD14723F1D007E4827 /* Phototime */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D031D49114F84CC500DEB789 /* libQuincyLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libQuincyLib.a;
+			remoteRef = D031D49014F84CC500DEB789 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D031D4CD14F84CDB00DEB789 /* libHockeyLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHockeyLib.a;
+			remoteRef = D031D4CC14F84CDB00DEB789 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		283818BC14723F1D007E4827 /* Resources */ = {
@@ -1401,15 +1485,6 @@
 				281A48881486291400F5E19E /* BackgroundWeave.jpg in Resources */,
 				281A48891486291400F5E19E /* BackgroundWeave@2x.jpg in Resources */,
 				28C6504214883B5000729AE9 /* imgur_gallery.json in Resources */,
-				28CDD8C714887A3400306FF2 /* Helvetica LT 37 Thin Condensed Oblique.otf in Resources */,
-				28CDD8C814887A3400306FF2 /* Helvetica LT 37 Thin Condensed.ttf in Resources */,
-				28CDD8C914887A3400306FF2 /* Helvetica LT 47 Light Condensed.ttf in Resources */,
-				28CDD8CA14887A3400306FF2 /* Helvetica LT 57 Condensed Oblique.otf in Resources */,
-				28CDD8CB14887A3400306FF2 /* Helvetica LT 57 Condensed.ttf in Resources */,
-				28CDD8CC14887A3400306FF2 /* Helvetica LT 67 Medium Condensed Oblique.otf in Resources */,
-				28CDD8CD14887A3400306FF2 /* Helvetica LT 67 Medium Condensed.ttf in Resources */,
-				28CDD8CE14887A3400306FF2 /* Helvetica LT 77 Bold Condensed Oblique.otf in Resources */,
-				28CDD8CF14887A3400306FF2 /* Helvetica LT 77 Bold Condensed.ttf in Resources */,
 				28C9469C14918257000E4277 /* BackgroundSearchBar.png in Resources */,
 				28C9469D14918257000E4277 /* BackgroundSearchBar@2x.png in Resources */,
 				2810F578149202DF0028BCFE /* HorizontalLine.png in Resources */,
@@ -1456,8 +1531,6 @@
 				D08E516214E8A54800B5CCCD /* PSPullRefreshView.bundle in Resources */,
 				D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */,
 				D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */,
-				D0B910A814F5C4BE00587682 /* Hockey.bundle in Resources */,
-				D0B910AB14F5C4BE00587682 /* Quincy.bundle in Resources */,
 				D0B910B514F5C6A800587682 /* ButtonBlockCenter@2x.png in Resources */,
 				D0B910B614F5C6A800587682 /* ButtonBlockLeft@2x.png in Resources */,
 				D0B910B714F5C6A800587682 /* ButtonBlockRight@2x.png in Resources */,
@@ -1480,6 +1553,17 @@
 				D0C5C00014F766C90041A364 /* BackgroundPostIt@2x.png in Resources */,
 				D0C5C01814F76FE60041A364 /* Default.jpg in Resources */,
 				D0C5C01914F76FE60041A364 /* Default@2x.jpg in Resources */,
+				D031D48E14F84CC300DEB789 /* Quincy.bundle in Resources */,
+				D031D4C714F84CDA00DEB789 /* Hockey.bundle in Resources */,
+				D031D4D714F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed Oblique.otf in Resources */,
+				D031D4D814F84D2F00DEB789 /* Helvetica LT 37 Thin Condensed.ttf in Resources */,
+				D031D4D914F84D2F00DEB789 /* Helvetica LT 47 Light Condensed.ttf in Resources */,
+				D031D4DA14F84D2F00DEB789 /* Helvetica LT 57 Condensed Oblique.otf in Resources */,
+				D031D4DB14F84D2F00DEB789 /* Helvetica LT 57 Condensed.ttf in Resources */,
+				D031D4DC14F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed Oblique.otf in Resources */,
+				D031D4DD14F84D2F00DEB789 /* Helvetica LT 67 Medium Condensed.ttf in Resources */,
+				D031D4DE14F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed Oblique.otf in Resources */,
+				D031D4DF14F84D2F00DEB789 /* Helvetica LT 77 Bold Condensed.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1587,17 +1671,6 @@
 				D048787214EF193B00DE6AC8 /* NSMutableArray+PSKit.m in Sources */,
 				D0A3AC8814F42A8900748CE7 /* PSURLCache.m in Sources */,
 				D0A3AC8B14F42AA300748CE7 /* PSCachedImageView.m in Sources */,
-				D0B9109E14F5C4BE00587682 /* BWApp.m in Sources */,
-				D0B9109F14F5C4BE00587682 /* BWGlobal.m in Sources */,
-				D0B910A014F5C4BE00587682 /* BWHockeyManager.m in Sources */,
-				D0B910A114F5C4BE00587682 /* BWHockeySettingsViewController.m in Sources */,
-				D0B910A214F5C4BE00587682 /* BWHockeyViewController.m in Sources */,
-				D0B910A314F5C4BE00587682 /* NSString+HockeyAdditions.m in Sources */,
-				D0B910A414F5C4BE00587682 /* PSAppStoreHeader.m in Sources */,
-				D0B910A514F5C4BE00587682 /* PSStoreButton.m in Sources */,
-				D0B910A614F5C4BE00587682 /* PSWebTableViewCell.m in Sources */,
-				D0B910A714F5C4BE00587682 /* UIImage+HockeyAdditions.m in Sources */,
-				D0B910A914F5C4BE00587682 /* BWQuincyManager.m in Sources */,
 				D054E97214F6C41F00B03306 /* PSGalleryView.m in Sources */,
 				D054E98D14F6EE5F00B03306 /* PSPopoverView.m in Sources */,
 				D054E99014F6F98D00B03306 /* DateRangeView.m in Sources */,
@@ -1606,6 +1679,17 @@
 				D0C5C01214F76E520041A364 /* LocalyticsSession.m in Sources */,
 				D0C5C01314F76E520041A364 /* UploaderThread.m in Sources */,
 				D031D2ED14F84B8700DEB789 /* PSStyleSheet.m in Sources */,
+				D031D48B14F84CC300DEB789 /* BWQuincyManager.m in Sources */,
+				D031D4BD14F84CDA00DEB789 /* BWApp.m in Sources */,
+				D031D4BE14F84CDA00DEB789 /* BWGlobal.m in Sources */,
+				D031D4BF14F84CDA00DEB789 /* BWHockeyManager.m in Sources */,
+				D031D4C014F84CDA00DEB789 /* BWHockeySettingsViewController.m in Sources */,
+				D031D4C114F84CDA00DEB789 /* BWHockeyViewController.m in Sources */,
+				D031D4C214F84CDA00DEB789 /* NSString+HockeyAdditions.m in Sources */,
+				D031D4C314F84CDA00DEB789 /* PSAppStoreHeader.m in Sources */,
+				D031D4C414F84CDA00DEB789 /* PSStoreButton.m in Sources */,
+				D031D4C514F84CDA00DEB789 /* PSWebTableViewCell.m in Sources */,
+				D031D4C614F84CDA00DEB789 /* UIImage+HockeyAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1687,7 +1771,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/PSKit/src/Vendor/QuincyKit\"",
+					"\"$(SRCROOT)/Submodules/QuincyKit/client/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
@@ -1705,7 +1789,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/PSKit/src/Vendor/QuincyKit\"",
+					"\"$(SRCROOT)/Submodules/QuincyKit/client/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
@@ -1751,7 +1835,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/PSKit/src/Vendor/QuincyKit\"",
+					"\"$(SRCROOT)/Submodules/QuincyKit/client/iOS\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Phototime-Prefix.pch";
