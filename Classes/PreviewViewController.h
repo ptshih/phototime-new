@@ -8,19 +8,8 @@
 
 #import "PSViewController.h"
 
-@interface PreviewViewController : PSViewController {
-  UIImageView *_photoView;
-  UIImage *_image;
-  NSDictionary *_metadata;
-  NSURL *_assetURL;
-}
+@interface PreviewViewController : PSViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (id)initWithImage:(UIImage *)image metadata:(NSDictionary *)metadata;
-- (id)initWithImage:(UIImage *)image assetURL:(NSURL *)assetURL;
-
-- (void)getExifFromData:(NSData *)data;
-//- (void)uploadPhotoWithData:(NSData *)data;
 - (void)uploadPhotoWithData:(NSData *)data width:(CGFloat)width height:(CGFloat)height metadata:(NSDictionary *)metadata;
-- (void)uploadPhotoWithAssetURL:(NSURL *)assetURL;
 
 @end

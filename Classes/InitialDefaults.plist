@@ -16,6 +16,8 @@
 	<integer>11</integer>
 	<key>endYearIndex</key>
 	<integer>5</integer>
+	<key>dateRangeDidChange</key>
+	<false/>
 	<key>currentUser</key>
 	<dict>
 		<key>lastName</key>

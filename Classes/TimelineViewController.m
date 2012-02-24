@@ -11,7 +11,7 @@
 #import "DateRangeView.h"
 
 #import "TimelineConfigViewController.h"
-#import "GalleryViewController.h"
+#import "PreviewViewController.h"
 
 @interface TimelineViewController (Private)
 
@@ -23,6 +23,7 @@
 @implementation TimelineViewController
 
 @synthesize
+pvc = _pvc,
 timelineId = _timelineId,
 startDate = _startDate,
 endDate = _endDate,
@@ -65,6 +66,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)dealloc {
+    self.pvc = nil;
+    
     self.startDate = nil;
     self.endDate = nil;
     self.items = nil;
@@ -152,7 +155,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
     [self.rightButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockRight" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraBlack"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconClockBlack"] forState:UIControlStateNormal];
     
     [self.headerView addSubview:self.leftButton];
     [self.headerView addSubview:self.centerButton];
@@ -204,7 +207,16 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)rightAction {
-//    GalleryViewController *vc = [[[GalleryViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    DateRangeView *dateRangeView = [[[DateRangeView alloc] initWithFrame:CGRectMake(0, 0, 288, 352)] autorelease];
+    PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Timeline Dates" contentView:dateRangeView] autorelease];
+    popoverView.delegate = self;
+    [popoverView show];
+    
+//    if (!self.pvc) {
+//        self.pvc = [[[PreviewViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+//    }
+//    UIImagePickerController *vc = [[[UIImagePickerController alloc] init] autorelease];
+//    vc.delegate = self.pvc;
 //    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
 }
 
@@ -383,8 +395,11 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - PSPopoverViewDelegate
 - (void)popoverViewDidDismiss:(PSPopoverView *)popoverView {
-    [self setDateRange];
-    [self reloadDataSource];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"dateRangeDidChange"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"dateRangeDidChange"];
+        [self setDateRange];
+        [self reloadDataSource];
+    }
 }
 
 #pragma mark - PSErrorViewDelegate

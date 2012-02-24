@@ -15,5 +15,9 @@
 @property (nonatomic, retain) NSArray *months;
 @property (nonatomic, retain) NSArray *years;
 @property (nonatomic, retain) NSString *selectedKey;
+@property (nonatomic, assign) NSInteger startMonthIndex;
+@property (nonatomic, assign) NSInteger startYearIndex;
+@property (nonatomic, assign) NSInteger endMonthIndex;
+@property (nonatomic, assign) NSInteger endYearIndex;
 
 @end

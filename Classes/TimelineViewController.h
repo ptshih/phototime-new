@@ -11,8 +11,11 @@
 #import "PSPullRefreshView.h"
 #import "PSPopoverView.h"
 
+@class PreviewViewController;
+
 @interface TimelineViewController : PSBaseViewController <PSCollectionViewDelegate, PSCollectionViewDataSource, PSPullRefreshViewDelegate, UIScrollViewDelegate, PSPopoverViewDelegate>
 
+@property (nonatomic, retain) PreviewViewController *pvc;
 @property (nonatomic, copy) NSString *timelineId;
 @property (nonatomic, copy) NSDate *startDate;
 @property (nonatomic, copy) NSDate *endDate;

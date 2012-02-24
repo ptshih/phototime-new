@@ -15,7 +15,11 @@ pickerView = _pickerView,
 tableView = _tableView,
 months = _months,
 years = _years,
-selectedKey = _selectedKey;
+selectedKey = _selectedKey,
+startMonthIndex = _startMonthIndex,
+startYearIndex = _startYearIndex,
+endMonthIndex = _endMonthIndex,
+endYearIndex = _endYearIndex;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -52,13 +56,18 @@ selectedKey = _selectedKey;
         [self.pickerView selectRow:monthIndex inComponent:0 animated:NO];
         [self.pickerView selectRow:yearIndex inComponent:1 animated:NO];
         
+        self.startMonthIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"startMonthIndex"];
+        self.startYearIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"startYearIndex"];    
+        self.endMonthIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"endMonthIndex"];
+        self.endYearIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"endYearIndex"];
+        
         UITableViewCell *cell = nil;
         
         cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [self.months objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"startMonthIndex"]], [self.years objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"startYearIndex"]]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [self.months objectAtIndex:self.startMonthIndex], [self.years objectAtIndex:self.startYearIndex]];
         
         cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [self.months objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"endMonthIndex"]], [self.years objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"endYearIndex"]]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [self.months objectAtIndex:self.endMonthIndex], [self.years objectAtIndex:self.endYearIndex]];
     }
     return self;
 }
@@ -136,6 +145,11 @@ selectedKey = _selectedKey;
     
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [self.pickerView.delegate pickerView:self.pickerView titleForRow:[self.pickerView selectedRowInComponent:0] forComponent:0], [self.pickerView.delegate pickerView:self.pickerView titleForRow:[self.pickerView selectedRowInComponent:1] forComponent:1]];
     
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"dateRangeDidChange"]) {
+        if (self.startMonthIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"startMonthIndex"] || self.startYearIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"startYearIndex"] || self.endMonthIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"endMonthIndex"] || self.endYearIndex != [[NSUserDefaults standardUserDefaults] integerForKey:@"endYearIndex"]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"dateRangeDidChange"];
+        }
+    }
 }
 
 

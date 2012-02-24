@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PSTableViewController.h"
 
-@interface TimelineConfigViewController : PSTableViewController
+@interface TimelineConfigViewController : PSTableViewController <UIAlertViewDelegate>
 
 @property (nonatomic, copy) NSString *timelineId;
 @property (nonatomic, assign) UIButton *leftButton;

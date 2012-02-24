@@ -206,6 +206,9 @@
 		D05B5F9314EB068200970969 /* NSJSONSerialization+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */; };
 		D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639C14E90CA800150193 /* IconCalendarBlack.png */; };
 		D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */; };
+		D07B2DB714F74DD400304E62 /* IconHeartBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D07B2DB514F74DD400304E62 /* IconHeartBlack.png */; };
+		D07B2DB814F74DD400304E62 /* IconHeartBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */; };
+		D07B2DC114F750F500304E62 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = D07B2DC014F750F500304E62 /* Appirater.m */; };
 		D080F6C414E5D10B0061A38B /* IconMinusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C014E5D10B0061A38B /* IconMinusBlack.png */; };
 		D080F6C514E5D10B0061A38B /* IconMinusBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */; };
 		D080F6C614E5D10B0061A38B /* IconPlusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C214E5D10B0061A38B /* IconPlusBlack.png */; };
@@ -521,6 +524,10 @@
 		D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PSKit.m"; sourceTree = "<group>"; };
 		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
 		D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendarBlack@2x.png"; sourceTree = "<group>"; };
+		D07B2DB514F74DD400304E62 /* IconHeartBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconHeartBlack.png; sourceTree = "<group>"; };
+		D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHeartBlack@2x.png"; sourceTree = "<group>"; };
+		D07B2DBF14F750F500304E62 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
+		D07B2DC014F750F500304E62 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		D080F6C014E5D10B0061A38B /* IconMinusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconMinusBlack.png; sourceTree = "<group>"; };
 		D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMinusBlack@2x.png"; sourceTree = "<group>"; };
 		D080F6C214E5D10B0061A38B /* IconPlusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconPlusBlack.png; sourceTree = "<group>"; };
@@ -640,6 +647,7 @@
 		283818B314723F1C007E4827 = {
 			isa = PBXGroup;
 			children = (
+				D07B2DBD14F750F400304E62 /* Vendor */,
 				D03447D114F7251300CE226A /* AppStore */,
 				2869873D1475CECD00B40860 /* PSKit */,
 				283818C814723F1D007E4827 /* Classes */,
@@ -727,6 +735,8 @@
 		28698713147312EC00B40860 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D07B2DB514F74DD400304E62 /* IconHeartBlack.png */,
+				D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */,
 				D054E99114F7001D00B03306 /* ButtonBlue@2x.png */,
 				D054E99214F7001D00B03306 /* ButtonWhite@2x.png */,
 				D054E98014F6E4A200B03306 /* NetworkErrorBlack@2x.png */,
@@ -1269,6 +1279,23 @@
 			name = AppStore;
 			sourceTree = "<group>";
 		};
+		D07B2DBD14F750F400304E62 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				D07B2DBE14F750F500304E62 /* Appirater */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		D07B2DBE14F750F500304E62 /* Appirater */ = {
+			isa = PBXGroup;
+			children = (
+				D07B2DBF14F750F500304E62 /* Appirater.h */,
+				D07B2DC014F750F500304E62 /* Appirater.m */,
+			);
+			path = Appirater;
+			sourceTree = "<group>";
+		};
 		D0A3AC8514F42A8900748CE7 /* PSURLCache */ = {
 			isa = PBXGroup;
 			children = (
@@ -1362,7 +1389,7 @@
 		283818B514723F1C007E4827 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 283818B814723F1C007E4827 /* Build configuration list for PBXProject "Phototime" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1510,6 +1537,8 @@
 				D054E99414F7001D00B03306 /* ButtonWhite@2x.png in Resources */,
 				D03447CE14F7250D00CE226A /* Icon.png in Resources */,
 				D03447D014F7251000CE226A /* Icon@2x.png in Resources */,
+				D07B2DB714F74DD400304E62 /* IconHeartBlack.png in Resources */,
+				D07B2DB814F74DD400304E62 /* IconHeartBlack@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1632,6 +1661,7 @@
 				D054E97214F6C41F00B03306 /* PSGalleryView.m in Sources */,
 				D054E98D14F6EE5F00B03306 /* PSPopoverView.m in Sources */,
 				D054E99014F6F98D00B03306 /* DateRangeView.m in Sources */,
+				D07B2DC114F750F500304E62 /* Appirater.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
