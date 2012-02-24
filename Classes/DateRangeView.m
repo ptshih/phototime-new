@@ -135,6 +135,7 @@ selectedKey = _selectedKey;
     }
     
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [self.pickerView.delegate pickerView:self.pickerView titleForRow:[self.pickerView selectedRowInComponent:0] forComponent:0], [self.pickerView.delegate pickerView:self.pickerView titleForRow:[self.pickerView selectedRowInComponent:1] forComponent:1]];
+    
 }
 
 
