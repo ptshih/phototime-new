@@ -51,11 +51,13 @@ nameLabel = _nameLabel;
     self.object = nil;
     self.imageView = nil;
     self.backgroundView = nil;
+    self.nameLabel = nil;
     [super dealloc];
 }
 
 - (void)prepareForReuse {
     [self.imageView prepareForReuse];
+    self.nameLabel.text = nil;
 }
 
 - (void)layoutSubviews {
