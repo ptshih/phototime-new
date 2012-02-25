@@ -517,6 +517,9 @@
 		D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PSKit.m"; sourceTree = "<group>"; };
 		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
 		D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendarBlack@2x.png"; sourceTree = "<group>"; };
+		D070C00614F85BFA00E2D582 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		D070C00714F85BFA00E2D582 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
+		D070C00914F85C0500E2D582 /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = SOURCE_ROOT; };
 		D07B2DB514F74DD400304E62 /* IconHeartBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconHeartBlack.png; sourceTree = "<group>"; };
 		D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHeartBlack@2x.png"; sourceTree = "<group>"; };
 		D07B2DBF14F750F500304E62 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
@@ -549,8 +552,6 @@
 		D08E516114E8A54800B5CCCD /* PSPullRefreshView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PSPullRefreshView.bundle; sourceTree = "<group>"; };
 		D08E516E14E8ABB400B5CCCD /* GalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryViewController.h; sourceTree = "<group>"; };
 		D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
-		D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Phototime-Info.plist"; sourceTree = SOURCE_ROOT; };
-		D092D2A014DC3F2C001108A0 /* Phototime-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Phototime-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		D092D2C114DC4837001108A0 /* NSMutableURLRequest+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+PSKit.h"; sourceTree = "<group>"; };
 		D092D2C214DC4837001108A0 /* NSMutableURLRequest+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+PSKit.m"; sourceTree = "<group>"; };
 		D0A3AC8614F42A8900748CE7 /* PSURLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSURLCache.h; sourceTree = "<group>"; };
@@ -675,8 +676,9 @@
 		283818C914723F1D007E4827 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D092D29F14DC3F2C001108A0 /* Phototime-Info.plist */,
-				D092D2A014DC3F2C001108A0 /* Phototime-Prefix.pch */,
+				D070C00914F85C0500E2D582 /* Info.h */,
+				D070C00614F85BFA00E2D582 /* Info.plist */,
+				D070C00714F85BFA00E2D582 /* Prefix.pch */,
 				286988611475CF3500B40860 /* InitialDefaults.plist */,
 				283818CB14723F1D007E4827 /* InfoPlist.strings */,
 				283818CE14723F1D007E4827 /* main.m */,
