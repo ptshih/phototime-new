@@ -129,5 +129,24 @@
 		<key>numberOfLines</key>
 		<integer>10</integer>
 	</dict>
+	<key>timelineNameLabel</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-MediumCond</string>
+		<key>fontSize</key>
+		<integer>14</integer>
+		<key>textColor</key>
+		<string>0x222222</string>
+		<key>highlightedTextColor</key>
+		<string>0x22222</string>
+		<key>textAlignment</key>
+		<string>left</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>3</integer>
+	</dict>
 </dict>
 </plist>

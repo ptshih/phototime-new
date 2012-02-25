@@ -229,6 +229,7 @@
 		D0C5C01814F76FE60041A364 /* Default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5C01614F76FE60041A364 /* Default.jpg */; };
 		D0C5C01914F76FE60041A364 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5C01714F76FE60041A364 /* Default@2x.jpg */; };
 		D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */; };
+		D0F4CB4014F8C6D90001FD7E /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4CB3F14F8C6D90001FD7E /* TimelineView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -584,6 +585,8 @@
 		D0C5C01714F76FE60041A364 /* Default@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Default@2x.jpg"; sourceTree = "<group>"; };
 		D0DDA67914E85DC1001FD463 /* PSPullRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSPullRefreshView.h; sourceTree = "<group>"; };
 		D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPullRefreshView.m; sourceTree = "<group>"; };
+		D0F4CB3E14F8C6D90001FD7E /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
+		D0F4CB3F14F8C6D90001FD7E /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1129,6 +1132,8 @@
 		28E94A80147DA19C002E8343 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0F4CB3E14F8C6D90001FD7E /* TimelineView.h */,
+				D0F4CB3F14F8C6D90001FD7E /* TimelineView.m */,
 				28603B5D14AC4D9300541BB1 /* TimelineCell.h */,
 				28603B5E14AC4D9300541BB1 /* TimelineCell.m */,
 				D0269E4214E1B5E100B690A2 /* UserCell.h */,
@@ -1692,6 +1697,7 @@
 				D031D4C414F84CDA00DEB789 /* PSStoreButton.m in Sources */,
 				D031D4C514F84CDA00DEB789 /* PSWebTableViewCell.m in Sources */,
 				D031D4C614F84CDA00DEB789 /* UIImage+HockeyAdditions.m in Sources */,
+				D0F4CB4014F8C6D90001FD7E /* TimelineView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

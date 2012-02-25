@@ -8,6 +8,7 @@
 
 #import "TimelineViewController.h"
 #import "PSZoomView.h"
+#import "TimelineView.h"
 #import "DateRangeView.h"
 
 #import "TimelineConfigViewController.h"
@@ -315,39 +316,31 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (UIView *)collectionView:(PSCollectionView *)collectionView viewAtIndex:(NSInteger)index {
-    NSDictionary *photo = [self.items objectAtIndex:index];
-    UIView *v = [self.collectionView dequeueReusableView];
-    if (!v) {
-        v = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
-        v.contentMode = UIViewContentModeScaleAspectFill;
-        v.clipsToBounds = YES;
-        v.layer.borderWidth = 1.0;
-        v.layer.borderColor = [RGBACOLOR(230, 230, 230, 0.8) CGColor];
-    }
-    v.width = [[photo objectForKey:@"width"] floatValue];
-    v.height = [[photo objectForKey:@"height"] floatValue];
+    NSDictionary *item = [self.items objectAtIndex:index];
     
-    [(PSCachedImageView *)v setOriginalURL:[NSURL URLWithString:[photo objectForKey:@"source"]]];
-    [(PSCachedImageView *)v setThumbnailURL:[NSURL URLWithString:[photo objectForKey:@"picture"]]];
-    [(PSCachedImageView *)v loadImageWithURL:[NSURL URLWithString:[photo objectForKey:@"picture"]] cacheType:PSURLCacheTypePermanent];
+    TimelineView *v = (TimelineView *)[self.collectionView dequeueReusableView];
+    if (!v) {
+        v = [[[TimelineView alloc] initWithFrame:CGRectZero] autorelease];
+    }
+    
+    [v fillViewWithObject:item];
     
     return v;
-
 }
 
-- (CGSize)sizeForViewAtIndex:(NSInteger)index {
-    NSDictionary *photo = [self.items objectAtIndex:index];
-    CGFloat width = [[photo objectForKey:@"width"] floatValue];
-    CGFloat height = [[photo objectForKey:@"height"] floatValue];
-    
-    return CGSizeMake(width, height);
+- (CGFloat)heightForViewAtIndex:(NSInteger)index {
+    NSDictionary *item = [self.items objectAtIndex:index];
+    return [TimelineView heightForViewWithObject:item inColumnWidth:self.collectionView.colWidth];
 }
 
 - (void)collectionView:(PSCollectionView *)collectionView didSelectView:(UIView *)view atIndex:(NSInteger)index {
+    // ZOOM
     static BOOL isZooming;
     
+    TimelineView *timelineView = (TimelineView *)view;
+    
     // If the image hasn't loaded, don't allow zoom
-    PSCachedImageView *imageView = (PSCachedImageView *)view;
+    PSCachedImageView *imageView = timelineView.imageView;
     if (!imageView.image) return;
     
     // If already zooming, don't rezoom
@@ -370,7 +363,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
             if (sourceImage) {
                 UIViewContentMode contentMode = imageView.contentMode;
                 PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
-                CGRect imageRect = [collectionView convertRect:imageView.frame toView:collectionView];
+                CGRect imageRect = [timelineView convertRect:imageView.frame toView:collectionView];
                 [zoomView showInRect:[collectionView convertRect:imageRect toView:nil]];
             }
         }
