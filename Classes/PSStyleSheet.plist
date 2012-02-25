@@ -55,6 +55,23 @@
 		<key>textAlignment</key>
 		<string>center</string>
 	</dict>
+	<key>popoverTitleLabel</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-MediumCond</string>
+		<key>fontSize</key>
+		<integer>18</integer>
+		<key>textColor</key>
+		<string>0xefefef</string>
+		<key>shadowColor</key>
+		<string>0xefefef</string>
+		<key>shadowOffset</key>
+		<string>{0,0}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
+		<key>textAlignment</key>
+		<string>center</string>
+	</dict>
 	<key>timelineTitleLabel</key>
 	<dict>
 		<key>fontName</key>
