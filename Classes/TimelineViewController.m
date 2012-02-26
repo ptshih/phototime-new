@@ -28,9 +28,6 @@ pvc = _pvc,
 timelineId = _timelineId,
 startDate = _startDate,
 endDate = _endDate,
-items = _items,
-collectionView = _collectionView,
-pullRefreshView = _pullRefreshView,
 leftButton = _leftButton,
 centerButton = _centerButton,
 rightButton = _rightButton,
@@ -60,9 +57,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)viewDidUnload {
-    // Views
-    self.pullRefreshView = nil;
-    self.collectionView = nil;
     [super viewDidUnload];
 }
 
@@ -71,15 +65,11 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     self.startDate = nil;
     self.endDate = nil;
-    self.items = nil;
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-    
-    // Views
-    self.pullRefreshView = nil;
-    self.collectionView = nil;
+
     [super dealloc];
 }
 
@@ -103,7 +93,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     // Setup Views
     [self setupSubviews];
-//    [self setupPullRefresh];
+    [self setupPullRefresh];
 //    self.tableView.contentOffset = self.contentOffset;
     
     // Load
@@ -133,13 +123,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
     
     [self.view addSubview:self.collectionView];
-    
-    if (self.pullRefreshView == nil) {
-        self.pullRefreshView = [[[PSPullRefreshView alloc] initWithFrame:CGRectMake(0.0, 0.0 - 48.0, self.view.frame.size.width, 48.0) style:PSPullRefreshStyleBlack] autorelease];
-        self.pullRefreshView.scrollView = self.collectionView;
-        self.pullRefreshView.delegate = self;
-        [self.collectionView addSubview:self.pullRefreshView];		
-    }
 }
 
 - (void)setupHeader {
@@ -311,10 +294,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 #pragma mark - PSCollectionViewDelegate
-- (NSInteger)numberOfViewsInCollectionView:(PSCollectionView *)collectionView {
-    return [self.items count];
-}
-
 - (UIView *)collectionView:(PSCollectionView *)collectionView viewAtIndex:(NSInteger)index {
     NSDictionary *item = [self.items objectAtIndex:index];
     
@@ -370,32 +349,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     }];
 }
 
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (self.pullRefreshView) {
-        [self.pullRefreshView pullRefreshScrollViewDidEndDragging:scrollView
-                                                   willDecelerate:decelerate];
-    }
-}
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-//    [[PSURLCache sharedCache] suspend];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (self.pullRefreshView) {
-        [self.pullRefreshView pullRefreshScrollViewDidScroll:scrollView];
-    }
-}
-
-#pragma mark - PSPullRefreshViewDelegate
-- (void)pullRefreshViewDidBeginRefreshing:(PSPullRefreshView *)pullRefreshView {
-    [self reloadDataSource];
-}
-
 #pragma mark - PSPopoverViewDelegate
 - (void)popoverViewDidDismiss:(PSPopoverView *)popoverView {
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"dateRangeDidChange"]) {
@@ -413,13 +366,11 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 #pragma mark - Refresh
 - (void)beginRefresh {
     [super beginRefresh];
-    [self.pullRefreshView setState:PSPullRefreshStateRefreshing];
     [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeNone];
 }
 
 - (void)endRefresh {
     [super endRefresh];
-    [self.pullRefreshView setState:PSPullRefreshStateIdle];
     [SVProgressHUD dismiss];
 }
 

@@ -134,11 +134,11 @@
 		<key>fontName</key>
 		<string>HelveticaNeueLT-MediumCond</string>
 		<key>fontSize</key>
-		<integer>14</integer>
+		<integer>12</integer>
 		<key>textColor</key>
-		<string>0x222222</string>
+		<string>0x333333</string>
 		<key>highlightedTextColor</key>
-		<string>0x22222</string>
+		<string>0x333333</string>
 		<key>textAlignment</key>
 		<string>left</string>
 		<key>shadowColor</key>
@@ -146,7 +146,7 @@
 		<key>shadowOffset</key>
 		<string>{0, 0}</string>
 		<key>numberOfLines</key>
-		<integer>3</integer>
+		<integer>1</integer>
 	</dict>
 </dict>
 </plist>

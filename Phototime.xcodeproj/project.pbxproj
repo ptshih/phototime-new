@@ -230,6 +230,7 @@
 		D0C5C01914F76FE60041A364 /* Default@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D0C5C01714F76FE60041A364 /* Default@2x.jpg */; };
 		D0DDA67B14E85DC1001FD463 /* PSPullRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */; };
 		D0F4CB4014F8C6D90001FD7E /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F4CB3F14F8C6D90001FD7E /* TimelineView.m */; };
+		D0FE067014F9B7DD00140D9E /* PSCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FE066F14F9B7DD00140D9E /* PSCollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -587,6 +588,8 @@
 		D0DDA67A14E85DC1001FD463 /* PSPullRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSPullRefreshView.m; sourceTree = "<group>"; };
 		D0F4CB3E14F8C6D90001FD7E /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		D0F4CB3F14F8C6D90001FD7E /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
+		D0FE066E14F9B7DD00140D9E /* PSCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCollectionViewController.h; sourceTree = "<group>"; };
+		D0FE066F14F9B7DD00140D9E /* PSCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -876,6 +879,8 @@
 		286987831475CEEC00B40860 /* PSKit */ = {
 			isa = PBXGroup;
 			children = (
+				D0FE066E14F9B7DD00140D9E /* PSCollectionViewController.h */,
+				D0FE066F14F9B7DD00140D9E /* PSCollectionViewController.m */,
 				D0A3AC8914F42AA300748CE7 /* PSCachedImageView.h */,
 				D0A3AC8A14F42AA300748CE7 /* PSCachedImageView.m */,
 				286987841475CEEC00B40860 /* PSBaseViewController.h */,
@@ -1698,6 +1703,7 @@
 				D031D4C514F84CDA00DEB789 /* PSWebTableViewCell.m in Sources */,
 				D031D4C614F84CDA00DEB789 /* UIImage+HockeyAdditions.m in Sources */,
 				D0F4CB4014F8C6D90001FD7E /* TimelineView.m in Sources */,
+				D0FE067014F9B7DD00140D9E /* PSCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
