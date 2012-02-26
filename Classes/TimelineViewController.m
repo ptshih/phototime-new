@@ -152,6 +152,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     self.centerButton = [UIButton buttonWithFrame:CGRectMake(44, 0, self.headerView.width - 88, 44) andStyle:@"timelineTitleLabel" target:self action:@selector(centerAction)];
     [self.centerButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockCenter" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
+    self.centerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.centerButton.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 8);
     [self setDateRange];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
@@ -263,8 +265,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
-    BLOCK_SELF;
-    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSNumber *startTimestamp = [NSNumber numberWithDouble:[self.startDate timeIntervalSince1970]];
     NSNumber *endTimestamp = [NSNumber numberWithDouble:[self.endDate timeIntervalSince1970]];
@@ -276,7 +276,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
         if (error) {
-            [blockSelf dataSourceDidError];
+            [self dataSourceDidError];
         } else {
             [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
                 // Parse JSON
@@ -294,12 +294,12 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
                         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                             NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
                             self.items = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
-                            [blockSelf dataSourceDidLoad];
+                            [self dataSourceDidLoad];
                             
                             // If this is the first load and we loaded cached data, we should refreh from remote now
-                            if (!blockSelf.hasLoadedOnce && isCached) {
-                                blockSelf.hasLoadedOnce = YES;
-                                [blockSelf reloadDataSource];
+                            if (!self.hasLoadedOnce && isCached) {
+                                self.hasLoadedOnce = YES;
+                                [self reloadDataSource];
                                 NSLog(@"first load, stale cache");
                             }
                         }];

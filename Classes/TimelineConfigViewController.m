@@ -88,6 +88,8 @@ rightButton = _rightButton;
     [self.centerButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockCenter" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
     [self.centerButton setTitle:@"Timeline Members" forState:UIControlStateNormal];
     self.centerButton.userInteractionEnabled = NO;
+    self.centerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.centerButton.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 8);
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
     [self.rightButton setBackgroundImage:[UIImage stretchableImageNamed:@"ButtonBlockRight" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
@@ -139,8 +141,6 @@ rightButton = _rightButton;
 }
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
-    BLOCK_SELF;
-    
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, self.timelineId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
@@ -171,11 +171,11 @@ rightButton = _rightButton;
                     // Section 1
                     //    ortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:sortBy ascending:ascending]]
                     [items addObject:inTimeline];
-                    [blockSelf.sectionTitles addObject:@"People in Timeline"];
+                    [self.sectionTitles addObject:@"People in Timeline"];
                     
                     // Section 2
                     [items addObject:notInTimeline];
-                    [blockSelf.sectionTitles addObject:@"People not in Timeline"];
+                    [self.sectionTitles addObject:@"People not in Timeline"];
                     
                     // Section 3
                     //            [items addObject:onPhototime];
@@ -185,7 +185,7 @@ rightButton = _rightButton;
                     //            [items addObject:notOnPhototime];
                     //            [blockSelf.sectionTitles addObject:@"People not on Phototime"];
                     
-                    [blockSelf dataSourceShouldLoadObjects:items animated:NO];
+                    [self dataSourceShouldLoadObjects:items animated:NO];
                     [self dataSourceDidLoad];
                 }
             }

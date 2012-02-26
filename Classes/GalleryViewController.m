@@ -52,7 +52,6 @@ assets = _assets;
     [self setupSubviews];
     
     // Load from ALAssets
-    BLOCK_SELF;
     ALAssetsLibrary *library = [[[ALAssetsLibrary alloc] init] autorelease];
     
     [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
@@ -66,11 +65,11 @@ assets = _assets;
                     UIImage *thumbnail = [UIImage imageWithCGImage:result.thumbnail];
                     [assetDict setObject:thumbnail forKey:@"thumbnail"];
                     
-                    [blockSelf.assets addObject:assetDict];
+                    [self.assets addObject:assetDict];
                 }
             }];
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [blockSelf.galleryView reloadViews];
+                [self.galleryView reloadViews];
             }];
         }
     } failureBlock:^(NSError *error) {

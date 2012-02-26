@@ -124,8 +124,6 @@
 }
 
 - (void)uploadAccessToken {
-    BLOCK_SELF;
-    
     // Setup the network request
     NSDictionary *me = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbMe"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -140,17 +138,17 @@
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
             // Handle server status codes?
-            [blockSelf loginDidNotSucceed];
+            [self loginDidNotSucceed];
         } else {
             NSDictionary *data = [JSON objectForKey:@"data"];
             NSDictionary *user = [data objectForKey:@"user"];
             NSString *timelineId = [user objectForKey:@"timelineId"];
             [[NSUserDefaults standardUserDefaults] setObject:timelineId forKey:@"timelineId"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [blockSelf loginDidSucceed:YES];
+            [self loginDidSucceed:YES];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [blockSelf loginDidNotSucceed];
+        [self loginDidNotSucceed];
     }];
     [op start];
 }
@@ -184,39 +182,5 @@
     [SVProgressHUD dismissWithError:@"Facebook dropped the ball, please try again."];
     [[PSFacebookCenter defaultCenter] logout];
 }
-
-//- (void)downloadTimelines {
-//    BLOCK_SELF;
-//    
-//    // Setup the network request
-//    NSString *fbId = [[NSUserDefaults standardUserDefaults] objectForKey:@"fbId"];
-//    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/%@/timelines", API_BASE_URL, fbId]];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
-//    
-//    AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
-//        if ([response statusCode] != 200) {
-//            // Handle server status codes?
-//            [blockSelf loginDidNotSucceed];
-//        } else {
-//            NSDictionary *timeline = [[[JSON objectForKey:@"data"] objectForKey:@"timelines"] lastObject];
-//            
-//            NSManagedObjectContext *moc = [[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType] autorelease];
-//            [moc setPersistentStoreCoordinator:[PSCoreDataStack persistentStoreCoordinator]];
-//            [moc performBlock:^{
-//                [Timeline updateOrInsertInManagedObjectContext:moc entity:timeline uniqueKey:@"id"];
-//                
-//                NSError *error = nil;
-//                [moc save:&error];
-//                
-//                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//                    [blockSelf loginDidSucceed:YES];
-//                }];
-//            }];
-//        }
-//    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//        [blockSelf loginDidNotSucceed];
-//    }];
-//    [op start];
-//}
 
 @end
