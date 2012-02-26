@@ -265,13 +265,16 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
                 // Parse JSON
                 id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
                 if (!JSON) {
-                    // invalid json
-                    [self dataSourceDidError];
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        [self dataSourceDidError];
+                    }];
                 } else {
                     // Check for our own success codes
                     id metaCode = [JSON objectForKey:@"code"];
                     if (!metaCode || [metaCode integerValue] != 200) {
-                        [self dataSourceDidError];
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            [self dataSourceDidError];
+                        }];
                     } else {
                         // Success
                         [[NSOperationQueue mainQueue] addOperationWithBlock:^{

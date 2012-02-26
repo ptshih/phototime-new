@@ -1,5 +1,3 @@
-#import <CoreData/CoreData.h>
-
 #import "PSConstants.h"
 #import "PSNavigationController.h"
 
