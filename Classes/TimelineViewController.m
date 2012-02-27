@@ -344,9 +344,9 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
             UIImage *sourceImage = [UIImage imageWithData:cachedData];
             if (sourceImage) {
                 UIViewContentMode contentMode = imageView.contentMode;
+                CGRect convertedRect = [imageView.superview convertRect:imageView.frame toView:nil];
                 PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
-                CGRect imageRect = [timelineView convertRect:imageView.frame toView:collectionView];
-                [zoomView showInRect:[collectionView convertRect:imageRect toView:nil]];
+                [zoomView showInRect:convertedRect];
             }
         }
     }];
