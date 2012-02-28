@@ -1,6 +1,8 @@
 #import "PSConstants.h"
 #import "PSNavigationController.h"
 
+#import <MapKit/MapKit.h>
+
 // Vendor imports
 #import "PSFacebookCenter.h"
 #import "SVProgressHUD.h"

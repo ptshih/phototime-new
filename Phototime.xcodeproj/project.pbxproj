@@ -189,6 +189,7 @@
 		D07B2DB714F74DD400304E62 /* IconHeartBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D07B2DB514F74DD400304E62 /* IconHeartBlack.png */; };
 		D07B2DB814F74DD400304E62 /* IconHeartBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */; };
 		D07B2DC114F750F500304E62 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = D07B2DC014F750F500304E62 /* Appirater.m */; };
+		D07D1DC214FC91640002CB57 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D07D1DC114FC91640002CB57 /* MapKit.framework */; };
 		D080F6C414E5D10B0061A38B /* IconMinusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C014E5D10B0061A38B /* IconMinusBlack.png */; };
 		D080F6C514E5D10B0061A38B /* IconMinusBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */; };
 		D080F6C614E5D10B0061A38B /* IconPlusBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D080F6C214E5D10B0061A38B /* IconPlusBlack.png */; };
@@ -526,6 +527,7 @@
 		D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHeartBlack@2x.png"; sourceTree = "<group>"; };
 		D07B2DBF14F750F500304E62 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		D07B2DC014F750F500304E62 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
+		D07D1DC114FC91640002CB57 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D080F6C014E5D10B0061A38B /* IconMinusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconMinusBlack.png; sourceTree = "<group>"; };
 		D080F6C114E5D10B0061A38B /* IconMinusBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconMinusBlack@2x.png"; sourceTree = "<group>"; };
 		D080F6C214E5D10B0061A38B /* IconPlusBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconPlusBlack.png; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D07D1DC214FC91640002CB57 /* MapKit.framework in Frameworks */,
 				D0C5C01514F76F920041A364 /* libz.dylib in Frameworks */,
 				28603B8114AFBD4E00541BB1 /* AssetsLibrary.framework in Frameworks */,
 				28603B6714AD41ED00541BB1 /* CoreImage.framework in Frameworks */,
@@ -648,6 +651,7 @@
 			children = (
 				D0C5C01414F76F910041A364 /* libz.dylib */,
 				28381A911472F88A007E4827 /* libsqlite3.dylib */,
+				D07D1DC114FC91640002CB57 /* MapKit.framework */,
 				28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */,
 				28603B6614AD41ED00541BB1 /* CoreImage.framework */,
 				28603B6414AD414E00541BB1 /* ImageIO.framework */,
