@@ -15,7 +15,6 @@
 
 @synthesize
 object = _object,
-backgroundView = _backgroundView,
 imageView = _imageView,
 nameLabel = _nameLabel;
 
@@ -24,18 +23,12 @@ nameLabel = _nameLabel;
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.clipsToBounds = NO;
         
-        self.backgroundView = [[[UIView alloc] initWithFrame:self.bounds] autorelease];
-        self.backgroundView.backgroundColor = [UIColor whiteColor];
-        self.backgroundView.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.backgroundView.layer.shadowOffset = CGSizeMake(0.0, 2.0);
-        self.backgroundView.layer.shadowOpacity = 0.7;
-        self.backgroundView.layer.shadowRadius = 3.0;
-        self.backgroundView.layer.masksToBounds = NO;
-        self.backgroundView.layer.shouldRasterize = YES;
-        [self addSubview:self.backgroundView];
-        
+        UIImage *shadowImage = [[UIImage imageNamed:@"Shadow"] stretchableImageWithLeftCapWidth:3 topCapHeight:3];
+        UIImageView *shadowView = [[[UIImageView alloc] initWithImage:shadowImage] autorelease];
+        shadowView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        shadowView.frame = CGRectInset(self.bounds, -1, -2);
+        [self addSubview:shadowView];
         
         self.imageView = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
         self.imageView.shouldAnimate = YES;
@@ -51,7 +44,6 @@ nameLabel = _nameLabel;
 - (void)dealloc {
     self.object = nil;
     self.imageView = nil;
-    self.backgroundView = nil;
     self.nameLabel = nil;
     [super dealloc];
 }
@@ -63,9 +55,6 @@ nameLabel = _nameLabel;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    self.backgroundView.frame = self.bounds;
-    self.backgroundView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:self.backgroundView.bounds] CGPath];
     
     CGFloat width = self.width - MARGIN * 2;
     

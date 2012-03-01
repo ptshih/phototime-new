@@ -164,6 +164,8 @@
 		D05B5F9314EB068200970969 /* NSJSONSerialization+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */; };
 		D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639C14E90CA800150193 /* IconCalendarBlack.png */; };
 		D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */; };
+		D07032F314FFD5DD002DA895 /* Shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = D07032F114FFD5DD002DA895 /* Shadow.png */; };
+		D07032F414FFD5DD002DA895 /* Shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D07032F214FFD5DD002DA895 /* Shadow@2x.png */; };
 		D07B2DB714F74DD400304E62 /* IconHeartBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D07B2DB514F74DD400304E62 /* IconHeartBlack.png */; };
 		D07B2DB814F74DD400304E62 /* IconHeartBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D07B2DB614F74DD400304E62 /* IconHeartBlack@2x.png */; };
 		D07B2DC114F750F500304E62 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = D07B2DC014F750F500304E62 /* Appirater.m */; };
@@ -478,6 +480,8 @@
 		D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PSKit.m"; sourceTree = "<group>"; };
 		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
 		D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCalendarBlack@2x.png"; sourceTree = "<group>"; };
+		D07032F114FFD5DD002DA895 /* Shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Shadow.png; sourceTree = "<group>"; };
+		D07032F214FFD5DD002DA895 /* Shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shadow@2x.png"; sourceTree = "<group>"; };
 		D070C00614F85BFA00E2D582 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		D070C00714F85BFA00E2D582 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
 		D070C00914F85C0500E2D582 /* Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Info.h; sourceTree = SOURCE_ROOT; };
@@ -668,6 +672,8 @@
 		28698713147312EC00B40860 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D07032F114FFD5DD002DA895 /* Shadow.png */,
+				D07032F214FFD5DD002DA895 /* Shadow@2x.png */,
 				D0F6CA7A14FD500300CCF2B4 /* LogoLargeWhite.png */,
 				D0C5BFF314F760820041A364 /* LogoLargeWhite@2x.png */,
 				D0C5BFEB14F75C4B0041A364 /* ButtonFacebook.png */,
@@ -1500,6 +1506,8 @@
 				D0F6CA7F14FD503900CCF2B4 /* ButtonBlockCenter.png in Resources */,
 				D0F6CA8014FD503900CCF2B4 /* ButtonBlockLeft.png in Resources */,
 				D0F6CA8114FD503900CCF2B4 /* ButtonBlockRight.png in Resources */,
+				D07032F314FFD5DD002DA895 /* Shadow.png in Resources */,
+				D07032F414FFD5DD002DA895 /* Shadow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
