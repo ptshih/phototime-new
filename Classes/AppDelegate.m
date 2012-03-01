@@ -15,8 +15,6 @@
 #import "BWHockeyManager.h"
 #import "BWQuincyManager.h"
 
-static NSMutableDictionary *_captionsCache;
-
 @interface AppDelegate (Private)
 
 + (void)setupDefaults;
@@ -31,7 +29,6 @@ navigationController = _navigationController;
 
 + (void)initialize {
     [self setupDefaults];
-    _captionsCache = [[NSMutableDictionary alloc] init];
 }
 
 #pragma mark - Initial Defaults
@@ -53,9 +50,6 @@ navigationController = _navigationController;
 }
 
 #pragma mark - Global Statics
-- (NSMutableDictionary *)captionsCache {
-    return _captionsCache;
-}
 
 #pragma mark - Application Lifecycle
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
@@ -139,7 +133,7 @@ navigationController = _navigationController;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    RELEASE_SAFELY(_navigationController);
+    self.navigationController = nil;
     [_window release];
     [super dealloc];
 }

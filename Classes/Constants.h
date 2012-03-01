@@ -13,6 +13,8 @@
 #define CORE_DATA_MOM @"Phototime"
 #define CORE_DATA_SQL_FILE @"Phototime.sqlite"
 
+#define FB_APP_ID @"145264018857264"
+
 /**
  Notifications
  */

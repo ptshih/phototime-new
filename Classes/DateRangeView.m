@@ -174,6 +174,8 @@ endYearIndex = _endYearIndex;
     cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if(cell == nil) { 
         cell = [[[cellClass alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier] autorelease];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     }
 
     switch (indexPath.row) {
