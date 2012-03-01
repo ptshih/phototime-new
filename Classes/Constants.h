@@ -16,6 +16,11 @@
 #define FB_APP_ID @"145264018857264"
 
 /**
+ Constants
+ */
+#define kSecondsBackgroundedUntilStale 300
+
+/**
  Notifications
  */
 #define kLoginSucceeded @"kLoginSucceeded"
