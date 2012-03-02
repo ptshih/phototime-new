@@ -98,13 +98,13 @@ assets = _assets;
     // Setup perma left/right buttons
     static CGFloat margin = 10.0;
     UIButton *leftButton = [UIButton buttonWithFrame:CGRectMake(margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(leftAction)];
-    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"IconBackBlack"] forState:UIControlStateHighlighted];
+    [leftButton setImage:[UIImage imageNamed:@"IconBackWhite"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"IconBackWhite"] forState:UIControlStateHighlighted];
     [headerView addSubview:leftButton];
     
     UIButton *rightButton = [UIButton buttonWithFrame:CGRectMake(headerView.width - 28.0 - margin, 8.0, 28.0, 28.0) andStyle:nil target:self action:@selector(rightAction)];
-    [rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateNormal];
-    [rightButton setImage:[UIImage imageNamed:@"IconNextBlack"] forState:UIControlStateHighlighted];
+    [rightButton setImage:[UIImage imageNamed:@"IconNextWhite"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"IconNextWhite"] forState:UIControlStateHighlighted];
     [headerView addSubview:rightButton];
     
     [self.view addSubview:headerView];

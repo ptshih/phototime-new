@@ -55,7 +55,7 @@
     self.detailTextLabel.text = [dict objectForKey:@"id"];
     
 //    UIButton *accessoryButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 44, 44) andStyle:nil target:self action:@selector(accessoryButtonTapped:withEvent:)];
-//    [accessoryButton setImage:[UIImage imageNamed:@"IconPlusBlack"] forState:UIControlStateNormal];
+//    [accessoryButton setImage:[UIImage imageNamed:@"IconPlusWhite"] forState:UIControlStateNormal];
 //    
 //    self.accessoryView = accessoryButton;
 //    self.parentTableView = tableView;
