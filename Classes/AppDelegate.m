@@ -140,7 +140,7 @@ shouldReloadInterface = _shouldReloadInterface;
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     if (self.shouldReloadInterface) {
         self.shouldReloadInterface = NO;
-        [self.navigationController popToRootViewControllerAnimated:NO];
+//        [self.navigationController popToRootViewControllerAnimated:NO];
         [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldReload object:nil];
     }
 }

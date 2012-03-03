@@ -309,16 +309,15 @@ textField = _textField;
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"POST" headers:nil parameters:parameters];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             if (error) {
-                self.rightButton.enabled = YES;
                 [SVProgressHUD dismissWithError:@"Something Bad Happened"];
             } else {
                 [self reloadDataSource];
                 [SVProgressHUD dismissWithSuccess:@"Comment Added"];
-                [textField resignFirstResponder];
-                textField.text = nil;
             }
         }];
-        return NO;
+        textField.text = nil;
+        [textField resignFirstResponder];
+        return YES;
     } else {
         [textField resignFirstResponder];
         return YES;
