@@ -150,7 +150,6 @@ textField = _textField;
 - (void)rightAction {
     // Like
     self.rightButton.enabled = NO;
-    [SVProgressHUD showSuccessWithStatus:@"Liking Photo"];
     NSString *fbid = [self.photo objectForKey:@"fbPhotoId"];
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/likes", fbid]];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -159,10 +158,10 @@ textField = _textField;
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if (error) {
             self.rightButton.enabled = YES;
-            [SVProgressHUD dismissWithError:@"Something Bad Happened"];
+            [SVProgressHUD showSuccessWithStatus:@"Network Error"];
         } else {
             [self reloadDataSource];
-            [SVProgressHUD dismissWithSuccess:@"Photo Liked"];
+            [SVProgressHUD showSuccessWithStatus:@"Liked on Facebook"];
         }
     }];
 }
@@ -300,7 +299,6 @@ textField = _textField;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {    
     if ([textField.text length] > 0) {
         // Submit the comment
-        [SVProgressHUD showSuccessWithStatus:@"Adding Comment"];
         NSString *fbid = [self.photo objectForKey:@"fbPhotoId"];
         NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/comments", fbid]];
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -309,10 +307,10 @@ textField = _textField;
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"POST" headers:nil parameters:parameters];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             if (error) {
-                [SVProgressHUD dismissWithError:@"Something Bad Happened"];
+                [SVProgressHUD showSuccessWithStatus:@"Network Error"];
             } else {
                 [self reloadDataSource];
-                [SVProgressHUD dismissWithSuccess:@"Comment Added"];
+                [SVProgressHUD showSuccessWithStatus:@"Comment Added"];
             }
         }];
         textField.text = nil;

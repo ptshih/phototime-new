@@ -299,15 +299,15 @@ rightButton = _rightButton;
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
             // Handle server status codes?
-            [SVProgressHUD dismissWithError:@"Error"];
+            [SVProgressHUD dismissWithError:@"Network Error"];
         } else {
             // We got an HTTP OK code, start reading the response
             [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefreshOnAppear object:nil];
-            [SVProgressHUD dismissWithSuccess:@"Success"];
+            [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"%@ Added", [member objectForKey:@"name"]]];
             [self loadDataSource];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [SVProgressHUD dismissWithError:@"Error"];
+        [SVProgressHUD dismissWithError:@"Network Error"];
     }];
     [op start];
 }
@@ -325,15 +325,15 @@ rightButton = _rightButton;
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
         if ([response statusCode] != 200) {
             // Handle server status codes?
-            [SVProgressHUD dismissWithError:@"Error"];
+            [SVProgressHUD dismissWithError:@"Network Error"];
         } else {
             // We got an HTTP OK code, start reading the response
             [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldRefreshOnAppear object:nil];
-            [SVProgressHUD dismissWithSuccess:@"Success"];
+            [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"%@ Removed", [member objectForKey:@"name"]]];
             [self loadDataSource];
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [SVProgressHUD dismissWithError:@"Error"];
+        [SVProgressHUD dismissWithError:@"Network Error"];
     }];
     [op start];
 }
