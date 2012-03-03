@@ -63,7 +63,7 @@ messageLabel = _messageLabel;
     // Image
     self.psImageView.frame = CGRectMake(left, top, PROFILE_SIZE, PROFILE_SIZE);
     left = self.psImageView.right + MARGIN;
-    width -= self.psImageView.width - MARGIN;
+    width -= self.psImageView.width + MARGIN;
     CGFloat right = self.width - MARGIN;
     
     labelSize = [PSStyleSheet sizeForText:self.timestampLabel.text width:width style:@"metaLabel"];
@@ -93,7 +93,7 @@ messageLabel = _messageLabel;
     NSDictionary *from = [dict objectForKey:@"from"];
     
     CGFloat height = MARGIN;
-    CGFloat width = ([self rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN * 2);
+    CGFloat width = ([self rowWidthForInterfaceOrientation:interfaceOrientation] - MARGIN * 2 - PROFILE_SIZE - MARGIN);
     CGSize labelSize = CGSizeZero;
     
     labelSize = [PSStyleSheet sizeForText:[from objectForKey:@"name"] width:width style:@"titleLabel"];

@@ -231,8 +231,25 @@ rightButton = _rightButton;
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.sectionTitles objectAtIndex:section];
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.sectionTitles objectAtIndex:section];
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 29.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *title = [self.sectionTitles objectAtIndex:section];
+    
+    UIView *v = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.width, 29.0)] autorelease];
+    v.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BGTableSection"]];
+    
+    UILabel *l = [UILabel labelWithText:title style:@"sectionTitleLabel"];
+    l.frame = CGRectInset(v.bounds, 8, 0);
+    [v addSubview:l];
+    
+    return v;
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

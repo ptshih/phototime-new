@@ -25,7 +25,10 @@
 
 @synthesize
 window = _window,
-navigationController = _navigationController;
+navigationController = _navigationController,
+backgroundDate = _backgroundDate,
+foregroundDate = _foregroundDate,
+shouldReloadInterface = _shouldReloadInterface;
 
 + (void)initialize {
     [self setupDefaults];
@@ -63,6 +66,8 @@ navigationController = _navigationController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 //    NSLog(@"Fonts: %@", [UIFont familyNames]);
+    
+    self.shouldReloadInterface = NO;
     
 #ifdef RELEASE
     [[BWHockeyManager sharedHockeyManager] setAppIdentifier:@"4e1669c1ec68aae5f6c0adb8c3c48367"];
@@ -114,16 +119,30 @@ navigationController = _navigationController;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    self.backgroundDate = [NSDate date];
     [[LocalyticsSession sharedLocalyticsSession] close];
     [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    self.foregroundDate = [NSDate date];
+    
+    NSTimeInterval secondsBackgrounded = [self.foregroundDate timeIntervalSinceDate:self.backgroundDate];
+    // 5 min threshold
+    if (secondsBackgrounded > kSecondsBackgroundedUntilStale) {
+        self.shouldReloadInterface = YES;
+    }
+    
     [[LocalyticsSession sharedLocalyticsSession] resume];
     [[LocalyticsSession sharedLocalyticsSession] upload];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    if (self.shouldReloadInterface) {
+        self.shouldReloadInterface = NO;
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTimelineShouldReload object:nil];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -133,6 +152,8 @@ navigationController = _navigationController;
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.backgroundDate = nil;
+    self.foregroundDate = nil;
     self.navigationController = nil;
     [_window release];
     [super dealloc];

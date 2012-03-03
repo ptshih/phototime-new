@@ -15,6 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.contentView.backgroundColor = RGBCOLOR(200, 200, 200);
         [PSStyleSheet applyStyle:@"likesLabel" forLabel:self.textLabel];
     }
     return self;

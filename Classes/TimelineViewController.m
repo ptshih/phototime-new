@@ -51,7 +51,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldReload object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
 }
@@ -68,7 +69,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldReload object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 
     [super dealloc];
 }
@@ -369,12 +371,10 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 #pragma mark - Refresh
 - (void)beginRefresh {
     [super beginRefresh];
-    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeNone];
 }
 
 - (void)endRefresh {
     [super endRefresh];
-    [SVProgressHUD dismiss];
 }
 
 @end

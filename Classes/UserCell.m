@@ -8,6 +8,9 @@
 
 #import "UserCell.h"
 
+#define MARGIN 8.0
+#define PROFILE_SIZE 30.0
+
 @implementation UserCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -17,30 +20,30 @@
         [self.contentView addSubview:self.psImageView];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [PSStyleSheet applyStyle:@"userNameLabel" forLabel:self.textLabel];
     }
     return self;
 }
 
 + (CGFloat)rowHeight {
-    return 48.0;
+    return 46.0;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    static CGFloat margin = 8.0;
-    
     // Layout
-    CGFloat left = margin;
-    CGFloat top = margin;
-    CGFloat width = self.contentView.width - margin * 2;
+    CGFloat left = MARGIN;
+    CGFloat top = MARGIN;
+    CGFloat width = self.contentView.width - MARGIN * 2;
     
     // Image
-    self.psImageView.frame = CGRectMake(left, top, 32.0, 32.0);
-    left = self.psImageView.right + margin;
-    width -= self.psImageView.width - margin;
+    self.psImageView.frame = CGRectMake(left, top, PROFILE_SIZE, PROFILE_SIZE);
+    left = self.psImageView.right + MARGIN;
+    width -= self.psImageView.width - MARGIN;
     
-    self.textLabel.frame = CGRectMake(left, top, width, 32.0);
+    self.textLabel.frame = CGRectMake(left, top, width, PROFILE_SIZE);
 //    top = self.textLabel.bottom;
     
 //    self.detailTextLabel.frame = CGRectMake(left, top, width, 25.0);

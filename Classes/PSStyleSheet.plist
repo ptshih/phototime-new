@@ -174,9 +174,9 @@
 		<key>fontSize</key>
 		<integer>13</integer>
 		<key>textColor</key>
-		<string>0x70695A</string>
+		<string>0x323232</string>
 		<key>highlightedTextColor</key>
-		<string>0x70695A</string>
+		<string>0x323232</string>
 		<key>textAlignment</key>
 		<string>left</string>
 		<key>shadowColor</key>
@@ -185,6 +185,44 @@
 		<string>{0, 0}</string>
 		<key>numberOfLines</key>
 		<integer>0</integer>
+	</dict>
+	<key>sectionTitleLabel</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-BoldCond</string>
+		<key>fontSize</key>
+		<integer>14</integer>
+		<key>textColor</key>
+		<string>0x4c4c4c</string>
+		<key>highlightedTextColor</key>
+		<string>0x4c4c4c</string>
+		<key>textAlignment</key>
+		<string>left</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
+	</dict>
+	<key>userNameLabel</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-BoldCond</string>
+		<key>fontSize</key>
+		<integer>18</integer>
+		<key>textColor</key>
+		<string>0x222222</string>
+		<key>highlightedTextColor</key>
+		<string>0x222222</string>
+		<key>textAlignment</key>
+		<string>left</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
 	</dict>
 	<key>welcomeDisclaimerLabel</key>
 	<dict>
@@ -223,6 +261,25 @@
 		<string>{0, 0}</string>
 		<key>numberOfLines</key>
 		<integer>10</integer>
+	</dict>
+	<key>commentField</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-MediumCond</string>
+		<key>fontSize</key>
+		<integer>15</integer>
+		<key>textColor</key>
+		<string>0xefefef</string>
+		<key>highlightedTextColor</key>
+		<string>0xefefef</string>
+		<key>textAlignment</key>
+		<string>center</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
 	</dict>
 </dict>
 </plist>
