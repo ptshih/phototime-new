@@ -85,6 +85,7 @@ textField = _textField;
     [self setupHeader];
     [self setupFooter];
     [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - self.headerView.height - self.footerView.height) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:RGBCOLOR(200, 200, 200)];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
     
     UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self.textField action:@selector(resignFirstResponder)] autorelease];
     [self.tableView addGestureRecognizer:gr];
@@ -116,12 +117,12 @@ textField = _textField;
 }
 
 - (void)setupFooter {
-    self.footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 44, self.view.width, 44)] autorelease];
+    self.footerView = [[[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 52, self.view.width, 52)] autorelease];
     self.footerView.backgroundColor = RGBCOLOR(200, 200, 200);
     
-    self.textField = [[[PSTextField alloc] initWithFrame:CGRectZero withInset:CGSizeMake(8, 8   )] autorelease];
+    self.textField = [[[PSTextField alloc] initWithFrame:CGRectZero withInset:CGSizeMake(8, 8)] autorelease];
     self.textField.background = [[UIImage imageNamed:@"BGTextInput"] stretchableImageWithLeftCapWidth:6.0 topCapHeight:8.0];
-    self.textField.frame = CGRectInset(self.footerView.bounds, 8, 4);
+    self.textField.frame = CGRectInset(self.footerView.bounds, 8, 8);
     self.textField.delegate = self;
     self.textField.returnKeyType = UIReturnKeySend;
     self.textField.font = [PSStyleSheet fontForStyle:@"commentField"];
@@ -130,6 +131,10 @@ textField = _textField;
     [self.textField setEnablesReturnKeyAutomatically:YES];
 //    [self.textField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.footerView addSubview:self.textField];
+    
+    UIView *divider = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.footerView.width, 1.0)] autorelease];
+    divider.backgroundColor = RGBCOLOR(120, 120, 120);
+    [self.footerView addSubview:divider];
     
     [self.view addSubview:self.footerView];
 }

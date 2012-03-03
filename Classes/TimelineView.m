@@ -50,7 +50,7 @@ socialButton = _socialButton;
         [self addSubview:self.nameLabel];
         
         self.socialButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.socialButton.backgroundColor = RGBACOLOR(200, 200, 200, 1.0);
+        self.socialButton.backgroundColor = RGBACOLOR(200, 210, 215, 1.0);
         [PSStyleSheet applyStyle:@"metaLabel" forButton:self.socialButton];
         [self.socialButton addTarget:self action:@selector(pushSocial:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.socialButton];

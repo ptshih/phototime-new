@@ -155,9 +155,9 @@
 		<key>fontSize</key>
 		<integer>12</integer>
 		<key>textColor</key>
-		<string>0x70695A</string>
+		<string>0x554F44</string>
 		<key>highlightedTextColor</key>
-		<string>0x70695A</string>
+		<string>0x554F44</string>
 		<key>textAlignment</key>
 		<string>left</string>
 		<key>shadowColor</key>
