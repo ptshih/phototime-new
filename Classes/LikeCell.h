@@ -1,13 +1,13 @@
 //
-//  UserCell.h
+//  LikeCell.h
 //  Phototime
 //
-//  Created by Peter on 2/7/12.
+//  Created by Peter on 3/2/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "PSCell.h"
 
-@interface UserCell : PSCell
+@interface LikeCell : PSCell
 
 @end

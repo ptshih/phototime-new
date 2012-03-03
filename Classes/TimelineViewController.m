@@ -119,7 +119,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.collectionView.delegate = self; // scrollViewDelegate
     self.collectionView.collectionViewDelegate = self;
     self.collectionView.collectionViewDataSource = self;
-    self.collectionView.numCols = 3;
+    self.collectionView.numCols = 2;
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
     
     [self.view addSubview:self.collectionView];
@@ -305,7 +305,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
         v = [[[TimelineView alloc] initWithFrame:CGRectZero] autorelease];
     }
     
-    [v fillViewWithObject:item];
+    [v fillViewWithObject:item presentingController:self];
     
     return v;
 }

@@ -214,12 +214,12 @@ rightButton = _rightButton;
     
     // Configure accessoryView
     if (indexPath.section == 0 || indexPath.section == 1) {
-        UIButton *accessoryButton = [UIButton buttonWithFrame:CGRectMake(8, 8, 32, 32) andStyle:nil target:self action:@selector(accessoryButtonTapped:withEvent:)];
+        UIButton *accessoryButton = [UIButton buttonWithFrame:CGRectMake(8, 8, 30, 30) andStyle:nil target:self action:@selector(accessoryButtonTapped:withEvent:)];
         UIImage *accessoryImage = nil;
         if (indexPath.section == 0) {
             accessoryImage = [UIImage imageNamed:@"IconMinusBlack"];
         } else if (indexPath.section == 1) {
-            accessoryImage = [UIImage imageNamed:@"IconPlusBlacke"];
+            accessoryImage = [UIImage imageNamed:@"IconPlusBlack"];
         }
         [accessoryButton setImage:accessoryImage forState:UIControlStateNormal];
         
