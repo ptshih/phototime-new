@@ -175,21 +175,6 @@ textField = _textField;
     [super loadDataSource];
     
     // Setup Table Header
-//    if ([[self.photo objectForKey:@"likes"] notNull]) {
-//        NSArray *likes = [[self.photo objectForKey:@"likes"] objectForKey:@"data"];
-//        NSString *likeNames = [[likes valueForKey:@"name"] componentsJoinedByString:@", "];
-//        NSString *likesText = [NSString stringWithFormat:@"%@ like this photo.", likeNames];
-//        
-//        UILabel *likesLabel = [UILabel labelWithStyle:@"likesLabel"];
-//        likesLabel.text = likesText;
-//        CGSize labelSize = [PSStyleSheet sizeForText:likesText width:self.tableView.width - 16 style:@"likesLabel"];
-//        
-//        UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, labelSize.height + 16.0)] autorelease];
-//        likesLabel.frame = CGRectInset(tableHeaderView.bounds, 8, 8);
-//        [tableHeaderView addSubview:likesLabel];
-//        self.tableView.tableHeaderView = tableHeaderView;
-//    }
-    
 
     [self loadDataSourceFromRemoteUsingCache:YES];
 }

@@ -114,6 +114,10 @@ socialButton = _socialButton;
 //    [self.socialButton setContentEdgeInsets:UIEdgeInsetsMake(4, 8, 4, 8)];
 }
 
+- (void)fillViewWithObject:(id)object {
+    [self fillViewWithObject:object presentingController:nil];
+}
+
 - (void)fillViewWithObject:(id)object presentingController:(UIViewController *)presentingController {
     self.presentingController = presentingController;
     self.object = object;

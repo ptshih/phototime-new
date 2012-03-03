@@ -67,7 +67,7 @@
     [super viewDidLoad];
     
     UIImageView *logo = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogoLargeWhite"]] autorelease];
-    logo.top = 16.0;
+    logo.top = 20.0;
     logo.left = 33.0;
     [self.view addSubview:logo];
     
@@ -75,26 +75,26 @@
     UIButton *loginButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 254, 59) andStyle:nil target:self action:@selector(login)];
     [loginButton setImage:[UIImage imageNamed:@"ButtonFacebook"] forState:UIControlStateNormal];
     [loginButton setImage:[UIImage imageNamed:@"ButtonFacebookHighlighted"] forState:UIControlStateHighlighted];
-    loginButton.top = logo.bottom + 16.0;
+    loginButton.top = logo.bottom + 20.0;
     loginButton.left = 33.0;
     [self.view addSubview:loginButton];
     
     // Add disclaimer
-    UILabel *disclaimer = [UILabel labelWithText:@"We use facebook to find your friends.\r\nWe don't post anything to your wall." style:@"welcomeDisclaimerLabel"];
+    UILabel *disclaimer = [UILabel labelWithText:@"We use facebook to find your friends.\r\nWe don't post anything to your timeline." style:@"welcomeDisclaimerLabel"];
     [self.view addSubview:disclaimer];
     CGSize dSize = [disclaimer sizeForLabelInWidth:254];
     disclaimer.width = dSize.width;
     disclaimer.height = dSize.height;
-    disclaimer.top = loginButton.bottom + 16.0;
+    disclaimer.top = loginButton.bottom + 20.0;
     disclaimer.left = floorf((self.view.width - disclaimer.width) / 2);
     
     UIImageView *postit = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundPostIt"]] autorelease];
-    postit.top = disclaimer.bottom + 16.0;
+    postit.top = disclaimer.bottom + 20.0;
     postit.left = 33.0;
     [self.view addSubview:postit];
     
-    UILabel *note = [UILabel labelWithText:@"Phototime is a visual timeline of your closest friends.\r\n\r\nLovingly made in NYC." style:@"welcomeNoteLabel"];
-    note.frame = CGRectInset(postit.bounds, 32, 16);
+    UILabel *note = [UILabel labelWithText:@"Discover photos from your friends by choosing a time period.\r\n\r\nPhototime will combine photos from you and your friends to create a shared visual timeline.\r\n\r\nLovingly made in NYC" style:@"welcomeNoteLabel"];
+    note.frame = CGRectInset(postit.bounds, 24, 16);
     [postit addSubview:note];
 }
 

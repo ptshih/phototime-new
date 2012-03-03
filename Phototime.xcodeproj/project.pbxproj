@@ -34,7 +34,6 @@
 		28603B6714AD41ED00541BB1 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28603B6614AD41ED00541BB1 /* CoreImage.framework */; };
 		28603B7514AFB2B500541BB1 /* IconCameraBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B7114AFB2B400541BB1 /* IconCameraBlack.png */; };
 		28603B7614AFB2B500541BB1 /* IconCameraBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B7214AFB2B400541BB1 /* IconCameraBlack@2x.png */; };
-		28603B7F14AFB3AC00541BB1 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28603B7E14AFB3AB00541BB1 /* CameraViewController.m */; };
 		28603B8114AFBD4E00541BB1 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */; };
 		28633AAB14A30E910074A674 /* IconBackBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28633AA914A30E910074A674 /* IconBackBlack@2x.png */; };
 		28633AAC14A30E910074A674 /* IconBackBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 28633AAA14A30E910074A674 /* IconBackBlack.png */; };
@@ -322,8 +321,6 @@
 		28603B6614AD41ED00541BB1 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		28603B7114AFB2B400541BB1 /* IconCameraBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCameraBlack.png; sourceTree = "<group>"; };
 		28603B7214AFB2B400541BB1 /* IconCameraBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconCameraBlack@2x.png"; sourceTree = "<group>"; };
-		28603B7D14AFB3AB00541BB1 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
-		28603B7E14AFB3AB00541BB1 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		28603B8014AFBD4D00541BB1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		28633AA914A30E910074A674 /* IconBackBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconBackBlack@2x.png"; sourceTree = "<group>"; };
 		28633AAA14A30E910074A674 /* IconBackBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconBackBlack.png; sourceTree = "<group>"; };
@@ -1193,8 +1190,6 @@
 				28B855EC147CE1A3004F84EA /* WelcomeViewController.m */,
 				28603B5914AC4A1D00541BB1 /* TimelineViewController.h */,
 				28603B5A14AC4A1D00541BB1 /* TimelineViewController.m */,
-				28603B7D14AFB3AB00541BB1 /* CameraViewController.h */,
-				28603B7E14AFB3AB00541BB1 /* CameraViewController.m */,
 				2812CFEA14B5C53D00F3B8CA /* PreviewViewController.h */,
 				2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */,
 				D0269E3614E1AE2C00B690A2 /* TimelineConfigViewController.h */,
@@ -1823,7 +1818,6 @@
 				28603B4414AA860700541BB1 /* PSZoomView.m in Sources */,
 				28603B5B14AC4A1D00541BB1 /* TimelineViewController.m in Sources */,
 				28603B5F14AC4D9300541BB1 /* TimelineCell.m in Sources */,
-				28603B7F14AFB3AC00541BB1 /* CameraViewController.m in Sources */,
 				288CB07114B2D72800233B45 /* CoreGraphics-PSKit.m in Sources */,
 				2812CFEC14B5C53D00F3B8CA /* PreviewViewController.m in Sources */,
 				D092D2C314DC4837001108A0 /* NSMutableURLRequest+PSKit.m in Sources */,

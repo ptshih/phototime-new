@@ -65,7 +65,7 @@ shouldReloadInterface = _shouldReloadInterface;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    NSLog(@"Fonts: %@", [UIFont familyNames]);
+    NSLog(@"Fonts: %@", [UIFont familyNames]);
     
     self.shouldReloadInterface = NO;
     
