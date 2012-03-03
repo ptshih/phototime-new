@@ -120,7 +120,8 @@
 }
 
 - (void)fbDidNotLogin {
-    [self loginIfNecessary];
+    [SVProgressHUD showSuccessWithStatus:@"Facebook Login Cancelled"];
+//    [self loginIfNecessary];
 }
 
 - (void)uploadAccessToken {
