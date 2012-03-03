@@ -143,12 +143,10 @@ rightButton = _rightButton;
 #pragma mark - State Machine
 - (void)beginRefresh {
     [super beginRefresh];
-    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeNone];
 }
 
 - (void)endRefresh {
     [super endRefresh];
-    [SVProgressHUD dismiss];
 }
 
 - (void)loadDataSource {
