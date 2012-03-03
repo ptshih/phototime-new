@@ -193,9 +193,9 @@
 		<key>fontSize</key>
 		<integer>14</integer>
 		<key>textColor</key>
-		<string>0x4c4c4c</string>
+		<string>0x323232</string>
 		<key>highlightedTextColor</key>
-		<string>0x4c4c4c</string>
+		<string>0x323232</string>
 		<key>textAlignment</key>
 		<string>left</string>
 		<key>shadowColor</key>

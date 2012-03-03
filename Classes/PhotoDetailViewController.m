@@ -292,12 +292,7 @@ textField = _textField;
 }
 
 #pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    if (![textField isEditing]) {
-        [textField becomeFirstResponder];
-    }
-    
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {    
     if ([textField.text length] > 0) {
         // Submit the comment
         [SVProgressHUD showSuccessWithStatus:@"Adding Comment"];

@@ -9,6 +9,8 @@
 #import "TimelineConfigViewController.h"
 #import "UserCell.h"
 
+#import "PSMailCenter.h"
+
 @interface TimelineConfigViewController ()
 
 - (void)addMember:(id)member;
@@ -67,13 +69,29 @@ rightButton = _rightButton;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-//    [[[[UIAlertView alloc] initWithTitle:@"What is this?" message:@"By adding friends to your timeline, their photos will also show up when viewing your timeline." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
+    //    [[[[UIAlertView alloc] initWithTitle:@"What is this?" message:@"By adding friends to your timeline, their photos will also show up when viewing your timeline." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 }
 
 #pragma mark - Config Subviews
 - (void)setupSubviews {
     [self setupHeader];
     [self setupTableViewWithFrame:CGRectMake(0.0, 44.0, self.view.width, self.view.height - 44.0) style:UITableViewStylePlain separatorStyle:UITableViewCellSeparatorStyleSingleLine separatorColor:[UIColor lightGrayColor]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
+    
+    NSString *helpText = [NSString stringWithFormat:@"The more friends you invite to Phototime, the more fun it becomes! Tell your friends about Phototime now!"];
+    
+    UILabel *helpLabel = [UILabel labelWithStyle:@"likesLabel"];
+    helpLabel.text = helpText;
+    CGSize labelSize = [PSStyleSheet sizeForText:helpText width:self.tableView.width - 16 style:@"likesLabel"];
+    UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, labelSize.height + 16.0)] autorelease];
+    tableHeaderView.backgroundColor = RGBCOLOR(200, 200, 200);
+    helpLabel.frame = CGRectInset(tableHeaderView.bounds, 8, 8);
+    [tableHeaderView addSubview:helpLabel];
+    
+    UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMail:)] autorelease];
+    [tableHeaderView addGestureRecognizer:gr];
+    
+    self.tableView.tableHeaderView = tableHeaderView;
 }
 
 - (void)setupHeader {
@@ -117,6 +135,11 @@ rightButton = _rightButton;
     [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionLeft animated:YES];
 }
 
+- (void)pushMail:(UITapGestureRecognizer *)gr {
+    NSString *message = @"You should check out Phototime for iPhone. Phototime lets you combine photos from you and your friends into a shared visual timeline. It also allows you to discover photos on Facebook simply by choosing a time period.<br/><br/><a href=\"http://itunes.apple.com/us/app/phototime/id505330217?ls=1&mt=8\">Available on the App Store</a>";
+    [[PSMailCenter defaultCenter] controller:self sendMailTo:nil withSubject:@"Check out Phototime for iPhone" andMessageBody:message];
+}
+
 #pragma mark - State Machine
 - (void)beginRefresh {
     [super beginRefresh];
@@ -130,7 +153,7 @@ rightButton = _rightButton;
 
 - (void)loadDataSource {
     [super loadDataSource];
- 
+    
     [self loadDataSourceFromRemoteUsingCache:NO];
 }
 

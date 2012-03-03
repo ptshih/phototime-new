@@ -155,7 +155,9 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     static NSArray *years = nil;
     years = [[NSArray arrayWithObjects:@"2007", @"2008", @"2009", @"2010", @"2011", @"2012", nil] retain];
     static NSDateComponents *components = nil;
-    components = [[NSDateComponents alloc] init];
+    if (!components) {
+        components = [[NSDateComponents alloc] init];
+    }
         
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -173,10 +175,10 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.endDate = [calendar dateFromComponents:components];
     
     // Display
-    components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.startDate];
-    NSString *startString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
-    components = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.endDate];
-    NSString *endString = [NSString stringWithFormat:@"%d/%d", components.month, components.year];
+    NSDateComponents *displayComponents = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.startDate];
+    NSString *startString = [NSString stringWithFormat:@"%d/%d", displayComponents.month, displayComponents.year];
+    displayComponents = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.endDate];
+    NSString *endString = [NSString stringWithFormat:@"%d/%d", displayComponents.month, displayComponents.year];
     
     [self.centerButton setTitle:[NSString stringWithFormat:@"%@ - %@", startString, endString] forState:UIControlStateNormal];
 }
