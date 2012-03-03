@@ -156,6 +156,7 @@ textField = _textField;
             self.rightButton.enabled = YES;
             [SVProgressHUD dismissWithError:@"Something Bad Happened"];
         } else {
+            [self reloadDataSource];
             [SVProgressHUD dismissWithSuccess:@"Photo Liked"];
         }
     }];
@@ -189,34 +190,77 @@ textField = _textField;
 //        self.tableView.tableHeaderView = tableHeaderView;
 //    }
     
-    NSMutableArray *items = [NSMutableArray array];
-    
-    NSMutableArray *likes = [NSMutableArray array];
-    [self.sectionTitles addObject:@"Likes"];
-    if ([[self.photo objectForKey:@"likes"] notNull]) {
-        NSArray *fbLikes = [[self.photo objectForKey:@"likes"] objectForKey:@"data"];
-        NSString *likeNames = [[fbLikes valueForKey:@"name"] componentsJoinedByString:@", "];
-        NSString *likesText = [NSString stringWithFormat:@"%@ like this photo.", likeNames];
-        [likes addObject:likesText];
-    }
-    [items addObject:likes];
-    
-    NSMutableArray *comments = [NSMutableArray array];
-    [self.sectionTitles addObject:@"Comments"];
-    if ([[self.photo objectForKey:@"comments"] notNull]) {
-        [comments addObjectsFromArray:[[self.photo objectForKey:@"comments"] objectForKey:@"data"]];
-    }
-    [items addObject:comments];
-    
-    [self dataSourceShouldLoadObjects:items animated:NO];
-    [self dataSourceDidLoad];
-//    [self loadDataSourceFromRemoteUsingCache:NO];
+
+    [self loadDataSourceFromRemoteUsingCache:YES];
 }
 
 - (void)reloadDataSource {
     [super reloadDataSource];
     
-//    [self loadDataSourceFromRemoteUsingCache:NO];
+    [self loadDataSourceFromRemoteUsingCache:NO];
+}
+
+- (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/photos/%@", API_BASE_URL, [self.photo objectForKey:@"fbPhotoId"]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
+    
+    [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
+        if (error) {
+            [self dataSourceDidError];
+        } else {
+            [[[[NSOperationQueue alloc] init] autorelease] addOperationWithBlock:^{
+                // Parse JSON
+                id JSON = [NSJSONSerialization JSONObjectWithData:cachedData options:NSJSONReadingMutableContainers error:nil];
+                if (!JSON) {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        [self dataSourceDidError];
+                    }];
+                } else {
+                    // Check for our own success codes
+                    id metaCode = [JSON objectForKey:@"code"];
+                    if (!metaCode || [metaCode integerValue] != 200) {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            [self dataSourceDidError];
+                        }];
+                    } else {
+                        // Success
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
+                            self.photo = [[JSON objectForKey:@"data"] objectForKey:@"photo"];
+                            NSMutableArray *items = [NSMutableArray array];
+                            
+                            NSMutableArray *likes = [NSMutableArray array];
+                            [self.sectionTitles addObject:@"Likes"];
+                            if ([[self.photo objectForKey:@"likes"] notNull]) {
+                                NSArray *fbLikes = [[self.photo objectForKey:@"likes"] objectForKey:@"data"];
+                                NSString *likeNames = [[fbLikes valueForKey:@"name"] componentsJoinedByString:@", "];
+                                NSString *likesText = [NSString stringWithFormat:@"%@ like this photo.", likeNames];
+                                [likes addObject:likesText];
+                            }
+                            [items addObject:likes];
+                            
+                            NSMutableArray *comments = [NSMutableArray array];
+                            [self.sectionTitles addObject:@"Comments"];
+                            if ([[self.photo objectForKey:@"comments"] notNull]) {
+                                [comments addObjectsFromArray:[[self.photo objectForKey:@"comments"] objectForKey:@"data"]];
+                            }
+                            [items addObject:comments];
+                            
+                            [self dataSourceShouldLoadObjects:items animated:NO];
+                            [self dataSourceDidLoad];
+                            
+                            // If this is the first load and we loaded cached data, we should refreh from remote now
+                            if (!self.hasLoadedOnce && isCached) {
+                                self.hasLoadedOnce = YES;
+                                [self reloadDataSource];
+                                NSLog(@"first load, stale cache");
+                            }
+                        }];
+                    }
+                }
+            }];
+        }
+    }];
 }
 
 #pragma mark - TableView
@@ -283,6 +327,7 @@ textField = _textField;
                 self.rightButton.enabled = YES;
                 [SVProgressHUD dismissWithError:@"Something Bad Happened"];
             } else {
+                [self reloadDataSource];
                 [SVProgressHUD dismissWithSuccess:@"Comment Added"];
                 [textField resignFirstResponder];
                 textField.text = nil;
