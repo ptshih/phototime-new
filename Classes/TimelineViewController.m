@@ -96,7 +96,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     // Setup Views
     [self setupSubviews];
     [self setupPullRefresh];
-//    self.tableView.contentOffset = self.contentOffset;
     
     // Load
     [self loadDataSource];
@@ -243,7 +242,6 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 - (void)dataSourceDidLoad {
     [super dataSourceDidLoad];
-    [self.collectionView reloadViews];
     
     if ([self dataSourceIsEmpty]) {
         // Show empty view
@@ -292,6 +290,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
                         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                             NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
                             self.items = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
+                            [self.collectionView reloadViews];
                             [self dataSourceDidLoad];
                             
                             // If this is the first load and we loaded cached data, we should refreh from remote now
