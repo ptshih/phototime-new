@@ -91,6 +91,25 @@
 		<key>numberOfLines</key>
 		<integer>1</integer>
 	</dict>
+	<key>emptyLabel</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-BoldCond</string>
+		<key>fontSize</key>
+		<integer>20</integer>
+		<key>textColor</key>
+		<string>0x70695A</string>
+		<key>highlightedTextColor</key>
+		<string>0x70695A</string>
+		<key>textAlignment</key>
+		<string>center</string>
+		<key>shadowColor</key>
+		<string>0xffffff</string>
+		<key>shadowOffset</key>
+		<string>{0,1}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
+	</dict>
 	<key>titleLabel</key>
 	<dict>
 		<key>fontName</key>
