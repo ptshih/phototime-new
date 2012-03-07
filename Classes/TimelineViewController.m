@@ -51,7 +51,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataSource) name:kLoginSucceeded object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldRefreshOnAppear object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshOnAppear) name:kTimelineShouldReload object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:kTimelineShouldReload object:nil];
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDataSource) name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
