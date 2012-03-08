@@ -157,6 +157,9 @@
 		D054E99014F6F98D00B03306 /* DateRangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = D054E98F14F6F98D00B03306 /* DateRangeView.m */; };
 		D054E99314F7001D00B03306 /* ButtonBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D054E99114F7001D00B03306 /* ButtonBlue@2x.png */; };
 		D054E99414F7001D00B03306 /* ButtonWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D054E99214F7001D00B03306 /* ButtonWhite@2x.png */; };
+		D05A3FF61508C83800AD0BAC /* IconCommentMini.png in Resources */ = {isa = PBXBuildFile; fileRef = D05A3FF41508C83800AD0BAC /* IconCommentMini.png */; };
+		D05A3FF71508C83800AD0BAC /* IconLikeMini.png in Resources */ = {isa = PBXBuildFile; fileRef = D05A3FF51508C83800AD0BAC /* IconLikeMini.png */; };
+		D05A3FFA1508C8B400AD0BAC /* SocialView.m in Sources */ = {isa = PBXBuildFile; fileRef = D05A3FF91508C8B400AD0BAC /* SocialView.m */; };
 		D05B5F9314EB068200970969 /* NSJSONSerialization+PSKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */; };
 		D060639E14E90CA800150193 /* IconCalendarBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639C14E90CA800150193 /* IconCalendarBlack.png */; };
 		D060639F14E90CA800150193 /* IconCalendarBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D060639D14E90CA800150193 /* IconCalendarBlack@2x.png */; };
@@ -528,6 +531,10 @@
 		D054E98F14F6F98D00B03306 /* DateRangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateRangeView.m; sourceTree = "<group>"; };
 		D054E99114F7001D00B03306 /* ButtonBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonBlue@2x.png"; sourceTree = "<group>"; };
 		D054E99214F7001D00B03306 /* ButtonWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonWhite@2x.png"; sourceTree = "<group>"; };
+		D05A3FF41508C83800AD0BAC /* IconCommentMini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCommentMini.png; sourceTree = "<group>"; };
+		D05A3FF51508C83800AD0BAC /* IconLikeMini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconLikeMini.png; sourceTree = "<group>"; };
+		D05A3FF81508C8B400AD0BAC /* SocialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialView.h; sourceTree = "<group>"; };
+		D05A3FF91508C8B400AD0BAC /* SocialView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialView.m; sourceTree = "<group>"; };
 		D05B5F9114EB068200970969 /* NSJSONSerialization+PSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+PSKit.h"; sourceTree = "<group>"; };
 		D05B5F9214EB068200970969 /* NSJSONSerialization+PSKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+PSKit.m"; sourceTree = "<group>"; };
 		D060639C14E90CA800150193 /* IconCalendarBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconCalendarBlack.png; sourceTree = "<group>"; };
@@ -788,6 +795,8 @@
 		28698713147312EC00B40860 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D05A3FF41508C83800AD0BAC /* IconCommentMini.png */,
+				D05A3FF51508C83800AD0BAC /* IconLikeMini.png */,
 				D0E3BFA015028B610016D2DF /* BGTextInput.png */,
 				D0E3BFA115028B610016D2DF /* BGTextInput@2x.png */,
 				D0E3BF7D15021B7A0016D2DF /* BGTableSection.png */,
@@ -1240,6 +1249,8 @@
 				D0A1EF7915019E8D008FF801 /* LikeCell.m */,
 				D054E98E14F6F98D00B03306 /* DateRangeView.h */,
 				D054E98F14F6F98D00B03306 /* DateRangeView.m */,
+				D05A3FF81508C8B400AD0BAC /* SocialView.h */,
+				D05A3FF91508C8B400AD0BAC /* SocialView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1746,6 +1757,8 @@
 				D02656251502BBE5001D4687 /* Icon-Small.png in Resources */,
 				D02656261502BBE5001D4687 /* Icon-Small@2x.png in Resources */,
 				D02656271502BBE5001D4687 /* iTunesArtwork.png in Resources */,
+				D05A3FF61508C83800AD0BAC /* IconCommentMini.png in Resources */,
+				D05A3FF71508C83800AD0BAC /* IconLikeMini.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1876,6 +1889,7 @@
 				D0FBE12115019114000D705C /* PhotoDetailViewController.m in Sources */,
 				D0A1EF77150198D1008FF801 /* CommentCell.m in Sources */,
 				D0A1EF7A15019E8D008FF801 /* LikeCell.m in Sources */,
+				D05A3FFA1508C8B400AD0BAC /* SocialView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

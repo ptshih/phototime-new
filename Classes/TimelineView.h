@@ -17,7 +17,6 @@
 @property (nonatomic, retain) PSCachedImageView *imageView;
 @property (nonatomic, retain) PSCachedImageView *profileView;
 @property (nonatomic, retain) UILabel *nameLabel;
-@property (nonatomic, retain) UIButton *socialButton;
 
 - (void)prepareForReuse;
 - (void)fillViewWithObject:(id)object;

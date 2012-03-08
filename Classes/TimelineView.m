@@ -9,10 +9,17 @@
 #import "TimelineView.h"
 #import "PSCachedImageView.h"
 #import "PhotoDetailViewController.h"
+#import "SocialView.h"
 
 #define MARGIN 4.0
 #define PROFILE_SIZE 20.0
-#define SOCIAL_SIZE 20.0
+#define SOCIAL_SIZE 22.0
+
+@interface TimelineView ()
+
+@property (nonatomic, retain) SocialView *socialView;
+
+@end
 
 @implementation TimelineView
 
@@ -22,7 +29,7 @@ object = _object,
 imageView = _imageView,
 profileView = _profileView,
 nameLabel = _nameLabel,
-socialButton = _socialButton;
+socialView = _socialView;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -49,11 +56,10 @@ socialButton = _socialButton;
         self.nameLabel.textAlignment = UITextAlignmentCenter;
         [self addSubview:self.nameLabel];
         
-        self.socialButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.socialButton.backgroundColor = RGBACOLOR(200, 210, 215, 1.0);
-        [PSStyleSheet applyStyle:@"metaLabel" forButton:self.socialButton];
-        [self.socialButton addTarget:self action:@selector(pushSocial:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.socialButton];
+        self.socialView = [[[SocialView alloc] initWithFrame:CGRectZero] autorelease];
+        [self addSubview:self.socialView];
+        UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushSocial:)] autorelease];
+        [self.socialView addGestureRecognizer:gr];
     }
     return self;
 }
@@ -63,12 +69,12 @@ socialButton = _socialButton;
     self.imageView = nil;
 //    self.profileView = nil;
     self.nameLabel = nil;
-    self.socialButton = nil;
+    self.socialView = nil;
 
     [super dealloc];
 }
 
-- (void)pushSocial:(UIButton *)sender {
+- (void)pushSocial:(UITapGestureRecognizer *)gr {
     PhotoDetailViewController *vc = [[[PhotoDetailViewController alloc] initWithDictionary:self.object] autorelease];
     [(PSNavigationController *)self.presentingController.parentViewController pushViewController:vc animated:YES];
 }
@@ -77,7 +83,7 @@ socialButton = _socialButton;
     [self.imageView prepareForReuse];
 //    [self.profileView prepareForReuse];
     self.nameLabel.text = nil;
-    [self.socialButton setTitle:@"" forState:UIControlStateNormal];
+    [self.socialView prepareForReuse];
 }
 
 - (void)layoutSubviews {
@@ -109,7 +115,7 @@ socialButton = _socialButton;
     
     top = self.nameLabel.bottom + MARGIN;
     
-    self.socialButton.frame = CGRectMake(left, top, width, SOCIAL_SIZE);
+    self.socialView.frame = CGRectMake(0, top, self.width, SOCIAL_SIZE);
 //    [self.socialButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
 //    [self.socialButton setContentEdgeInsets:UIEdgeInsetsMake(4, 8, 4, 8)];
 }
@@ -152,7 +158,7 @@ socialButton = _socialButton;
         NSArray *comments = [[self.object objectForKey:@"comments"] objectForKey:@"data"];
         commentCount = [comments count];
     }
-    [self.socialButton setTitle:[NSString stringWithFormat:@"%d Likes %d Comments", likeCount, commentCount] forState:UIControlStateNormal];
+    [self.socialView loadWithLikes:likeCount comments:commentCount];
 }
 
 + (CGFloat)heightForViewWithObject:(id)object inColumnWidth:(CGFloat)columnWidth {
@@ -187,8 +193,6 @@ socialButton = _socialButton;
     height += MARGIN;
     
     height += SOCIAL_SIZE;
-    
-    height += MARGIN;
     
 //MAX(height, PROFILE_SIZE + MARGIN * 2);
     return height;
