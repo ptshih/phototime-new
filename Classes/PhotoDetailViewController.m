@@ -149,6 +149,7 @@ textField = _textField;
 
 - (void)rightAction {
     // Like
+    [SVProgressHUD showWithStatus:@"Liking Photo" networkIndicator:YES];
     self.rightButton.enabled = NO;
     NSString *fbid = [self.photo objectForKey:@"fbPhotoId"];
     NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/likes", fbid]];
@@ -299,6 +300,7 @@ textField = _textField;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {    
     if ([textField.text length] > 0) {
         // Submit the comment
+        [SVProgressHUD showWithStatus:@"Adding Comment" networkIndicator:YES];
         NSString *fbid = [self.photo objectForKey:@"fbPhotoId"];
         NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/comments", fbid]];
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
