@@ -43,7 +43,7 @@
 #define CELL_SELECTED_COLOR CELL_BLUE_COLOR
 
 #if TARGET_IPHONE_SIMULATOR
-  #define USE_LOCALHOST
+//  #define USE_LOCALHOST
 #endif
 
 #define API_LOCALHOST @"http://localhost:5000"
