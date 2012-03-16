@@ -97,14 +97,11 @@ shouldReloadInterface = _shouldReloadInterface;
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]];
     
-    // Setup initial view controller based on authentication
-    // @"4f2b65e2e4b024f14205b3ad"
-    
-    NSString *timelineId = [[NSUserDefaults standardUserDefaults] objectForKey:@"timelineId"];
-    
+    // MOVE THESE TO KEYCHAIN
+    // CURRENTLY FORCED IN INITIALDEFAULTS
     id controller = nil;
-    if ([[PSFacebookCenter defaultCenter] isLoggedIn] && timelineId) {
-        controller = [[[TimelineViewController alloc] initWithTimelineId:timelineId] autorelease];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"]) {
+        controller = [[[TimelineViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     } else {
         controller = [[[WelcomeViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     }

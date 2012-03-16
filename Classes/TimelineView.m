@@ -8,8 +8,6 @@
 
 #import "TimelineView.h"
 #import "PSCachedImageView.h"
-#import "PhotoDetailViewController.h"
-#import "SocialView.h"
 
 #define MARGIN 4.0
 #define PROFILE_SIZE 20.0
@@ -17,7 +15,7 @@
 
 @interface TimelineView ()
 
-@property (nonatomic, retain) SocialView *socialView;
+@property (nonatomic, retain) TTTAttributedLabel *actionLabel;
 
 @end
 
@@ -27,9 +25,7 @@
 presentingController = _presentingController,
 object = _object,
 imageView = _imageView,
-profileView = _profileView,
-nameLabel = _nameLabel,
-socialView = _socialView;
+actionLabel = _actionLabel;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -47,19 +43,10 @@ socialView = _socialView;
         self.imageView.clipsToBounds = YES;
         [self addSubview:self.imageView];
         
-//        self.profileView = [[[PSCachedImageView alloc] initWithFrame:CGRectZero] autorelease];
-//        self.profileView.shouldAnimate = YES;
-//        self.profileView.clipsToBounds = YES;
-//        [self addSubview:self.profileView];
-        
-        self.nameLabel = [UILabel labelWithStyle:@"subtitleLabel"];
-        self.nameLabel.textAlignment = UITextAlignmentCenter;
-        [self addSubview:self.nameLabel];
-        
-        self.socialView = [[[SocialView alloc] initWithFrame:CGRectZero] autorelease];
-        [self addSubview:self.socialView];
-        UITapGestureRecognizer *gr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushSocial:)] autorelease];
-        [self.socialView addGestureRecognizer:gr];
+        // Must set to 0 lines and word wrap line break mode
+        self.actionLabel = [[[TTTAttributedLabel alloc] initWithFrame:CGRectZero] autorelease];
+        [PSStyleSheet applyStyle:@"attributedLabelRegular" forLabel:self.actionLabel];
+        [self addSubview:self.actionLabel];
     }
     return self;
 }
@@ -67,57 +54,39 @@ socialView = _socialView;
 - (void)dealloc {
     self.object = nil;
     self.imageView = nil;
-//    self.profileView = nil;
-    self.nameLabel = nil;
-    self.socialView = nil;
+    self.actionLabel = nil;
 
     [super dealloc];
 }
 
-- (void)pushSocial:(UITapGestureRecognizer *)gr {
-    PhotoDetailViewController *vc = [[[PhotoDetailViewController alloc] initWithDictionary:self.object] autorelease];
-    [(PSNavigationController *)self.presentingController.parentViewController pushViewController:vc animated:YES];
-}
-
 - (void)prepareForReuse {
     [self.imageView prepareForReuse];
-//    [self.profileView prepareForReuse];
-    self.nameLabel.text = nil;
-    [self.socialView prepareForReuse];
+    self.actionLabel.text = nil;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     
     CGFloat width = self.width - MARGIN * 2;
     CGFloat top = MARGIN;
     CGFloat left = MARGIN;
 //    CGFloat right = self.width - MARGIN;
     
-    CGFloat objectWidth = [[self.object objectForKey:@"width"] floatValue];
-    CGFloat objectHeight = [[self.object objectForKey:@"height"] floatValue];
+    NSDictionary *original = [self.object objectForKey:@"original"];
+    
+    CGFloat objectWidth = [[original objectForKey:@"width"] floatValue];
+    CGFloat objectHeight = [[original objectForKey:@"height"] floatValue];
     CGFloat scaledHeight = floorf(objectHeight / (objectWidth / width));
     self.imageView.frame = CGRectMake(left, top, width, scaledHeight);
     
     top = self.imageView.bottom + MARGIN;
     
-//    self.profileView.frame = CGRectMake(left, top, PROFILE_SIZE, PROFILE_SIZE);
-//    
-//    left += self.profileView.width + MARGIN;
-//    width -= self.profileView.width + MARGIN;
     
-    CGSize labelSize = [PSStyleSheet sizeForText:self.nameLabel.text width:width style:@"subtitleLabel"];
-    self.nameLabel.top = top;
-    self.nameLabel.left = left;
-    self.nameLabel.width = width;
-    self.nameLabel.height = labelSize.height;
-    
-    top = self.nameLabel.bottom + MARGIN;
-    
-    self.socialView.frame = CGRectMake(0, top, self.width, SOCIAL_SIZE);
-//    [self.socialButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-//    [self.socialButton setContentEdgeInsets:UIEdgeInsetsMake(4, 8, 4, 8)];
+    CGSize labelSize = [PSStyleSheet sizeForText:self.actionLabel.text width:width style:@"attributedLabelRegular"];
+    self.actionLabel.top = top;
+    self.actionLabel.left = left;
+    self.actionLabel.width = width;
+    self.actionLabel.height = labelSize.height;
 }
 
 - (void)fillViewWithObject:(id)object {
@@ -128,73 +97,90 @@ socialView = _socialView;
     self.presentingController = presentingController;
     self.object = object;
     
-    [self.imageView setOriginalURL:[NSURL URLWithString:[self.object objectForKey:@"source"]]];
-    [self.imageView setThumbnailURL:[NSURL URLWithString:[self.object objectForKey:@"picture"]]];
-    [self.imageView loadImageWithURL:[NSURL URLWithString:[self.object objectForKey:@"picture"]] cacheType:PSURLCacheTypePermanent];
-    
-//    NSURL *profileURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [[self.object objectForKey:@"fbFrom"] objectForKey:@"id"]]];
-//    [self.profileView loadImageWithURL:profileURL cacheType:PSURLCacheTypePermanent];
-    
-    NSString *displayName = nil;
-    NSString *name = [[object objectForKey:@"fbFrom"] objectForKey:@"name"];
-    if (0) {
-        NSArray *nameComponents = [name componentsSeparatedByString:@" "];
-        NSString *firstName = [nameComponents objectAtIndex:0];
-        NSString *lastName = [nameComponents lastObject];
-        displayName = [NSString stringWithFormat:@"%@ %@.", firstName, [lastName substringToIndex:1]];
+    NSDictionary *original = [self.object objectForKey:@"original"];
+    NSDictionary *thumbnail = [self.object objectForKey:@"thumbnail"];
+    NSDictionary *user = [self.object objectForKey:@"user"];
+    NSDictionary *location = [self.object objectForKey:@"location"];
+    NSNumber *createdAt = [self.object objectForKey:@"createdAt"];
+    NSDate *createdDate = [NSDate dateWithTimeIntervalSince1970:[createdAt doubleValue]];
+    NSString *createdString = [[PSDateFormatter sharedDateFormatter] shortRelativeStringFromDate:createdDate];
+    NSString *attribution = nil;
+    if ([self.object objectForKey:@"fbPhotoId"]) {
+        attribution = @"via Facebook";
+    } else if ([self.object objectForKey:@"igPhotoId"]) {
+        attribution = @"via Instagram";
     } else {
-        displayName = [NSString stringWithFormat:@"%@", name];
+        attribution = @"via Phototime";
     }
     
-    self.nameLabel.text = displayName;
+    NSString *userName = [user objectForKey:@"name"];
+    NSString *caption = [self.object objectForKey:@"caption"];
     
-    NSInteger likeCount = 0;
-    NSInteger commentCount = 0;
-    if ([[self.object objectForKey:@"likes"] notNull]) {
-        NSArray *likes = [[self.object objectForKey:@"likes"] objectForKey:@"data"];
-        likeCount = [likes count];
-    }
-    if ([[self.object objectForKey:@"comments"] notNull]) {
-        NSArray *comments = [[self.object objectForKey:@"comments"] objectForKey:@"data"];
-        commentCount = [comments count];
-    }
-    [self.socialView loadWithLikes:likeCount comments:commentCount];
+    NSString *captionText = [caption notNull] ? caption : @"a photo";
+    NSString *actionText = [NSString stringWithFormat:@"%@ took %@ %@ %@", userName, captionText, createdString, attribution];
+    
+    // Setup Image
+    self.imageView.originalURL = [NSURL URLWithString:[original objectForKey:@"url"]];
+    self.imageView.thumbnailURL = [NSURL URLWithString:[thumbnail objectForKey:@"url"]];
+    [self.imageView loadImageWithURL:self.imageView.thumbnailURL cacheType:PSURLCacheTypePermanent];
+    
+    // Setup Label
+    [self.actionLabel setText:actionText afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange userNameRange = [[mutableAttributedString string] rangeOfString:userName options:NSCaseInsensitiveSearch];
+        NSRange captionRange = [[mutableAttributedString string] rangeOfString:captionText options:NSCaseInsensitiveSearch];
+        NSRange attributionRange = [[mutableAttributedString string] rangeOfString:attribution options:NSCaseInsensitiveSearch];
+        
+        // Color
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x3B5998] CGColor] range:userNameRange];
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x222222] CGColor] range:captionRange];
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x3B5998] CGColor] range:attributionRange];
+        
+        return mutableAttributedString;
+    }];
 }
 
 + (CGFloat)heightForViewWithObject:(id)object inColumnWidth:(CGFloat)columnWidth {
     CGFloat height = 0.0;
     CGFloat width = columnWidth - MARGIN * 2;
     
+    NSDictionary *original = [object objectForKey:@"original"];
+    NSDictionary *thumbnail = [object objectForKey:@"thumbnail"];
+    NSDictionary *user = [object objectForKey:@"user"];
+    NSDictionary *location = [object objectForKey:@"location"];
+    NSNumber *createdAt = [object objectForKey:@"createdAt"];
+    NSDate *createdDate = [NSDate dateWithTimeIntervalSince1970:[createdAt doubleValue]];
+    NSString *createdString = [[PSDateFormatter sharedDateFormatter] shortRelativeStringFromDate:createdDate];
+    NSString *attribution = nil;
+    if ([object objectForKey:@"fbPhotoId"]) {
+        attribution = @"via Facebook";
+    } else if ([object objectForKey:@"igPhotoId"]) {
+        attribution = @"via Instagram";
+    } else {
+        attribution = @"via Phototime";
+    }
+    
+    NSString *userName = [user objectForKey:@"name"];
+    NSString *caption = [object objectForKey:@"caption"];
+    
+    NSString *captionText = [caption notNull] ? caption : @"a photo";
+    NSString *actionText = [NSString stringWithFormat:@"%@ took %@ %@ %@", userName, captionText, createdString, attribution];
+    
     height += MARGIN;
     
-    CGFloat objectWidth = [[object objectForKey:@"width"] floatValue];
-    CGFloat objectHeight = [[object objectForKey:@"height"] floatValue];
+    // Image
+    CGFloat objectWidth = [[original objectForKey:@"width"] floatValue];
+    CGFloat objectHeight = [[original objectForKey:@"height"] floatValue];
     CGFloat scaledHeight = floorf(objectHeight / (objectWidth / width));
     height += scaledHeight;
     
     height += MARGIN;
     
-    NSString *displayName = nil;
-    NSString *name = [[object objectForKey:@"fbFrom"] objectForKey:@"name"];
-    if (0) {
-        NSArray *nameComponents = [name componentsSeparatedByString:@" "];
-        NSString *firstName = [nameComponents objectAtIndex:0];
-        NSString *lastName = [nameComponents lastObject];
-        displayName = [NSString stringWithFormat:@"%@ %@.", firstName, [lastName substringToIndex:1]];
-    } else {
-        displayName = [NSString stringWithFormat:@"%@", name];
-    }
-    
-//    width -= PROFILE_SIZE + MARGIN;
-    
-    CGSize labelSize = [PSStyleSheet sizeForText:displayName width:width style:@"subtitleLabel"];
+    // Label
+    CGSize labelSize = [PSStyleSheet sizeForText:actionText width:width style:@"attributedLabelRegular"];
     height += labelSize.height;
     
     height += MARGIN;
     
-    height += SOCIAL_SIZE;
-    
-//MAX(height, PROFILE_SIZE + MARGIN * 2);
     return height;
 }
 

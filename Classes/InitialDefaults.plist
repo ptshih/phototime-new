@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>isLoggedIn</key>
-	<false/>
 	<key>isFirstLaunch</key>
 	<true/>
+	<key>userId</key>
+	<string>4f627f99d4196444ad000001</string>
+	<key>accessToken</key>
+	<string>2ce812a9-0082-4ef6-aaad-77ef93aa62da</string>
 	<key>lastExitDate</key>
 	<date>1970-01-01T08:00:00Z</date>
 	<key>startMonthIndex</key>

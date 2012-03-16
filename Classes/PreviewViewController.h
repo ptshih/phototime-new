@@ -8,8 +8,8 @@
 
 #import "PSViewController.h"
 
-@interface PreviewViewController : PSViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface PreviewViewController : PSViewController <UITextFieldDelegate>
 
-- (void)uploadPhotoWithData:(NSData *)data width:(CGFloat)width height:(CGFloat)height metadata:(NSDictionary *)metadata;
+- (id)initWithImage:(UIImage *)image;
 
 @end

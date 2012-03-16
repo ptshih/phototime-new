@@ -91,6 +91,25 @@
 		<key>numberOfLines</key>
 		<integer>1</integer>
 	</dict>
+	<key>navigationButton</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-BoldCond</string>
+		<key>fontSize</key>
+		<integer>14</integer>
+		<key>textColor</key>
+		<string>0xefefef</string>
+		<key>highlightedTextColor</key>
+		<string>0xefefef</string>
+		<key>textAlignment</key>
+		<string>center</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
+	</dict>
 	<key>emptyLabel</key>
 	<dict>
 		<key>fontName</key>
@@ -109,6 +128,27 @@
 		<string>{0,1}</string>
 		<key>numberOfLines</key>
 		<integer>1</integer>
+	</dict>
+	<key>attributedLabelRegular</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-MediumCond</string>
+		<key>fontSize</key>
+		<integer>13</integer>
+		<key>textColor</key>
+		<string>0x4c4c4c</string>
+		<key>highlightedTextColor</key>
+		<string>0x4c4c4c</string>
+		<key>textAlignment</key>
+		<string>left</string>
+		<key>lineBreakMode</key>
+		<string>wordWrap</string>
+		<key>shadowColor</key>
+		<string>0x999999</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>0</integer>
 	</dict>
 	<key>titleLabel</key>
 	<dict>

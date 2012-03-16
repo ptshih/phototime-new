@@ -11,7 +11,9 @@
 		2810F579149202DF0028BCFE /* HorizontalLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F577149202DE0028BCFE /* HorizontalLine@2x.png */; };
 		2810F59B14921C340028BCFE /* BackgroundToolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F59914921C330028BCFE /* BackgroundToolbar.png */; };
 		2810F59C14921C340028BCFE /* BackgroundToolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F59A14921C330028BCFE /* BackgroundToolbar@2x.png */; };
-		2812CFEC14B5C53D00F3B8CA /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */; };
+		281A575E1512C6BB00EE945C /* PSDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 281A575D1512C6BB00EE945C /* PSDateFormatter.m */; };
+		281A57701512D83900EE945C /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 281A576F1512D83900EE945C /* PreviewViewController.m */; };
+		282FBCAF1512DA69008A25BA /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 282FBCAE1512DA69008A25BA /* ScoreViewController.m */; };
 		283818C314723F1D007E4827 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283818C214723F1D007E4827 /* UIKit.framework */; };
 		283818C514723F1D007E4827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283818C414723F1D007E4827 /* Foundation.framework */; };
 		283818C714723F1D007E4827 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283818C614723F1D007E4827 /* CoreGraphics.framework */; };
@@ -298,8 +300,12 @@
 		2810F577149202DE0028BCFE /* HorizontalLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HorizontalLine@2x.png"; sourceTree = "<group>"; };
 		2810F59914921C330028BCFE /* BackgroundToolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundToolbar.png; sourceTree = "<group>"; };
 		2810F59A14921C330028BCFE /* BackgroundToolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackgroundToolbar@2x.png"; sourceTree = "<group>"; };
-		2812CFEA14B5C53D00F3B8CA /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
-		2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		281A575C1512C6BB00EE945C /* PSDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSDateFormatter.h; sourceTree = "<group>"; };
+		281A575D1512C6BB00EE945C /* PSDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSDateFormatter.m; sourceTree = "<group>"; };
+		281A576E1512D83900EE945C /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
+		281A576F1512D83900EE945C /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
+		282FBCAD1512DA69008A25BA /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreViewController.h; sourceTree = "<group>"; };
+		282FBCAE1512DA69008A25BA /* ScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreViewController.m; sourceTree = "<group>"; };
 		283818BE14723F1D007E4827 /* Phototime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phototime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		283818C214723F1D007E4827 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		283818C414723F1D007E4827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -711,6 +717,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		281A575B1512C6A900EE945C /* PSDateFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				281A575C1512C6BB00EE945C /* PSDateFormatter.h */,
+				281A575D1512C6BB00EE945C /* PSDateFormatter.m */,
+			);
+			path = PSDateFormatter;
+			sourceTree = "<group>";
+		};
 		283818B314723F1C007E4827 = {
 			isa = PBXGroup;
 			children = (
@@ -841,6 +856,7 @@
 		2869873D1475CECD00B40860 /* PSKit */ = {
 			isa = PBXGroup;
 			children = (
+				281A575B1512C6A900EE945C /* PSDateFormatter */,
 				D0A3AC8514F42A8900748CE7 /* PSURLCache */,
 				D0DDA67814E85DAB001FD463 /* PSPullRefreshView */,
 				D031558714E5AB8B00CC8572 /* PSCollectionView */,
@@ -1201,18 +1217,20 @@
 		28B855DA147CDCC4004F84EA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				281A576E1512D83900EE945C /* PreviewViewController.h */,
+				281A576F1512D83900EE945C /* PreviewViewController.m */,
 				28B855EB147CE1A3004F84EA /* WelcomeViewController.h */,
 				28B855EC147CE1A3004F84EA /* WelcomeViewController.m */,
 				28603B5914AC4A1D00541BB1 /* TimelineViewController.h */,
 				28603B5A14AC4A1D00541BB1 /* TimelineViewController.m */,
-				2812CFEA14B5C53D00F3B8CA /* PreviewViewController.h */,
-				2812CFEB14B5C53D00F3B8CA /* PreviewViewController.m */,
 				D0269E3614E1AE2C00B690A2 /* TimelineConfigViewController.h */,
 				D0269E3714E1AE2C00B690A2 /* TimelineConfigViewController.m */,
 				D08E516E14E8ABB400B5CCCD /* GalleryViewController.h */,
 				D08E516F14E8ABB400B5CCCD /* GalleryViewController.m */,
 				D0FBE11F15019114000D705C /* PhotoDetailViewController.h */,
 				D0FBE12015019114000D705C /* PhotoDetailViewController.m */,
+				282FBCAD1512DA69008A25BA /* ScoreViewController.h */,
+				282FBCAE1512DA69008A25BA /* ScoreViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1844,7 +1862,6 @@
 				28603B5B14AC4A1D00541BB1 /* TimelineViewController.m in Sources */,
 				28603B5F14AC4D9300541BB1 /* TimelineCell.m in Sources */,
 				288CB07114B2D72800233B45 /* CoreGraphics-PSKit.m in Sources */,
-				2812CFEC14B5C53D00F3B8CA /* PreviewViewController.m in Sources */,
 				D092D2C314DC4837001108A0 /* NSMutableURLRequest+PSKit.m in Sources */,
 				D0269E3814E1AE2C00B690A2 /* TimelineConfigViewController.m in Sources */,
 				D0269E4414E1B5E100B690A2 /* UserCell.m in Sources */,
@@ -1890,6 +1907,9 @@
 				D0A1EF77150198D1008FF801 /* CommentCell.m in Sources */,
 				D0A1EF7A15019E8D008FF801 /* LikeCell.m in Sources */,
 				D05A3FFA1508C8B400AD0BAC /* SocialView.m in Sources */,
+				281A575E1512C6BB00EE945C /* PSDateFormatter.m in Sources */,
+				281A57701512D83900EE945C /* PreviewViewController.m in Sources */,
+				282FBCAF1512DA69008A25BA /* ScoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

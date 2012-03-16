@@ -225,10 +225,7 @@ profileIconSize = _profileIconSize;
         if (!error) {
             UIImage *sourceImage = [UIImage imageWithData:cachedData];
             if (sourceImage) {
-                UIViewContentMode contentMode = imageView.contentMode;
-                PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
-                CGRect imageRect = [self.contentView convertRect:imageView.frame toView:self];
-                [zoomView showInRect:[self convertRect:imageRect toView:nil]];
+                // NOTE: ZOOM CODE HERE
             }
         }
     }];

@@ -168,15 +168,14 @@
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
 //    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
     [SVProgressHUD dismissWithSuccess:@"Your Timeline is Ready!"];
+
     
-    NSString *timelineId = [[NSUserDefaults standardUserDefaults] objectForKey:@"timelineId"];
-    
-    if (timelineId) {
-        TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimelineId:timelineId] autorelease];
-        [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
-    } else {
-        [self loginDidNotSucceed];
-    }
+//    if (timelineId) {
+//        TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimelineId:timelineId] autorelease];
+//        [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
+//    } else {
+//        [self loginDidNotSucceed];
+//    }
 }
 
 - (void)loginDidNotSucceed {

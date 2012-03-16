@@ -15,8 +15,6 @@
 @property (nonatomic, assign) UIViewController *presentingController;
 @property (nonatomic, retain) id object;
 @property (nonatomic, retain) PSCachedImageView *imageView;
-@property (nonatomic, retain) PSCachedImageView *profileView;
-@property (nonatomic, retain) UILabel *nameLabel;
 
 - (void)prepareForReuse;
 - (void)fillViewWithObject:(id)object;

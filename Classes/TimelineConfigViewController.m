@@ -21,21 +21,11 @@
 @implementation TimelineConfigViewController
 
 @synthesize
-timelineId = _timelineId,
 leftButton = _leftButton,
 centerButton = _centerButton,
 rightButton = _rightButton;
 
 #pragma mark - Init
-
-- (id)initWithTimelineId:(NSString *)timelineId {
-    self = [self initWithNibName:nil bundle:nil];
-    if (self) {
-        self.timelineId = timelineId;
-    }
-    return self;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -48,7 +38,6 @@ rightButton = _rightButton;
 }
 
 - (void)dealloc {
-    self.timelineId = nil;
     [super dealloc];
 }
 
@@ -68,8 +57,6 @@ rightButton = _rightButton;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    //    [[[[UIAlertView alloc] initWithTitle:@"What is this?" message:@"By adding friends to your timeline, their photos will also show up when viewing your timeline." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] autorelease] show];
 }
 
 #pragma mark - Config Subviews
@@ -163,7 +150,7 @@ rightButton = _rightButton;
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, self.timelineId]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/members", API_BASE_URL, nil]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
     [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypeSession usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
@@ -291,7 +278,7 @@ rightButton = _rightButton;
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Adding %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/addUser/%@", API_BASE_URL, self.timelineId, [member objectForKey:@"id"]]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/addUser/%@", API_BASE_URL, nil, [member objectForKey:@"id"]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
     AFJSONRequestOperation *op = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON){
@@ -316,7 +303,7 @@ rightButton = _rightButton;
     [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"Removing %@", [member objectForKey:@"name"]] maskType:SVProgressHUDMaskTypeGradient];
     
     // Setup the network request
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/removeUser/%@", API_BASE_URL, self.timelineId, [member objectForKey:@"id"]]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/removeUser/%@", API_BASE_URL, nil, [member objectForKey:@"id"]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:nil];
     
     

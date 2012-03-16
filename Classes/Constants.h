@@ -43,11 +43,11 @@
 #define CELL_SELECTED_COLOR CELL_BLUE_COLOR
 
 #if TARGET_IPHONE_SIMULATOR
-//  #define USE_LOCALHOST
+  #define USE_LOCALHOST
 #endif
 
 #define API_LOCALHOST @"http://localhost:5000"
-#define API_REMOTE @"http://whiskey.herokuapp.com"
+#define API_REMOTE @"http://initech.herokuapp.com"
 
 #ifdef USE_LOCALHOST
   #define API_BASE_URL [NSString stringWithFormat:API_LOCALHOST]

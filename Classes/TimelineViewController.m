@@ -6,15 +6,21 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import <ImageIO/ImageIO.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+
 #import "TimelineViewController.h"
 #import "PSZoomView.h"
 #import "TimelineView.h"
 #import "DateRangeView.h"
 
-#import "TimelineConfigViewController.h"
 #import "PreviewViewController.h"
 
-@interface TimelineViewController (Private)
+#import "TimelineConfigViewController.h"
+
+@interface TimelineViewController ()
+
+@property (nonatomic, retain) UIPopoverController *popover;
 
 - (void)setDateRange;
 - (void)refreshOnAppear;
@@ -24,24 +30,13 @@
 @implementation TimelineViewController
 
 @synthesize
-pvc = _pvc,
-timelineId = _timelineId,
-startDate = _startDate,
-endDate = _endDate,
+popover = _popover,
 leftButton = _leftButton,
 centerButton = _centerButton,
 rightButton = _rightButton,
 shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - Init
-- (id)initWithTimelineId:(NSString *)timelineId {
-    self = [self initWithNibName:nil bundle:nil];
-    if (self) {
-        self.timelineId = timelineId;
-    }
-    return self;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -58,15 +53,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)viewDidUnload {
+    self.popover = nil;
     [super viewDidUnload];
 }
 
 - (void)dealloc {
-    self.pvc = nil;
+    self.popover = nil;
     
-    self.startDate = nil;
-    self.endDate = nil;
-
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kLoginSucceeded object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldRefreshOnAppear object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTimelineShouldReload object:nil];
@@ -120,7 +113,8 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.collectionView.delegate = self; // scrollViewDelegate
     self.collectionView.collectionViewDelegate = self;
     self.collectionView.collectionViewDataSource = self;
-    self.collectionView.numCols = 2;
+    self.collectionView.numColsPortrait = 2;
+//    self.collectionView.numCols = 2;
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
     
     UILabel *emptyLabel = [UILabel labelWithText:@"No Photos Found" style:@"emptyLabel"];
@@ -145,7 +139,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
     [self.rightButton setBackgroundImage:[UIImage stretchableImageNamed:@"NavButtonRightBlack" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
-    [self.rightButton setImage:[UIImage imageNamed:@"IconClockWhite"] forState:UIControlStateNormal];
+    [self.rightButton setImage:[UIImage imageNamed:@"IconCameraWhite"] forState:UIControlStateNormal];
     
     [self.headerView addSubview:self.leftButton];
     [self.headerView addSubview:self.centerButton];
@@ -154,68 +148,29 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)setDateRange {
-    static NSArray *years = nil;
-    years = [[NSArray arrayWithObjects:@"2007", @"2008", @"2009", @"2010", @"2011", @"2012", nil] retain];
-    static NSDateComponents *components = nil;
-    if (!components) {
-        components = [[NSDateComponents alloc] init];
-    }
-        
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    NSInteger startMonthIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"startMonthIndex"];
-    NSInteger startYearIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"startYearIndex"];    
-    NSInteger endMonthIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"endMonthIndex"];
-    NSInteger endYearIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"endYearIndex"];
-    
-    // Parse
-    [components setMonth:startMonthIndex + 1];
-    [components setYear:[[years objectAtIndex:startYearIndex] integerValue]];
-    self.startDate = [calendar dateFromComponents:components];
-    [components setMonth:endMonthIndex + 1];
-    [components setYear:[[years objectAtIndex:endYearIndex] integerValue]];
-    self.endDate = [calendar dateFromComponents:components];
-    
-    // Display
-    NSDateComponents *displayComponents = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.startDate];
-    NSString *startString = [NSString stringWithFormat:@"%d/%d", displayComponents.month, displayComponents.year];
-    displayComponents = [calendar components:(NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.endDate];
-    NSString *endString = [NSString stringWithFormat:@"%d/%d", displayComponents.month, displayComponents.year];
-    
-    [self.centerButton setTitle:[NSString stringWithFormat:@"%@ - %@", startString, endString] forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
 - (void)leftAction {
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#config"];
-    
-    TimelineConfigViewController *vc = [[[TimelineConfigViewController alloc] initWithTimelineId:self.timelineId] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionRight animated:YES];
 }
 
 - (void)centerAction {
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#dateRange"];
-    
-    DateRangeView *dateRangeView = [[[DateRangeView alloc] initWithFrame:CGRectMake(0, 0, 288, 352)] autorelease];
-    PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Timeline Dates" contentView:dateRangeView] autorelease];
-    popoverView.delegate = self;
-    [popoverView show];
 }
 
 - (void)rightAction {
-    [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"timeline#dateRange"];
+    UIActionSheet *as = [[[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil] autorelease];
     
-    DateRangeView *dateRangeView = [[[DateRangeView alloc] initWithFrame:CGRectMake(0, 0, 288, 352)] autorelease];
-    PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Timeline Dates" contentView:dateRangeView] autorelease];
-    popoverView.delegate = self;
-    [popoverView show];
+    // Only show "Take Photo" option if device supports it
+    BOOL canTakePicture = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+    if (canTakePicture) {
+        [as addButtonWithTitle:@"Take Photo"];
+    }
     
-//    if (!self.pvc) {
-//        self.pvc = [[[PreviewViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-//    }
-//    UIImagePickerController *vc = [[[UIImagePickerController alloc] init] autorelease];
-//    vc.delegate = self.pvc;
-//    [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionLeft animated:YES];
+    [as addButtonWithTitle:@"Choose From Library"];
+    [as addButtonWithTitle:@"Cancel"];
+    [as setCancelButtonIndex:[as numberOfButtons] - 1];
+    
+    [as showInView:self.view];
 }
 
 #pragma mark - State Machine
@@ -253,13 +208,15 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 }
 
 - (void)loadDataSourceFromRemoteUsingCache:(BOOL)usingCache {
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSNumber *startTimestamp = [NSNumber numberWithDouble:[self.startDate timeIntervalSince1970]];
-    NSNumber *endTimestamp = [NSNumber numberWithDouble:[self.endDate timeIntervalSince1970]];
-    [parameters setObject:startTimestamp forKey:@"since"];
-    [parameters setObject:endTimestamp forKey:@"until"];
+    NSLog(@"loading data source with cache: %d", usingCache);
     
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/timelines/%@/photos", API_BASE_URL, self.timelineId]];
+    NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
+    NSString *accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:accessToken forKey:@"accessToken"];
+    
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/users/%@/photos", API_BASE_URL, userId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL method:@"GET" headers:nil parameters:parameters];
     
     [[PSURLCache sharedCache] loadRequest:request cacheType:PSURLCacheTypePermanent usingCache:usingCache completionBlock:^(NSData *cachedData, NSURL *cachedURL, BOOL isCached, NSError *error) {
@@ -284,7 +241,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
                         // Success
                         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                             NSLog(@"# NSURLConnection finished on thread: %@", [NSThread currentThread]);
-                            self.items = [[JSON objectForKey:@"data"] objectForKey:@"photos"];
+                            self.items = [JSON objectForKey:@"data"];
                             [self.collectionView reloadViews];
                             [self dataSourceDidLoad];
                             
@@ -349,10 +306,9 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
         if (!error) {
             UIImage *sourceImage = [UIImage imageWithData:cachedData];
             if (sourceImage) {
-                UIViewContentMode contentMode = imageView.contentMode;
-                CGRect convertedRect = [imageView.superview convertRect:imageView.frame toView:nil];
-                PSZoomView *zoomView = [[[PSZoomView alloc] initWithImage:sourceImage contentMode:contentMode] autorelease];
-                [zoomView showInRect:convertedRect];
+                imageView.image = sourceImage;
+                CGRect convertedFrame = [self.view.window convertRect:imageView.frame fromView:imageView.superview];
+                [PSZoomView showImage:imageView.image withFrame:convertedFrame inView:self.view.window];
             }
         }
     }];
@@ -379,6 +335,77 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 - (void)endRefresh {
     [super endRefresh];
+}
+
+#pragma mark - ImagePickerDelegate
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    if (isDeviceIPad()) {
+        [self.popover dismissPopoverAnimated:YES];
+    } else {
+        [picker.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    // Handle a still image capture
+    if (CFStringCompare((CFStringRef)mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+        UIImage *originalImage = (UIImage *)[info objectForKey:UIImagePickerControllerOriginalImage];
+        UIImage *scaledImage = [originalImage imageScaledAndRotated];
+        
+        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            UIImageWriteToSavedPhotosAlbum(originalImage, nil, nil, nil);
+        }
+        
+        PreviewViewController *vc = [[[PreviewViewController alloc] initWithImage:scaledImage] autorelease];
+        [(PSNavigationController *)self.parentViewController pushViewController:vc animated:YES];
+    }
+    
+    if (isDeviceIPad()) {
+        [self.popover dismissPopoverAnimated:YES];
+    } else {
+        [picker.presentingViewController dismissViewControllerAnimated:YES completion:^{}];
+    }
+}
+
+#pragma mark - Action Sheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (actionSheet.cancelButtonIndex == buttonIndex) return;
+    
+    NSString *buttonName = [actionSheet buttonTitleAtIndex:buttonIndex];
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    if ([buttonName isEqualToString:@"Take Photo"]) {
+        sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else if ([buttonName isEqualToString:@"Choose From Library"]) {
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    } else {
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        UIImagePickerController *vc = [[[UIImagePickerController alloc] init] autorelease];
+        vc.delegate = self;
+        vc.sourceType = sourceType;
+        
+        NSArray *availableMediaTypes = [UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        if ([availableMediaTypes containsObject:(NSString *)kUTTypeImage]) {
+            vc.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+        }
+        
+        if (isDeviceIPad()) {
+            self.popover = [[[UIPopoverController alloc] initWithContentViewController:vc] autorelease];
+            self.popover.delegate = self;
+            [self.popover presentPopoverFromRect:self.headerView.frame inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        } else {
+            [self presentViewController:vc animated:YES completion:^{}];
+        }
+    }
+}
+
+#pragma mark - UIPopoverDelegate
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
 }
 
 @end
