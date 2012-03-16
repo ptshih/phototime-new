@@ -17,6 +17,11 @@
 #define FB_APP_ID @"145264018857264"
 
 /**
+ UIView Tags
+ */
+#define kLeaderboardViewTag 7001
+
+/**
  Constants
  */
 #define kSecondsBackgroundedUntilStale 300

@@ -12,17 +12,14 @@
 #import "TimelineViewController.h"
 #import "PSZoomView.h"
 #import "TimelineView.h"
-#import "DateRangeView.h"
+#import "LeaderboardView.h"
 
 #import "PreviewViewController.h"
-
-#import "TimelineConfigViewController.h"
 
 @interface TimelineViewController ()
 
 @property (nonatomic, retain) UIPopoverController *popover;
 
-- (void)setDateRange;
 - (void)refreshOnAppear;
 
 @end
@@ -114,7 +111,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     self.collectionView.collectionViewDelegate = self;
     self.collectionView.collectionViewDataSource = self;
     self.collectionView.numColsPortrait = 2;
-//    self.collectionView.numCols = 2;
+    self.collectionView.numColsLandscape = 3;
     self.collectionView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
     
     UILabel *emptyLabel = [UILabel labelWithText:@"No Photos Found" style:@"emptyLabel"];
@@ -129,13 +126,13 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     
     self.leftButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 44, 44) andStyle:nil target:self action:@selector(leftAction)];
     [self.leftButton setBackgroundImage:[UIImage stretchableImageNamed:@"NavButtonLeftBlack" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
-    [self.leftButton setImage:[UIImage imageNamed:@"IconGearWhite"] forState:UIControlStateNormal];
+    [self.leftButton setImage:[UIImage imageNamed:@"IconGroupWhite"] forState:UIControlStateNormal];
     
     self.centerButton = [UIButton buttonWithFrame:CGRectMake(44, 0, self.headerView.width - 88, 44) andStyle:@"navigationTitleLabel" target:self action:@selector(centerAction)];
     [self.centerButton setBackgroundImage:[UIImage stretchableImageNamed:@"NavButtonCenterBlack" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
     self.centerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.centerButton.titleEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 8);
-    [self setDateRange];
+    [self.centerButton setTitle:@"Phototime" forState:UIControlStateNormal];
     
     self.rightButton = [UIButton buttonWithFrame:CGRectMake(self.headerView.width - 44, 0, 44, 44) andStyle:nil target:self action:@selector(rightAction)];
     [self.rightButton setBackgroundImage:[UIImage stretchableImageNamed:@"NavButtonRightBlack" withLeftCapWidth:9 topCapWidth:0] forState:UIControlStateNormal];
@@ -147,14 +144,16 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
     [self.view addSubview:self.headerView];
 }
 
-- (void)setDateRange {
-}
-
 #pragma mark - Actions
 - (void)leftAction {
 }
 
 - (void)centerAction {
+    LeaderboardView *v = [[[LeaderboardView alloc] initWithFrame:CGRectInset(self.view.bounds, 16, 52)] autorelease];
+    PSPopoverView *popoverView = [[[PSPopoverView alloc] initWithTitle:@"Leaderboard: Last 7 Days" contentView:v] autorelease];
+    popoverView.tag = kLeaderboardViewTag;
+    popoverView.delegate = self;
+    [popoverView showWithSize:v.frame.size inView:self.view];
 }
 
 - (void)rightAction {
@@ -316,16 +315,7 @@ shouldRefreshOnAppear = _shouldRefreshOnAppear;
 
 #pragma mark - PSPopoverViewDelegate
 - (void)popoverViewDidDismiss:(PSPopoverView *)popoverView {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"dateRangeDidChange"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"dateRangeDidChange"];
-        [self setDateRange];
-        [self reloadDataSource];
-    }
-}
-
-#pragma mark - PSErrorViewDelegate
-- (void)errorViewDidDismiss:(PSErrorView *)errorView {
-    [self reloadDataSource];
+//    [self reloadDataSource];
 }
 
 #pragma mark - Refresh

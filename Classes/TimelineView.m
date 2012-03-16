@@ -106,18 +106,24 @@ actionLabel = _actionLabel;
     NSString *createdString = [[PSDateFormatter sharedDateFormatter] shortRelativeStringFromDate:createdDate];
     NSString *attribution = nil;
     if ([self.object objectForKey:@"fbPhotoId"]) {
-        attribution = @"via Facebook";
+        attribution = @" via Facebook";
     } else if ([self.object objectForKey:@"igPhotoId"]) {
-        attribution = @"via Instagram";
+        attribution = @" via Instagram";
     } else {
-        attribution = @"via Phototime";
+        attribution = @" via Phototime";
+    }
+    NSString *locationText = nil;
+    if ([location notNull] && [[location objectForKey:@"name"] notNull]) {
+        locationText = [NSString stringWithFormat:@" @ %@", [location objectForKey:@"name"]];
+    } else {
+        locationText = @"";
     }
     
     NSString *userName = [user objectForKey:@"name"];
     NSString *caption = [self.object objectForKey:@"caption"];
     
     NSString *captionText = [caption notNull] ? caption : @"a photo";
-    NSString *actionText = [NSString stringWithFormat:@"%@ took %@ %@ %@", userName, captionText, createdString, attribution];
+    NSString *actionText = [NSString stringWithFormat:@"%@ took %@ %@%@%@", userName, captionText, createdString, locationText, attribution];
     
     // Setup Image
     self.imageView.originalURL = [NSURL URLWithString:[original objectForKey:@"url"]];
@@ -132,8 +138,14 @@ actionLabel = _actionLabel;
         
         // Color
         [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x3B5998] CGColor] range:userNameRange];
-        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x222222] CGColor] range:captionRange];
-        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x3B5998] CGColor] range:attributionRange];
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x3B5998] CGColor] range:captionRange];
+        [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x70695A] CGColor] range:attributionRange];
+        
+        if ([location notNull] && [[location objectForKey:@"name"] notNull]) {
+            NSRange locationRange = [[mutableAttributedString string] rangeOfString:[location objectForKey:@"name"] options:NSCaseInsensitiveSearch];
+            
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[[UIColor colorWithRGBHex:0x3B5998] CGColor] range:locationRange];
+        }
         
         return mutableAttributedString;
     }];
@@ -144,7 +156,7 @@ actionLabel = _actionLabel;
     CGFloat width = columnWidth - MARGIN * 2;
     
     NSDictionary *original = [object objectForKey:@"original"];
-    NSDictionary *thumbnail = [object objectForKey:@"thumbnail"];
+//    NSDictionary *thumbnail = [object objectForKey:@"thumbnail"];
     NSDictionary *user = [object objectForKey:@"user"];
     NSDictionary *location = [object objectForKey:@"location"];
     NSNumber *createdAt = [object objectForKey:@"createdAt"];
@@ -152,18 +164,24 @@ actionLabel = _actionLabel;
     NSString *createdString = [[PSDateFormatter sharedDateFormatter] shortRelativeStringFromDate:createdDate];
     NSString *attribution = nil;
     if ([object objectForKey:@"fbPhotoId"]) {
-        attribution = @"via Facebook";
+        attribution = @" via Facebook";
     } else if ([object objectForKey:@"igPhotoId"]) {
-        attribution = @"via Instagram";
+        attribution = @" via Instagram";
     } else {
-        attribution = @"via Phototime";
+        attribution = @" via Phototime";
+    }
+    NSString *locationText = nil;
+    if ([location notNull] && [[location objectForKey:@"name"] notNull]) {
+        locationText = [NSString stringWithFormat:@" @ %@", [location objectForKey:@"name"]];
+    } else {
+        locationText = @"";
     }
     
     NSString *userName = [user objectForKey:@"name"];
     NSString *caption = [object objectForKey:@"caption"];
     
     NSString *captionText = [caption notNull] ? caption : @"a photo";
-    NSString *actionText = [NSString stringWithFormat:@"%@ took %@ %@ %@", userName, captionText, createdString, attribution];
+    NSString *actionText = [NSString stringWithFormat:@"%@ took %@ %@%@%@", userName, captionText, createdString, locationText, attribution];
     
     height += MARGIN;
     
