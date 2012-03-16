@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280A71C61513E9C30063E48A /* IconHomeWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A71C41513E9C30063E48A /* IconHomeWhite.png */; };
+		280A71C71513E9C30063E48A /* IconHomeWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 280A71C51513E9C30063E48A /* IconHomeWhite@2x.png */; };
 		2810F578149202DF0028BCFE /* HorizontalLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F576149202DE0028BCFE /* HorizontalLine.png */; };
 		2810F579149202DF0028BCFE /* HorizontalLine@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F577149202DE0028BCFE /* HorizontalLine@2x.png */; };
 		2810F59B14921C340028BCFE /* BackgroundToolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2810F59914921C330028BCFE /* BackgroundToolbar.png */; };
@@ -22,6 +24,9 @@
 		282FBCC315133109008A25BA /* BGLeaderboardCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282FBCBF15133109008A25BA /* BGLeaderboardCell@2x.png */; };
 		282FBCC415133109008A25BA /* IconStar.png in Resources */ = {isa = PBXBuildFile; fileRef = 282FBCC015133109008A25BA /* IconStar.png */; };
 		282FBCC515133109008A25BA /* IconStar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282FBCC115133109008A25BA /* IconStar@2x.png */; };
+		282FBCC91513D704008A25BA /* ScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 282FBCC81513D704008A25BA /* ScoreCell.m */; };
+		282FBCCC1513E213008A25BA /* IconXWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 282FBCCA1513E213008A25BA /* IconXWhite.png */; };
+		282FBCCD1513E213008A25BA /* IconXWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282FBCCB1513E213008A25BA /* IconXWhite@2x.png */; };
 		283818C314723F1D007E4827 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283818C214723F1D007E4827 /* UIKit.framework */; };
 		283818C514723F1D007E4827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283818C414723F1D007E4827 /* Foundation.framework */; };
 		283818C714723F1D007E4827 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 283818C614723F1D007E4827 /* CoreGraphics.framework */; };
@@ -304,6 +309,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		280A71C41513E9C30063E48A /* IconHomeWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconHomeWhite.png; sourceTree = "<group>"; };
+		280A71C51513E9C30063E48A /* IconHomeWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconHomeWhite@2x.png"; sourceTree = "<group>"; };
 		2810F576149202DE0028BCFE /* HorizontalLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HorizontalLine.png; sourceTree = "<group>"; };
 		2810F577149202DE0028BCFE /* HorizontalLine@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HorizontalLine@2x.png"; sourceTree = "<group>"; };
 		2810F59914921C330028BCFE /* BackgroundToolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundToolbar.png; sourceTree = "<group>"; };
@@ -324,6 +331,10 @@
 		282FBCBF15133109008A25BA /* BGLeaderboardCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BGLeaderboardCell@2x.png"; sourceTree = "<group>"; };
 		282FBCC015133109008A25BA /* IconStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconStar.png; sourceTree = "<group>"; };
 		282FBCC115133109008A25BA /* IconStar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconStar@2x.png"; sourceTree = "<group>"; };
+		282FBCC71513D704008A25BA /* ScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreCell.h; sourceTree = "<group>"; };
+		282FBCC81513D704008A25BA /* ScoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreCell.m; sourceTree = "<group>"; };
+		282FBCCA1513E213008A25BA /* IconXWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconXWhite.png; sourceTree = "<group>"; };
+		282FBCCB1513E213008A25BA /* IconXWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconXWhite@2x.png"; sourceTree = "<group>"; };
 		283818BE14723F1D007E4827 /* Phototime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Phototime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		283818C214723F1D007E4827 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		283818C414723F1D007E4827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -742,6 +753,23 @@
 				281A575D1512C6BB00EE945C /* PSDateFormatter.m */,
 			);
 			path = PSDateFormatter;
+			sourceTree = "<group>";
+		};
+		282FBCC61513D6E8008A25BA /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				D054E98E14F6F98D00B03306 /* DateRangeView.h */,
+				D054E98F14F6F98D00B03306 /* DateRangeView.m */,
+				D05A3FF81508C8B400AD0BAC /* SocialView.h */,
+				D05A3FF91508C8B400AD0BAC /* SocialView.m */,
+				28603B5D14AC4D9300541BB1 /* TimelineCell.h */,
+				28603B5E14AC4D9300541BB1 /* TimelineCell.m */,
+				D0A1EF75150198D1008FF801 /* CommentCell.h */,
+				D0A1EF76150198D1008FF801 /* CommentCell.m */,
+				D0A1EF7815019E8D008FF801 /* LikeCell.h */,
+				D0A1EF7915019E8D008FF801 /* LikeCell.m */,
+			);
+			name = Unused;
 			sourceTree = "<group>";
 		};
 		283818B314723F1C007E4827 = {
@@ -1279,22 +1307,15 @@
 			children = (
 				D0F4CB3E14F8C6D90001FD7E /* TimelineView.h */,
 				D0F4CB3F14F8C6D90001FD7E /* TimelineView.m */,
-				28603B5D14AC4D9300541BB1 /* TimelineCell.h */,
-				28603B5E14AC4D9300541BB1 /* TimelineCell.m */,
+				282FBCB415132B35008A25BA /* LeaderboardView.h */,
+				282FBCB515132B35008A25BA /* LeaderboardView.m */,
 				D0269E4214E1B5E100B690A2 /* UserCell.h */,
 				D0269E4314E1B5E100B690A2 /* UserCell.m */,
 				282FBCB715132DCD008A25BA /* LeaderboardCell.h */,
 				282FBCB815132DCD008A25BA /* LeaderboardCell.m */,
-				D0A1EF75150198D1008FF801 /* CommentCell.h */,
-				D0A1EF76150198D1008FF801 /* CommentCell.m */,
-				D0A1EF7815019E8D008FF801 /* LikeCell.h */,
-				D0A1EF7915019E8D008FF801 /* LikeCell.m */,
-				282FBCB415132B35008A25BA /* LeaderboardView.h */,
-				282FBCB515132B35008A25BA /* LeaderboardView.m */,
-				D054E98E14F6F98D00B03306 /* DateRangeView.h */,
-				D054E98F14F6F98D00B03306 /* DateRangeView.m */,
-				D05A3FF81508C8B400AD0BAC /* SocialView.h */,
-				D05A3FF91508C8B400AD0BAC /* SocialView.m */,
+				282FBCC71513D704008A25BA /* ScoreCell.h */,
+				282FBCC81513D704008A25BA /* ScoreCell.m */,
+				282FBCC61513D6E8008A25BA /* Unused */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1302,6 +1323,10 @@
 		28F38D4A149839B9009D58BA /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				280A71C41513E9C30063E48A /* IconHomeWhite.png */,
+				280A71C51513E9C30063E48A /* IconHomeWhite@2x.png */,
+				282FBCCA1513E213008A25BA /* IconXWhite.png */,
+				282FBCCB1513E213008A25BA /* IconXWhite@2x.png */,
 				282FBCB01513286A008A25BA /* IconGroupWhite.png */,
 				282FBCB11513286A008A25BA /* IconGroupWhite@2x.png */,
 				D0E3BF81150220110016D2DF /* IconThumbsDownBlack.png */,
@@ -1811,6 +1836,10 @@
 				282FBCC315133109008A25BA /* BGLeaderboardCell@2x.png in Resources */,
 				282FBCC415133109008A25BA /* IconStar.png in Resources */,
 				282FBCC515133109008A25BA /* IconStar@2x.png in Resources */,
+				282FBCCC1513E213008A25BA /* IconXWhite.png in Resources */,
+				282FBCCD1513E213008A25BA /* IconXWhite@2x.png in Resources */,
+				280A71C61513E9C30063E48A /* IconHomeWhite.png in Resources */,
+				280A71C71513E9C30063E48A /* IconHomeWhite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1946,6 +1975,7 @@
 				282FBCAF1512DA69008A25BA /* ScoreViewController.m in Sources */,
 				282FBCB615132B35008A25BA /* LeaderboardView.m in Sources */,
 				282FBCB915132DCD008A25BA /* LeaderboardCell.m in Sources */,
+				282FBCC91513D704008A25BA /* ScoreCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

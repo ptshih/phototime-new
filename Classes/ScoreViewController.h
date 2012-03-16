@@ -6,8 +6,10 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "PSViewController.h"
+#import "PSTableViewController.h"
 
-@interface ScoreViewController : PSViewController
+@interface ScoreViewController : PSTableViewController
+
+- (id)initWithDictionary:(NSDictionary *)dictionary image:(UIImage *)image;
 
 @end

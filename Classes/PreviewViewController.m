@@ -6,13 +6,16 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "PreviewViewController.h"
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+
+#import "PreviewViewController.h"
+#import "ScoreViewController.h"
 
 @interface PreviewViewController ()
 
 @property (nonatomic, retain) UIImage *image;
+@property (nonatomic, assign) UIImageView *headerImageView;
 
 @property (nonatomic, assign) UIButton *leftButton;
 @property (nonatomic, assign) UIButton *centerButton;
@@ -27,6 +30,7 @@
 
 @synthesize
 image = _image,
+headerImageView = _headerImageView,
 
 leftButton = _leftButton,
 centerButton = _centerButton,
@@ -95,6 +99,19 @@ imageView = _imageView;
     self.imageView.backgroundColor = RGBCOLOR(200, 200, 200);
     [self.imageView setImage:self.image];
     [self.containerView addSubview:self.imageView];
+    
+    
+    // Table Header
+//    UIView *tableHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, 160.0)] autorelease];
+//    
+//    CGFloat scaledHeight = floorf(self.image.size.height / (self.image.size.width / tableHeaderView.width));
+//    self.headerImageView = [[[UIImageView alloc] initWithImage:self.image] autorelease];
+//    self.headerImageView.width = tableHeaderView.width;
+//    self.headerImageView.height = scaledHeight;
+//    self.headerImageView.top = -1 * (self.headerImageView.height - tableHeaderView.height);
+//    [self.tableView addSubview:self.headerImageView];
+//    [self.tableView sendSubviewToBack:self.headerImageView];
+//    self.tableView.tableHeaderView = tableHeaderView;
 }
 
 - (void)setupHeader {
@@ -131,8 +148,35 @@ imageView = _imageView;
 - (void)centerAction {
 }
 
-- (void)rightAction {
+- (void)rightAction {    
     if (!self.image) return;
+    
+    // Show Score Screen
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    
+    NSMutableDictionary *reasons = [NSMutableDictionary dictionary];
+    [reasons setObject:@"Nice Photo! You earned 8 points!" forKey:@"description"];
+    NSMutableArray *reasonsItems = [NSMutableArray array];
+    [reasonsItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Every photo counts", @"reason", @"1", @"point", nil]];
+    [reasonsItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"First of the day", @"reason", @"3", @"point", nil]];
+    [reasonsItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"You tagged a Venue", @"reason", @"3", @"point", nil]];
+    [reasonsItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"You included your location", @"reason", @"1", @"point", nil]];
+    [reasons setObject:reasonsItems forKey:@"items"];
+    [data setObject:reasons forKey:@"reasons"];
+    
+    NSMutableDictionary *leaderboard = [NSMutableDictionary dictionary];
+    [leaderboard setObject:@"Leaderboard: You are #3!" forKey:@"description"];
+    NSMutableArray *leaderboardItems = [NSMutableArray array];
+    [leaderboardItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Peter Shih", @"name", @"160", @"score", nil]];
+    [leaderboardItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Peter Shih", @"name", @"160", @"score", nil]];
+    [leaderboardItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Peter Shih", @"name", @"160", @"score", nil]];
+    [leaderboard setObject:leaderboardItems forKey:@"items"];
+    [data setObject:leaderboard forKey:@"leaderboard"];
+    
+    ScoreViewController *vc = [[[ScoreViewController alloc] initWithDictionary:data image:self.image] autorelease];
+    [(PSNavigationController *)self.parentViewController pushViewController:vc animated:YES];
+    
+    return;
     
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
     NSString *accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"];
@@ -159,6 +203,11 @@ imageView = _imageView;
         NSInteger statusCode = [operation.response statusCode];
         if (statusCode == 200) {
             // success
+            id JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSDictionary *data = [JSON objectForKey:@"data"];
+            // Show Score Screen
+            ScoreViewController *vc = [[[ScoreViewController alloc] initWithDictionary:data image:self.image] autorelease];
+            [(PSNavigationController *)self.parentViewController pushViewController:vc animated:YES];
         } else {
             // Something bad happened
         }
@@ -168,10 +217,26 @@ imageView = _imageView;
     
     NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
     [queue addOperation:op];
-    
-    // Show Score Screen
-    
-    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
 }
+
+#pragma mark - UIScrollViewDelegate
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    [super scrollViewDidScroll:scrollView];
+//    
+//    CGFloat tableHeaderHeight = self.tableView.tableHeaderView.height;
+//    
+//    CGFloat yOffset = scrollView.contentOffset.y;
+//    //    if (yOffset > (tableHeaderHeight * 2)) {
+//    //        yOffset = (tableHeaderHeight * 2);
+//    //    } else if (yOffset < (-2 * tableHeaderHeight)) {
+//    //        yOffset = (-2 * tableHeaderHeight);
+//    //    }
+//    
+//    CGFloat factor = sinf(yOffset / tableHeaderHeight);
+//    if (yOffset >= 0) {
+//        factor = 0;
+//    }
+//    self.headerImageView.top = (-1 * (self.headerImageView.height - tableHeaderHeight)) - (factor * 100);
+//}
 
 @end

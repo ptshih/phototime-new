@@ -45,6 +45,11 @@ rankButton = _rankButton;
     [super dealloc];
 }
 
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    [self.psImageView prepareForReuse];
+}
+
 + (CGFloat)rowHeight {
     return 44.0;
 }
