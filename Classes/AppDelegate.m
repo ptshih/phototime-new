@@ -9,8 +9,7 @@
 #import "AppDelegate.h"
 #import "PSReachabilityCenter.h"
 #import "PSLocationCenter.h"
-#import "WelcomeViewController.h"
-#import "TimelineViewController.h"
+#import "RootViewController.h"
 
 #import "BWHockeyManager.h"
 #import "BWQuincyManager.h"
@@ -97,16 +96,10 @@ shouldReloadInterface = _shouldReloadInterface;
     [self.window makeKeyAndVisible];
     self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundLeather.jpg"]];
     
-    // MOVE THESE TO KEYCHAIN
-    // CURRENTLY FORCED IN INITIALDEFAULTS
-    id controller = nil;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"]) {
-        controller = [[[TimelineViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    } else {
-        controller = [[[WelcomeViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-    }
     
-    self.navigationController = [[[PSNavigationController alloc] initWithRootViewController:controller] autorelease];
+    RootViewController *vc = [[[RootViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    
+    self.navigationController = [[[PSNavigationController alloc] initWithRootViewController:vc] autorelease];
     self.window.rootViewController = self.navigationController;
     
     return YES;

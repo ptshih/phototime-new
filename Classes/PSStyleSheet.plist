@@ -72,6 +72,25 @@
 		<key>textAlignment</key>
 		<string>center</string>
 	</dict>
+	<key>logo</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-BoldCond</string>
+		<key>fontSize</key>
+		<integer>24</integer>
+		<key>textColor</key>
+		<string>0x222222</string>
+		<key>highlightedTextColor</key>
+		<string>0xefefef</string>
+		<key>textAlignment</key>
+		<string>center</string>
+		<key>shadowColor</key>
+		<string>0xffffff</string>
+		<key>shadowOffset</key>
+		<string>{0, 1}</string>
+		<key>numberOfLines</key>
+		<integer>1</integer>
+	</dict>
 	<key>navigationTitleLabel</key>
 	<dict>
 		<key>fontName</key>
@@ -288,15 +307,34 @@
 		<key>fontName</key>
 		<string>HelveticaNeueLT-MediumCond</string>
 		<key>fontSize</key>
-		<integer>14</integer>
+		<integer>12</integer>
 		<key>textColor</key>
-		<string>0xcdcdcd</string>
+		<string>0x554F44</string>
 		<key>highlightedTextColor</key>
-		<string>0xefefef</string>
+		<string>0x554F44</string>
 		<key>textAlignment</key>
 		<string>center</string>
 		<key>shadowColor</key>
-		<string>0x999999</string>
+		<string>0x000000</string>
+		<key>shadowOffset</key>
+		<string>{0, 0}</string>
+		<key>numberOfLines</key>
+		<integer>5</integer>
+	</dict>
+	<key>welcomeSignup</key>
+	<dict>
+		<key>fontName</key>
+		<string>HelveticaNeueLT-MediumCond</string>
+		<key>fontSize</key>
+		<integer>14</integer>
+		<key>textColor</key>
+		<string>0x3B5998</string>
+		<key>highlightedTextColor</key>
+		<string>0x3B5998</string>
+		<key>textAlignment</key>
+		<string>center</string>
+		<key>shadowColor</key>
+		<string>0x000000</string>
 		<key>shadowOffset</key>
 		<string>{0, 0}</string>
 		<key>numberOfLines</key>

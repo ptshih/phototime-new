@@ -7,7 +7,6 @@
 //
 
 #import "WelcomeViewController.h"
-#import "TimelineViewController.h"
 
 @interface WelcomeViewController (Private)
 
@@ -66,40 +65,81 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *logo = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogoLargeWhite"]] autorelease];
-    logo.top = 20.0;
-    logo.left = 33.0;
-    [self.view addSubview:logo];
+    [self setupSubviews];
+//    
+//    // Add disclaimer
+//    UILabel *disclaimer = [UILabel labelWithText:@"We use facebook to find your friends.\r\nWe don't post anything to your timeline." style:@"welcomeDisclaimerLabel"];
+//    [self.view addSubview:disclaimer];
+//    CGSize dSize = [disclaimer sizeForLabelInWidth:254];
+//    disclaimer.width = dSize.width;
+//    disclaimer.height = dSize.height;
+//    disclaimer.top = loginButton.bottom + 20.0;
+//    disclaimer.left = floorf((self.view.width - disclaimer.width) / 2);
+//    
+//    UIImageView *postit = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundPostIt"]] autorelease];
+//    postit.top = disclaimer.bottom + 20.0;
+//    postit.left = 33.0;
+//    [self.view addSubview:postit];
+//    
+//    UILabel *note = [UILabel labelWithText:@"Discover photos from your friends by choosing a time period.\r\n\r\nPhototime will combine photos from you and your friends to create a shared visual timeline.\r\n\r\nLovingly made in NYC" style:@"welcomeNoteLabel"];
+//    note.frame = CGRectInset(postit.bounds, 24, 16);
+//    [postit addSubview:note];
     
-    // Add a login button
-    UIButton *loginButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 254, 59) andStyle:nil target:self action:@selector(login)];
-    [loginButton setImage:[UIImage imageNamed:@"ButtonFacebook"] forState:UIControlStateNormal];
-    [loginButton setImage:[UIImage imageNamed:@"ButtonFacebookHighlighted"] forState:UIControlStateHighlighted];
-    loginButton.top = logo.bottom + 20.0;
-    loginButton.left = 33.0;
-    [self.view addSubview:loginButton];
-    
-    // Add disclaimer
-    UILabel *disclaimer = [UILabel labelWithText:@"We use facebook to find your friends.\r\nWe don't post anything to your timeline." style:@"welcomeDisclaimerLabel"];
-    [self.view addSubview:disclaimer];
-    CGSize dSize = [disclaimer sizeForLabelInWidth:254];
-    disclaimer.width = dSize.width;
-    disclaimer.height = dSize.height;
-    disclaimer.top = loginButton.bottom + 20.0;
-    disclaimer.left = floorf((self.view.width - disclaimer.width) / 2);
-    
-    UIImageView *postit = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundPostIt"]] autorelease];
-    postit.top = disclaimer.bottom + 20.0;
-    postit.left = 33.0;
-    [self.view addSubview:postit];
-    
-    UILabel *note = [UILabel labelWithText:@"Discover photos from your friends by choosing a time period.\r\n\r\nPhototime will combine photos from you and your friends to create a shared visual timeline.\r\n\r\nLovingly made in NYC" style:@"welcomeNoteLabel"];
-    note.frame = CGRectInset(postit.bounds, 24, 16);
-    [postit addSubview:note];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+}
+
+#pragma mark - Subviews
+- (void)setupSubviews {
+    // Top
+    UIView *topView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 60.0)] autorelease];
+    topView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
+    [self.view addSubview:topView];
+    
+    UILabel *logo = [UILabel labelWithText:@"Phototime" style:@"logo"];
+    logo.frame = topView.bounds;
+    [topView addSubview:logo];
+    
+    // Middle
+    UIView *midView = [[[UIView alloc] initWithFrame:CGRectMake(0, topView.bottom, self.view.width, self.view.height - 200.0)] autorelease];
+    midView.backgroundColor = RGBCOLOR(50, 50, 50);
+    [self.view addSubview:midView];
+    
+    UIImageView *loginBackground = [[[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"BGLoginField"] stretchableImageWithLeftCapWidth:16 topCapHeight:0]] autorelease];
+    loginBackground.width = midView.width - 32.0;
+    loginBackground.left = floorf((midView.width - loginBackground.width) / 2);
+    loginBackground.top = 16.0;
+    [midView addSubview:loginBackground];
+    
+    UIButton *loginButton = [UIButton buttonWithFrame:CGRectMake(16, loginBackground.bottom + 16, midView.width - 32, 44) andStyle:@"titleLabel" target:nil action:nil];
+    [loginButton setBackgroundImage:[[UIImage imageNamed:@"ButtonLogin"] stretchableImageWithLeftCapWidth:17 topCapHeight:0] forState:UIControlStateNormal];
+    [loginButton setBackgroundImage:[[UIImage imageNamed:@"ButtonLoginHighlighted"] stretchableImageWithLeftCapWidth:17 topCapHeight:0] forState:UIControlStateHighlighted];
+    [loginButton setTitle:@"Log in with email" forState:UIControlStateNormal];
+    [midView addSubview:loginButton];
+    
+    // Bottom
+    UIView *botView = [[[UIView alloc] initWithFrame:CGRectMake(0, midView.bottom, self.view.width, self.view.height - topView.height - midView.height)] autorelease];
+    botView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundPaper"]];
+    [self.view addSubview:botView];
+    
+    UIButton *signupButton = [UIButton buttonWithFrame:CGRectMake(16, 16, botView.width - 32, 20) andStyle:@"welcomeSignup" target:nil action:nil];
+    [signupButton setTitle:@"Sign up with email" forState:UIControlStateNormal];
+    [botView addSubview:signupButton];
+    
+    // Add a login button
+    UIButton *fbButton = [UIButton buttonWithFrame:CGRectMake(0, 0, 254, 59) andStyle:nil target:self action:@selector(login)];
+    [fbButton setImage:[UIImage imageNamed:@"ButtonFacebook"] forState:UIControlStateNormal];
+    [fbButton setImage:[UIImage imageNamed:@"ButtonFacebookHighlighted"] forState:UIControlStateHighlighted];
+    fbButton.left = floorf((botView.width - fbButton.width) / 2);
+    fbButton.top = floorf((botView.height - fbButton.height) / 2);
+    [botView addSubview:fbButton];
+    
+// Add disclaimer
+    UILabel *disclaimer = [UILabel labelWithText:@"We use facebook to find your friends.\r\nWe don't post anything to your timeline." style:@"welcomeDisclaimerLabel"];
+    disclaimer.frame = CGRectMake(0, fbButton.bottom, botView.width, 28.0);
+    [botView addSubview:disclaimer];
 }
 
 #pragma mark - Actions
@@ -156,26 +196,17 @@
 
 #pragma mark - Login
 - (void)loginIfNecessary {
-    if (![[PSFacebookCenter defaultCenter] isLoggedIn]) {
-        [[PSFacebookCenter defaultCenter] authorizeBasicPermissions];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"]) {
+        [self loginDidSucceed:YES];
     } else {
-        [self loginDidSucceed:NO];
+        [[PSFacebookCenter defaultCenter] authorizeBasicPermissions];
     }
 }
 
 - (void)loginDidSucceed:(BOOL)animated {
     [[LocalyticsSession sharedLocalyticsSession] tagEvent:@"welcome#loginSucceeded"];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSucceeded object:nil];
-//    [(PSNavigationController *)self.parentViewController popViewControllerWithDirection:PSNavigationControllerDirectionDown animated:YES];
-    [SVProgressHUD dismissWithSuccess:@"Your Timeline is Ready!"];
-
-    
-//    if (timelineId) {
-//        TimelineViewController *vc = [[[TimelineViewController alloc] initWithTimelineId:timelineId] autorelease];
-//        [(PSNavigationController *)self.parentViewController pushViewController:vc direction:PSNavigationControllerDirectionDown animated:YES];
-//    } else {
-//        [self loginDidNotSucceed];
-//    }
+    [(PSNavigationController *)self.parentViewController popViewControllerAnimated:YES];
 }
 
 - (void)loginDidNotSucceed {

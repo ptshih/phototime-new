@@ -173,10 +173,10 @@ imageView = _imageView;
     [leaderboard setObject:leaderboardItems forKey:@"items"];
     [data setObject:leaderboard forKey:@"leaderboard"];
     
-    ScoreViewController *vc = [[[ScoreViewController alloc] initWithDictionary:data image:self.image] autorelease];
-    [(PSNavigationController *)self.parentViewController pushViewController:vc animated:YES];
-    
-    return;
+//    ScoreViewController *vc = [[[ScoreViewController alloc] initWithDictionary:data image:self.image] autorelease];
+//    [(PSNavigationController *)self.parentViewController pushViewController:vc animated:YES];
+//    
+//    return;
     
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
     NSString *accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"];
@@ -203,8 +203,9 @@ imageView = _imageView;
         NSInteger statusCode = [operation.response statusCode];
         if (statusCode == 200) {
             // success
-            id JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            NSDictionary *data = [JSON objectForKey:@"data"];
+//            id JSON = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//            NSDictionary *data = [JSON objectForKey:@"data"];
+            
             // Show Score Screen
             ScoreViewController *vc = [[[ScoreViewController alloc] initWithDictionary:data image:self.image] autorelease];
             [(PSNavigationController *)self.parentViewController pushViewController:vc animated:YES];

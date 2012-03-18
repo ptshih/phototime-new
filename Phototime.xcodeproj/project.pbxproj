@@ -40,6 +40,13 @@
 		28381A981472F8C8007E4827 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28381A971472F8C8007E4827 /* CoreText.framework */; };
 		28381A9A1472F8EF007E4827 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28381A991472F8EF007E4827 /* CoreLocation.framework */; };
 		28381A9C1472F914007E4827 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28381A9B1472F914007E4827 /* MessageUI.framework */; };
+		283F8914151521BB003C1D63 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 283F8913151521BB003C1D63 /* RootViewController.m */; };
+		283F891915152857003C1D63 /* ButtonLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 283F891515152857003C1D63 /* ButtonLogin.png */; };
+		283F891A15152857003C1D63 /* ButtonLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 283F891615152857003C1D63 /* ButtonLogin@2x.png */; };
+		283F891B15152857003C1D63 /* ButtonLoginHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 283F891715152857003C1D63 /* ButtonLoginHighlighted.png */; };
+		283F891C15152857003C1D63 /* ButtonLoginHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 283F891815152857003C1D63 /* ButtonLoginHighlighted@2x.png */; };
+		283F891F15152867003C1D63 /* BGLoginField.png in Resources */ = {isa = PBXBuildFile; fileRef = 283F891D15152867003C1D63 /* BGLoginField.png */; };
+		283F892015152867003C1D63 /* BGLoginField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 283F891E15152867003C1D63 /* BGLoginField@2x.png */; };
 		28603B3114A7B20B00541BB1 /* IconNextBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B2D14A7B20A00541BB1 /* IconNextBlack.png */; };
 		28603B3214A7B20B00541BB1 /* IconNextBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28603B2E14A7B20A00541BB1 /* IconNextBlack@2x.png */; };
 		28603B4414AA860700541BB1 /* PSZoomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28603B4314AA860700541BB1 /* PSZoomView.m */; };
@@ -350,6 +357,14 @@
 		28381A971472F8C8007E4827 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		28381A991472F8EF007E4827 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		28381A9B1472F914007E4827 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		283F8912151521BB003C1D63 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		283F8913151521BB003C1D63 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		283F891515152857003C1D63 /* ButtonLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonLogin.png; sourceTree = "<group>"; };
+		283F891615152857003C1D63 /* ButtonLogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonLogin@2x.png"; sourceTree = "<group>"; };
+		283F891715152857003C1D63 /* ButtonLoginHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonLoginHighlighted.png; sourceTree = "<group>"; };
+		283F891815152857003C1D63 /* ButtonLoginHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonLoginHighlighted@2x.png"; sourceTree = "<group>"; };
+		283F891D15152867003C1D63 /* BGLoginField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BGLoginField.png; sourceTree = "<group>"; };
+		283F891E15152867003C1D63 /* BGLoginField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BGLoginField@2x.png"; sourceTree = "<group>"; };
 		28603B2D14A7B20A00541BB1 /* IconNextBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IconNextBlack.png; sourceTree = "<group>"; };
 		28603B2E14A7B20A00541BB1 /* IconNextBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconNextBlack@2x.png"; sourceTree = "<group>"; };
 		28603B4214AA860700541BB1 /* PSZoomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSZoomView.h; sourceTree = "<group>"; };
@@ -870,6 +885,12 @@
 				D0FBE113150184C6000D705C /* ButtonActionLeft@2x.png */,
 				D0FBE114150184C6000D705C /* ButtonActionRight.png */,
 				D0FBE115150184C6000D705C /* ButtonActionRight@2x.png */,
+				283F891515152857003C1D63 /* ButtonLogin.png */,
+				283F891615152857003C1D63 /* ButtonLogin@2x.png */,
+				283F891715152857003C1D63 /* ButtonLoginHighlighted.png */,
+				283F891815152857003C1D63 /* ButtonLoginHighlighted@2x.png */,
+				283F891D15152867003C1D63 /* BGLoginField.png */,
+				283F891E15152867003C1D63 /* BGLoginField@2x.png */,
 				D0ACA5881500443700681176 /* Nav */,
 				D07032F114FFD5DD002DA895 /* Shadow.png */,
 				D0ACA5891500449A00681176 /* IconBackWhite.png */,
@@ -1281,6 +1302,8 @@
 				D0FBE12015019114000D705C /* PhotoDetailViewController.m */,
 				282FBCAD1512DA69008A25BA /* ScoreViewController.h */,
 				282FBCAE1512DA69008A25BA /* ScoreViewController.m */,
+				283F8912151521BB003C1D63 /* RootViewController.h */,
+				283F8913151521BB003C1D63 /* RootViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1840,6 +1863,12 @@
 				282FBCCD1513E213008A25BA /* IconXWhite@2x.png in Resources */,
 				280A71C61513E9C30063E48A /* IconHomeWhite.png in Resources */,
 				280A71C71513E9C30063E48A /* IconHomeWhite@2x.png in Resources */,
+				283F891915152857003C1D63 /* ButtonLogin.png in Resources */,
+				283F891A15152857003C1D63 /* ButtonLogin@2x.png in Resources */,
+				283F891B15152857003C1D63 /* ButtonLoginHighlighted.png in Resources */,
+				283F891C15152857003C1D63 /* ButtonLoginHighlighted@2x.png in Resources */,
+				283F891F15152867003C1D63 /* BGLoginField.png in Resources */,
+				283F892015152867003C1D63 /* BGLoginField@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1976,6 +2005,7 @@
 				282FBCB615132B35008A25BA /* LeaderboardView.m in Sources */,
 				282FBCB915132DCD008A25BA /* LeaderboardCell.m in Sources */,
 				282FBCC91513D704008A25BA /* ScoreCell.m in Sources */,
+				283F8914151521BB003C1D63 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
